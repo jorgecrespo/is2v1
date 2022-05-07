@@ -1,0 +1,110 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\UsuariosRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: UsuariosRepository::class)]
+class Usuarios
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private $id;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $mail;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $pass;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $es_admin;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $nombre;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $fecha_baja;
+
+    #[ORM\ManyToOne(targetEntity: vacunatorios::class)]
+    private $vacunatorio_id;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(string $mail): self
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getPass(): ?string
+    {
+        return $this->pass;
+    }
+
+    public function setPass(string $pass): self
+    {
+        $this->pass = $pass;
+
+        return $this;
+    }
+
+    public function getEsAdmin(): ?bool
+    {
+        return $this->es_admin;
+    }
+
+    public function setEsAdmin(?bool $es_admin): self
+    {
+        $this->es_admin = $es_admin;
+
+        return $this;
+    }
+
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(string $nombre): self
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getFechaBaja(): ?\DateTimeInterface
+    {
+        return $this->fecha_baja;
+    }
+
+    public function setFechaBaja(?\DateTimeInterface $fecha_baja): self
+    {
+        $this->fecha_baja = $fecha_baja;
+
+        return $this;
+    }
+
+    public function getVacunatorioId(): ?vacunatorios
+    {
+        return $this->vacunatorio_id;
+    }
+
+    public function setVacunatorioId(?vacunatorios $vacunatorio_id): self
+    {
+        $this->vacunatorio_id = $vacunatorio_id;
+
+        return $this;
+    }
+}

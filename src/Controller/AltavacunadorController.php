@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Controller;
+
+use App\Form\VacunadorType;
+use App\Entity\Usuarios;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class AltavacunadorController extends AbstractController
+{
+    #[Route('/altavacunador', name: 'app_altavacunador')]
+    public function index(Request $request, ManagerRegistry $doctrine): Response
+    {
+
+        $usuario = new Usuarios();
+        $form = $this->createForm(VacunadorType::class, $usuario);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $em = $doctrine->getManager();
+            $em->persist($usuario);
+            $em->flush();
+        }
+
+
+
+        return $this->render('altavacunador/index.html.twig', [
+            'controller_name' => 'AltavacunadorController',
+            'formulario'      => $form->createView()
+        ]);
+    }
+}
