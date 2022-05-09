@@ -71,4 +71,24 @@ class PacientesRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+   public function findOneByEmail($mail): ?Pacientes
+   {
+    $entityManager = $this->getEntityManager();
+
+    $query = $entityManager->createQuery(
+        'SELECT  p
+        FROM App\Entity\Pacientes p
+        WHERE p.mail = :mail'
+    )->setParameter('mail', $mail);
+
+    // returns an array of Product objects
+    $busqueda = $query->getResult();
+    
+    if (count($busqueda) > 0)
+        return $query->getResult()[0];
+    else 
+        return null;
+   }
+
 }

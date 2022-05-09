@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AltapacienteController!{% endblock %}
+{% block title %}Hello CustomLoginPacienteController!{% endblock %}
 
 {% block body %}
 <style>
@@ -11,7 +11,18 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
+    Custom Login Paciente:
+   
    
    {{ form (formulario)}}
+
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success"> 
+            Mensaje: {{ message }}
+        </div>
+    {% endfor %}
+
+
 </div>
 {% endblock %}

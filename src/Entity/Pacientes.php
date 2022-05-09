@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use App\Repository\PacientesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[ORM\Entity(repositoryClass: PacientesRepository::class)]
-class Pacientes
+
+class Pacientes implements UserInterface,  PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -67,6 +71,11 @@ class Pacientes
     }
 
     public function getPass(): ?string
+    {
+        return $this->pass;
+    }
+
+    public function getPassword(): string
     {
         return $this->pass;
     }
@@ -197,4 +206,22 @@ class Pacientes
 
         return $this;
     }
+
+    
+    public function getRoles(): array
+    {
+        return ['ROLE_USER']; 
+    }
+
+    
+    public function getUserIdentifier(): string
+    {
+        return $this->mail; 
+    }
+
+    public function eraseCredentials()
+    {
+        $this->setMail('');
+    }
+
 }

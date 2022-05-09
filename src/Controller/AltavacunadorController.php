@@ -8,12 +8,13 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AltavacunadorController extends AbstractController
 {
     #[Route('/altavacunador', name: 'app_altavacunador')]
-    public function index(Request $request, ManagerRegistry $doctrine): Response
+    public function index(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
     {
 
         $usuario = new Usuarios();
@@ -21,8 +22,16 @@ class AltavacunadorController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
             $em = $doctrine->getManager();
+            $usuario->setEsAdmin(0);
+            $hashedPassword = $passwordHasher->hashPassword(
+                $usuario,
+                $form['pass']->getData()
+            );
+            $usuario->setPass($hashedPassword);
             $em->persist($usuario);
             $em->flush();
+            $this->addFlash(type: 'success', message:'Vacunador dado de alta exitosamente.');
+            return $this->redirectToRoute( route : 'app_homepage');
         }
 
 

@@ -23,6 +23,16 @@
     <li><a href="/vacunadoresporcentro">Vacunadores por Centro </a></li>
     <li><a href="/registrovacunas">Registrar vacunas recibidas </a></li>
     <li><a href="/usuarios">Usuario para Admin </a></li>
+    <li><a href="/homepaciente">Home Page Paciente </a></li>
+    <li><a href="/custom/login/paciente"> CustomLoginPacienteController </a></li>
     </ul>
 </div>
+
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success"> 
+    {{ message }}
+    </div>
+{% endfor %}
+
+
 {% endblock %}
