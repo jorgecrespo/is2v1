@@ -8,23 +8,26 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hola usuario anonimo </h1>
+{# {{ component('usuario') }} #}
 
-    Paginas a hacer:
+<div class="example-wrapper">
+    <h1>Paginas en Desarrollo </h1>
+        {{ data }}
+    <br>
     <ul>
     <li><a href="/altapaciente">Alta Paciente </a></li>
     <li><a href="/altavacunador">Alta Vacunador </a></li>
-    <li><a href="/vacunadoresporcentro">Vacunadores por Centro </a></li>
+    <li> - </li>
+    <li><a href="/custom/login/paciente"> Login Paciente </a></li>
     <li><a href="/login/admin">Login Vacunador y Admin </a></li>
-    <li><a href="/login/paciente">Login Paciente </a></li>
+    <li> - </li>
+    <li><a href="/vacunadoresporcentro">Vacunadores por Centro </a></li>
     <li><a href="/usuarios">Vacunadores (lista para poder editar y dar de baja vacunadores) </a></li>
     <li><a href="/modificarvacunador">modificar vacunador </a></li>
     <li><a href="/vacunadoresporcentro">Vacunadores por Centro </a></li>
     <li><a href="/registrovacunas">Registrar vacunas recibidas </a></li>
     <li><a href="/usuarios">Usuario para Admin </a></li>
     <li><a href="/homepaciente">Home Page Paciente </a></li>
-    <li><a href="/custom/login/paciente"> CustomLoginPacienteController </a></li>
     </ul>
 </div>
 

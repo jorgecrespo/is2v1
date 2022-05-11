@@ -14,7 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class AltavacunadorController extends AbstractController
 {
     #[Route('/altavacunador', name: 'app_altavacunador')]
-    public function index(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
+    public function index(
+        Request $request, 
+        ManagerRegistry $doctrine, 
+        // UserPasswordHasherInterface $passwordHasher
+        ): Response
     {
 
         $usuario = new Usuarios();
@@ -23,10 +27,11 @@ class AltavacunadorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $em = $doctrine->getManager();
             $usuario->setEsAdmin(0);
-            $hashedPassword = $passwordHasher->hashPassword(
-                $usuario,
-                $form['pass']->getData()
-            );
+            // $hashedPassword = $passwordHasher->hashPassword(
+            //     $usuario,
+            //     $form['pass']->getData()
+            // );
+            $hashedPassword = base64_encode($form['pass']->getData());
             $usuario->setPass($hashedPassword);
             $em->persist($usuario);
             $em->flush();

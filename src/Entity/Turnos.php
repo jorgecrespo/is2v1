@@ -23,7 +23,7 @@ class Turnos
     #[ORM\JoinColumn(nullable: false)]
     private $vacuna_id;
 
-    #[ORM\OneToOne(targetEntity: vacunatorios::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Vacunatorios::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private $vacunatorio_id;
 

@@ -30,7 +30,7 @@ class Usuarios implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $fecha_baja;
 
-    #[ORM\ManyToOne(targetEntity: vacunatorios::class)]
+    #[ORM\ManyToOne(targetEntity: Vacunatorios::class)]
     private $vacunatorio_id;
 
     public function getId(): ?int
