@@ -20,6 +20,7 @@ class LoginAdminController extends AbstractController
         CustomService $cs,
     ): Response 
     {
+        $cs->logout();
         $usuario = new Usuarios();
         $form = $this->createForm(LoginVacunadorType::class, $usuario);
         $form->handleRequest($request);
@@ -43,7 +44,7 @@ class LoginAdminController extends AbstractController
                 $userRol = 'V';
             }
 
-            $mensaje = ($usuarioDB != null) ? 'usuario mail: ' . $usuarioDB->getMail() . ", Pass: " .  $usuarioDB->getPassword()  : 'usuario no encontrado';
+            $mensaje = ($usuarioDB != null) ? 'usuario mail: ' . $usuarioDB->getMail() . ", Pass: " . base64_decode( $usuarioDB->getPassword())  : 'usuario no encontrado';
             $mensajeFinal = $dataForm . $mensaje;
 
             if (

@@ -71,4 +71,20 @@ class UsuariosRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+   /**
+    * @return Usuarios[] Returns an array of Usuarios objects by vacunatorio
+    */
+   public function findByVacunatorio($value): array
+   {
+       return $this->createQueryBuilder('u')
+           ->andWhere('u.vacunatorio_id = :val')
+           ->setParameter('val', $value)
+           ->andWhere('u.es_admin = 0')
+           ->orderBy('u.id', 'ASC')
+        //    ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 }

@@ -20,6 +20,7 @@ class CustomLoginPacienteController extends AbstractController
         CustomService $cs
     ): Response {
 
+        $cs->logout();
         $paciente = new Pacientes();
         $form = $this->createForm(LoginPacienteType::class, $paciente);
         $form->handleRequest($request);
@@ -33,10 +34,10 @@ class CustomLoginPacienteController extends AbstractController
 
             $pacienteDB = new Pacientes();
 
-            $dataForm = "mailForm: $mailForm, tokenForm:  $tokenForm, passForm: $passForm";
+            $dataForm = " mailForm: $mailForm, tokenForm:  $tokenForm, passForm: $passForm";
             $pacienteDB = $em->getRepository(Pacientes::class)->findOneByEmail($mailForm);
             // dd($pacienteDB);
-            $mensaje = ($pacienteDB != null) ? 'Paciente mail: ' . $pacienteDB->getMail() . ', Token: ' . $pacienteDB->getToken() . ", Pass: " .  $pacienteDB->getPass() : 'Paciente no encontrado';
+            $mensaje = ($pacienteDB != null) ? 'Paciente mail: ' . $pacienteDB->getMail() . ', Token: ' . $pacienteDB->getToken() . ", Pass: " .  base64_decode($pacienteDB->getPass()) : 'Paciente no encontrado';
             $mensajeFinal = $dataForm . $mensaje;
 
             // dd('hola!');
@@ -45,11 +46,11 @@ class CustomLoginPacienteController extends AbstractController
                 ($tokenForm == $pacienteDB->getToken()) &&
                 ($passForm == base64_decode($pacienteDB->getPass()))
             ) {
-                $mensajeFinal = "Credenciales correctas";
+                $mensajeFinal = "Credenciales correctas ";
                 $cs->setUser($mailForm, 'P');
                 return $this->redirectToRoute(route: 'app_homepaciente');
             } else {
-                $mensajeFinal .= "Credenciales incorrectas";
+                $mensajeFinal .= "Credenciales incorrectas ";
             }
 
             $this->addFlash(type: 'success', message: $mensajeFinal);
@@ -57,7 +58,7 @@ class CustomLoginPacienteController extends AbstractController
 
 
         return $this->render('custom_login_paciente/index.html.twig', [
-            'controller_name' => 'CustomLoginPacienteController',
+            'controller_name' => 'Login Pacientes',
             'formulario'      => $form->createView()
 
         ]);
