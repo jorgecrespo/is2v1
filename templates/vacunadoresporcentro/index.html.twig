@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
-{# {% block javascripts %}
-        
-            {{ encore_entry_script_tags('funciones2') }}
-        {% endblock %} #}
+
 {% block title %}Hello VacunadoresporcentroController!
 {% endblock %}
 
@@ -43,6 +40,9 @@
 					<th>
 						operacion
 					</th>
+					<th>
+						Fecha baja
+					</th>
 				</tr>
 				{% if checks["V1"] == true %}
 					<tr>
@@ -77,6 +77,9 @@
 								<a href="#">Baja</a>
 								<a href="#">Modificar</a>
 							</td>
+							<td>
+								fecha {{ vacunador.fecha_baja }}
+							</td>
 
 						</tr>
 					{% endfor %}
@@ -94,7 +97,10 @@
 								Vacunatorio X</td>
 							<td>
 								<a href="#" onclick="bajaVacunador('{{vacunador.mail}}')">Baja</a>
-								<a href="#">Modificar</a>
+								<a href="#"onclick="modificarVacunador('{{vacunador.mail}}')">Modificar</a>
+							</td>
+														<td>
+								{{ vacunador.fecha_baja }}
 							</td>
 
 						</tr>
@@ -103,5 +109,7 @@
 
 			</table>
 		</div>
+
+		
 
 	{% endblock %}

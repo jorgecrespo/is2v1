@@ -96,6 +96,14 @@ class Usuarios implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->fecha_baja;
     }
 
+    public function getfecha_baja(): ?String
+    {
+        if (isset($this->fecha_baja))
+        return date_format($this->fecha_baja, "d-m-Y");
+        else
+        return '';
+    }
+
     public function setFechaBaja(?\DateTimeInterface $fecha_baja): self
     {
         $this->fecha_baja = $fecha_baja;

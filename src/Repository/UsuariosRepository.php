@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Usuarios;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -87,4 +88,35 @@ class UsuariosRepository extends ServiceEntityRepository
            ->getResult()
        ;
    }
+
+
+
+     /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function bajaUsuario(String $mail): void
+    {
+        $usuario = $this->findOneByMail($mail);
+        if (isset($usuario)){
+            $nowFormat = new DateTime();
+            $usuario->setFechaBaja($nowFormat);
+        }
+
+        
+         $this->_em->flush();
+     
+    }
+
+    public function findOneByMail($value): ?Usuarios
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.mail = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+
 }

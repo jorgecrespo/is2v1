@@ -17,7 +17,6 @@ class AltavacunadorController extends AbstractController
     public function index(
         Request $request, 
         ManagerRegistry $doctrine, 
-        // UserPasswordHasherInterface $passwordHasher
         ): Response
     {
 
