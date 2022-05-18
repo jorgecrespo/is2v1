@@ -38,6 +38,13 @@ class Usuarios implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getMail(): ?string
     {
         return $this->mail;
@@ -52,17 +59,17 @@ class Usuarios implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getPass(): ?string
     {
-        return $this->pass;
+        return base64_decode($this->pass);
     }
 
     public function getPassword(): ?string
     {
-        return $this->pass;
+        return base64_decode($this->pass);
     }
 
     public function setPass(string $pass): self
     {
-        $this->pass = $pass;
+        $this->pass = base64_encode($pass);
 
         return $this;
     }

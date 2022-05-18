@@ -52,20 +52,21 @@ form_vacunador.submit();
 }
 
 // ir al formulario de modificar vacunador
-function modificarVacunador(mail) { // TODO: si es administrdor:
+function modificarVacunador(id, mail) { // TODO: si es administrdor:
 formVacunadores = $('#form_vacunador')[0]
 
-console.log(mail)
+//console.log(mail)
 
-let rta = confirm('Esta seguro que desea modificar al usuario ' + mail + '?')
+let rta = confirm('¿Esta seguro que desea modificar al usuario ' + mail + '?')
 if (rta) {
-$('#form_mod').val(mail)
+$('#form_mod').val(id)
 
 form_vacunador.action = 'http://localhost:8000/modificarvacunador'
 form_vacunador.submit();
 }
 
 }
+
 
 
 

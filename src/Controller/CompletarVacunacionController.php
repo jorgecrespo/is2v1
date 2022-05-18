@@ -37,7 +37,7 @@ class CompletarVacunacionController extends AbstractController
             // $em->persist($paciente);
             $em->flush();
             $this->addFlash(type: 'success', message:'Vacunas registradas exitosamente.');
-            return $this->redirectToRoute( route : 'app_completar_vacunacion');
+            return $this->redirectToRoute( route : 'app_homepaciente');
         }
 
 

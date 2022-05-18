@@ -23,30 +23,26 @@
    <table class="table">
   <thead>
     <tr>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Gripe</th>
+      <th scope="col">Covid-19</th>
+      <th scope="col">Hepatitis</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td><a href="#">Solicitar turno </a></td>
+      <td><a href="#">Solicitar turno </a></td>
+      <td><a href="#">Solicitar turno </a></td>
     </tr>
-    <tr>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+   
   </tbody>
 </table>
 
-
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success"> 
+    {{ message }}
+    </div>
+{% endfor %}
 
 
 

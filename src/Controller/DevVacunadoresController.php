@@ -19,9 +19,9 @@ class DevVacunadoresController extends AbstractController
         $usuarios = $em->getRepository(Usuarios::class)->findAll();
 
         //  dd($usuarios);
-        foreach($usuarios as &$usuario){
-            $usuario->setPass(base64_decode($usuario->getPass()));
-        }
+        // foreach($usuarios as &$usuario){
+        //     $usuario->setPass(base64_decode($usuario->getPass()));
+        // }
 
         return $this->render('dev_vacunadores/index.html.twig', [
             'controller_name' => 'DevVacunadoresController',

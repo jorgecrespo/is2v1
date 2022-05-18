@@ -32,15 +32,15 @@ class AltapacienteController extends AbstractController
             $em = $doctrine->getManager();
             $paciente->setToken(substr($form['nombre']->getData(), 0, 5));
 
-            $hashedPassword = base64_encode($form['pass']->getData());
-            $paciente->setPass($hashedPassword);
+            $paciente->setPass($form['pass']->getData());
             $paciente->setNotificacionPendiente(false);
             $em->persist($paciente);
             $em->flush();
+            $cs->setUser($form['mail']->getData(), 'P');
     
 
-            $this->addFlash(type: 'success', message:'Paciente dado de alta exitosamente.' . $cs->getUser()['user']
-            . ' Rol: '.$cs->getUser()['user']);
+            $this->addFlash(type: 'success', message:'Paciente dado de alta exitosamente. Mail' . $cs->getUser()['user']
+            . ' Rol: '.$cs->getUser()['rol']);
             return $this->redirectToRoute( route : 'app_token');
         }
 

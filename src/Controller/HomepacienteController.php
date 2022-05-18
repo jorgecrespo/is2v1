@@ -23,7 +23,7 @@ class HomepacienteController extends AbstractController
         $mail = $cs->getUser()['user'];
         $em = $doctrine->getManager();
         $paciente = $em->getRepository(Pacientes::class)->findOneByMail($mail);
-        dd($paciente);
+        // dd($paciente);
         return $this->render('homepaciente/index.html.twig', [
             'controller_name' => 'HomepacienteController',
             'paciente' => $paciente

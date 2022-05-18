@@ -30,8 +30,7 @@ class AltavacunadorController extends AbstractController
             //     $usuario,
             //     $form['pass']->getData()
             // );
-            $hashedPassword = base64_encode($form['pass']->getData());
-            $usuario->setPass($hashedPassword);
+            $usuario->setPass($form['pass']->getData());
             $em->persist($usuario);
             $em->flush();
             $this->addFlash(type: 'success', message:'Vacunador dado de alta exitosamente.');

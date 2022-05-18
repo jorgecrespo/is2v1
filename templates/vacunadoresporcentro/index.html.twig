@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello VacunadoresporcentroController!
+{% block title %}Vacunadores por Centro de Vacunación
 {% endblock %}
 
 {% block body %}
@@ -18,8 +18,8 @@
 		}
 	</style>
 
-	<h1>Hello
-		{{ controller_name }}! </h1>
+	<h1>
+		Vacunadores por Centro de Vacunación </h1>
 
 
 	{{ form (form, {'attr': {'id': 'form_vacunador'}})}}
@@ -27,58 +27,73 @@
 		<div class="example-wrapper">
 
 			<table>
+			{% if checks["V1"] == true or checks["V2"] == true or checks["V3"] == true %}
 				<tr>
-					<th>
-						nombre
-					</th>
-					<th>
-						mail
-					</th>
 					<th>
 						Vacunatorio
 					</th>
 					<th>
-						operacion
+						Nombre
+					</th>
+					<th>
+						Mail
+					</th>
+					{# <th>
+						Vacunatorio
+					</th> #}
+					<th>
+						Operacion
 					</th>
 					<th>
 						Fecha baja
 					</th>
 				</tr>
+				{% else %}
+				<tr><td>Debe Seleccionar al menos un Vacunatorio para listar sus vacunadores asignados </td></tr>
+				{% endif %}
+
 				{% if checks["V1"] == true %}
 					<tr>
-						<td>Vacunatorio 1</td>
+						<td>Cementerio</td>
 					</tr>
 
 					{% for vacunador in vacunadores1 %}
 						<tr>
+						<td></td>
 							<td>{{ vacunador.nombre }}</td>
 							<td>{{ vacunador.mail }}</td>
-							<td>
-								Vacunatorio X</td>
-							<td>
-								<a href="#">Baja</a>
-								<a href="#">Modificar</a>
+							{# <td>
+								Vacunatorio X
+								</td>
+								#}
+							<td> 
+								<a href="#" onclick="bajaVacunador('{{vacunador.mail}}')">Baja</a>
+								<a href="#"onclick="modificarVacunador('{{vacunador.id}}','{{vacunador.mail}}')">Modificar</a>
 							</td>
-
+							<td>
+								{{ vacunador.fecha_baja }}
+							</td>
 						</tr>
 					{% endfor %}
 				{% endif %}
 				{% if checks["V2"] == true %}
 					<tr>
-						<td>Vacunatorio 2</td>
+						<td>Terminal de Omnibus</td>
 					</tr>
 					{% for vacunador in vacunadores2 %}
 						<tr>
+						<td></td>
+
 							<td>{{ vacunador.nombre }}</td>
 							<td>{{ vacunador.mail }}</td>
-							<td>
-								Vacunatorio X</td>
-							<td>
-								<a href="#">Baja</a>
-								<a href="#">Modificar</a>
+							{# <td>
+								Vacunatorio X</td>#}
+							<td> 
+								<a href="#" onclick="bajaVacunador('{{vacunador.mail}}')">Baja</a>
+								<a href="#"onclick="modificarVacunador('{{vacunador.id}}','{{vacunador.mail}}')">Modificar</a>
 							</td>
 							<td>
-								fecha {{ vacunador.fecha_baja }}
+								{{ vacunador.fecha_baja }}
 							</td>
 
 						</tr>
@@ -86,18 +101,20 @@
 				{% endif %}
 				{% if checks["V3"] == true %}
 					<tr>
-						<td>Vacunatorio 3</td>
+						<td>Municipalidad</td>
 					</tr>
 
 					{% for vacunador in vacunadores3 %}
 						<tr>
+						<td></td>
+
 							<td>{{ vacunador.nombre }}</td>
 							<td>{{ vacunador.mail }}</td>
-							<td>
-								Vacunatorio X</td>
-							<td>
+							{# <td>
+								Vacunatorio X</td>#}
+							<td> 
 								<a href="#" onclick="bajaVacunador('{{vacunador.mail}}')">Baja</a>
-								<a href="#"onclick="modificarVacunador('{{vacunador.mail}}')">Modificar</a>
+								<a href="#"onclick="modificarVacunador('{{vacunador.id}}','{{vacunador.mail}}')">Modificar</a>
 							</td>
 														<td>
 								{{ vacunador.fecha_baja }}
@@ -108,6 +125,13 @@
 				{% endif %}
 
 			</table>
+
+
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success"> 
+    {{ message }}
+    </div>
+{% endfor %}
 		</div>
 
 		

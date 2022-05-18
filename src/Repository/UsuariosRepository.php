@@ -118,5 +118,15 @@ class UsuariosRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findOneById($value): ?Usuarios
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 
 }

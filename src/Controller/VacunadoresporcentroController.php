@@ -54,15 +54,15 @@ class VacunadoresporcentroController extends AbstractController
 
         $form = $this->createFormBuilder($defaultData)
             ->add('V1', CheckboxType::class, [
-                'label'    => 'Vacunatorio 1',
+                'label'    => 'Cementerio',
                 'required' => false,
             ])
             ->add('V2', CheckboxType::class, [
-                'label'    => 'Vacunatorio 2',
+                'label'    => 'Terminal de O.',
                 'required' => false,
             ])
             ->add('V3', CheckboxType::class, [
-                'label'    => 'Vacunatorio 3',
+                'label'    => 'Municipalidad',
                 'required' => false,
             ])
             ->add('baja', HiddenType::class, [
@@ -96,7 +96,6 @@ class VacunadoresporcentroController extends AbstractController
 
         // dd($data);
         return $this->render('vacunadoresporcentro/index.html.twig', [
-            'controller_name' => 'Vacunadores por centroController',
             'vacunadores1' => $data["vacunadores"]["vacunadores1"],
             'vacunadores2' => $data["vacunadores"]["vacunadores2"],
             'vacunadores3' => $data["vacunadores"]["vacunadores3"],

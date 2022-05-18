@@ -20,12 +20,15 @@ class VacunasType extends AbstractType
                 'attr' => ['id'=>'vacuna_gripe_fecha'],
                 'placeholder' => '--',
                 'required' => false,
+                'years' => range(1900,2022),
+
                 ])
             ->add('vacuna_covid1_fecha', type: DateType::class, options: [
                 'label' => 'Fecha de vacunación contra el Covid19 Dosis 1',
                 'attr' => ['id'=>'vacuna_covid1_fecha'],
                 'placeholder' => '--',
                 'required' => false,
+                'years' => range(1900,2022),
                 
                 ])
             ->add('vacuna_covid2_fecha', type: DateType::class, options: [
@@ -33,6 +36,7 @@ class VacunasType extends AbstractType
                 'attr' => ['id'=>'vacuna_covid2_fecha'],
                 'placeholder' => '--',
                 'required' => false,
+                'years' => range(1900,2022),
 
                 ])
             ->add('vacuna_hepatitis_fecha', type: DateType::class, options: [
@@ -40,6 +44,7 @@ class VacunasType extends AbstractType
                 'attr' => ['id'=>'vacuna_hepatitis_fecha'],
                 'placeholder' => '--',
                 'required' => false,
+                'years' => range(1900,2022),
 
                 ])
             ->add('registrar', type: SubmitType::class, options: [
