@@ -91,4 +91,21 @@ class PacientesRepository extends ServiceEntityRepository
         return null;
    }
 
+
+      /**
+    * @return Pacientes[] Returns an array of Pacientes objects
+    */
+   public function findAll(): array
+   {
+       return $this->createQueryBuilder('p')
+        //    ->andWhere('p.exampleField = :val')
+        //    ->setParameter('val', $value)
+           ->orderBy('p.id', 'ASC')
+        //    ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+
 }

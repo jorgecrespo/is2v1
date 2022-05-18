@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pacientes;
 use App\Form\PacienteType;
+use App\Service\CustomService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,8 +19,8 @@ class AltapacienteController extends AbstractController
     public function index(
     Request $request, 
     ManagerRegistry $doctrine, 
-    // UserPasswordHasherInterface $passwordHasher,
-    RequestStack $requestStack,
+    CustomService $cs,
+
     ): Response
     {
 
@@ -27,25 +28,20 @@ class AltapacienteController extends AbstractController
         $form = $this->createForm(PacienteType::class, $paciente);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+
             $em = $doctrine->getManager();
-            $paciente->setToken($form['nombre']->getData());
-            // $hashedPassword = $passwordHasher->hashPassword(
-            //     $paciente,
-            //     $form['pass']->getData()
-            // );
+            $paciente->setToken(substr($form['nombre']->getData(), 0, 5));
+
             $hashedPassword = base64_encode($form['pass']->getData());
             $paciente->setPass($hashedPassword);
             $paciente->setNotificacionPendiente(false);
             $em->persist($paciente);
             $em->flush();
-            // $_SESSION["id"] = $form['mail']->getData();
-            // $_SESSION["rol"] = "P";
-            $session = $requestStack->getSession();
-            $session->set('user',$form['mail']->getData() );
-            $session->set('rol','P');
+    
 
-            $this->addFlash(type: 'success', message:'Paciente dado de alta exitosamente.' . $session->get('user') . $session->get('rol'));
-            return $this->redirectToRoute( route : 'app_homepage');
+            $this->addFlash(type: 'success', message:'Paciente dado de alta exitosamente.' . $cs->getUser()['user']
+            . ' Rol: '.$cs->getUser()['user']);
+            return $this->redirectToRoute( route : 'app_token');
         }
 
 

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DevVacunadoresController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}</h1>
+
+ <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">mail</th>
+      <th scope="col">Pass (desencriptada)</th>
+      <th scope="col">Nombre</th>
+    </tr>
+  </thead>
+  <tbody>
+        {% for usuario in usuarios %}
+    <tr>
+      <th >
+             {{ usuario.id }}
+      </th>
+      <td>
+        {% if usuario.getEsAdmin() == true %}
+    <b>
+{% endif %}
+       {{ usuario.mail }}
+            {% if usuario.getEsAdmin() == true %}
+    </b>
+{% endif %}
+      </td>
+      <td>
+       {# {{ usuario.pass }} <br> #}
+       {{ usuario.pass }}
+      </td>
+    
+      <td>
+       {{ usuario.nombre }}
+      </td>
+    </tr>
+    {% endfor %}
+
+
+  </tbody>
+</table>
+
+
+</div>
+{% endblock %}

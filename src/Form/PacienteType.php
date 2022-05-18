@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Pacientes;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,13 +22,16 @@ class PacienteType extends AbstractType
             ->add('nombre')
             ->add('apellido')
             ->add('de_riesgo')
-            ->add('fecha_nac')
-            ->add('vacuna_gripe_fecha')
-            ->add('vacuna_covid1_fecha')
-            ->add('vacuna_covid2_fecha')
-            ->add('vacuna_hepatitis_fecha')
+            ->add('fecha_nac', type: DateType::class)
+            // ->add('vacuna_gripe_fecha', type: DateType::class)->setAttribute('disabled', 'disabled')
+            // ->add('vacuna_covid1_fecha', type: DateType::class)
+            // ->add('vacuna_covid2_fecha', type: DateType::class)
+            // ->add('vacuna_hepatitis_fecha', type: DateType::class)
             // ->add('notificacion_pendiente')
-            ->add('registrar', type: SubmitType::class)
+            ->add('terminar_registro_3333', type: SubmitType::class, options: [
+                'label' => 'Finalizar Registro',
+                'attr' => ['id'=>'finregistro']
+                ])
         ;
     }
 

@@ -6,27 +6,27 @@ use App\Entity\Pacientes;
 use App\Service\CustomService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomepacienteController extends AbstractController
+class TokenController extends AbstractController
 {
-    #[Route('/homepaciente', name: 'app_homepaciente')]
+    #[Route('/token', name: 'app_token')]
     public function index(
         CustomService $cs,
         ManagerRegistry $doctrine,
-        Request $request, 
     ): Response
     {
 
-        $mail = $cs->getUser()['user'];
         $em = $doctrine->getManager();
+        $mail = $cs->getUser()['user'];
         $paciente = $em->getRepository(Pacientes::class)->findOneByMail($mail);
-        dd($paciente);
-        return $this->render('homepaciente/index.html.twig', [
-            'controller_name' => 'HomepacienteController',
-            'paciente' => $paciente
+        $token = $paciente->getToken();
+
+
+        return $this->render('token/index.html.twig', [
+            'controller_name' => 'TokenController',
+            'token'           => $token,
         ]);
     }
 }
