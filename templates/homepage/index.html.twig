@@ -1,42 +1,114 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomepageController!{% endblock %}
+{% block title %}Hello HomepageController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-{# {{ component('usuario') }} #}
+	{# {{ component('usuario') }} #}
+	<div class="container">
 
-<div class="example-wrapper">
-    <h1>Paginas en Desarrollo </h1>
-        {{ data }}
-    <br>
-    <ul>
-    <li><a href="/altapaciente">Alta Paciente </a></li>
-    <li><a href="/altavacunador">Alta Vacunador </a></li>
-    <li> - </li>
-    <li><a href="/custom/login/paciente"> Login Paciente </a></li>
-    <li><a href="/login/admin">Login Vacunador y Admin </a></li>
-    <li> - </li>
-    <li><a href="/vacunadoresporcentro">Vacunadores por Centro </a></li>
-    <li><a href="/modificarvacunador">modificar vacunador </a></li>
-    <li><a href="/registrovacunas">Registrar vacunas recibidas </a></li>
-    <li><a href="/homepaciente">Home Page Paciente </a></li>
-    <li> - </li>
-    <li><a href="/dev/pacientes">DEV: Pacientes </a></li>
-    <li><a href="/dev/vacunadores">DEV: Vacunadores </a></li>
+		<div class="example-wrapper">
+			<h1>Paginas en Desarrollo
+			</h1>
+			{{ data }}
+			<br>
+			<ul>
+				<li>
+					<a href="/altapaciente">Alta Paciente
+					</a>
+				</li>
+				<li>
+					<a href="/altavacunador">Alta Vacunador
+					</a>
+				</li>
+				<li>
+					-
+				</li>
+				<li>
+					<a href="/custom/login/paciente">
+						Login Paciente
+					</a>
+				</li>
+				<li>
+					<a href="/login/admin">Login Vacunador y Admin
+					</a>
+				</li>
+				<li>
+					-
+				</li>
+				<li>
+					<a href="/homeadmin">Home Admin
+					</a>
+				</li>
+				<li>
+					<a href="/vacunadoresporcentro">Vacunadores por Centro
+					</a>
+				</li>
+				<li>
+					<a href="/modificarvacunador">modificar vacunador
+					</a>
+				</li>
+				<li>
+					-
+				</li>
+				<li>
+					<a href="/homepaciente">Home Page Paciente
+					</a>
+				</li>
+				<li>
+					<a href="/token">Token
+					</a>
+				</li>
+				<li>
+					-
+				</li>
+				<li>
+					<a href="/home/vacunador">Home Vacunador
+					</a>
+				</li>
+				<li>
+					-
+				</li>
+				<li>
+					<a href="/dev/pacientes">DEV: Pacientes
+					</a>
+				</li>
+				<li>
+					<a href="/dev/vacunadores">DEV: Vacunadores
+					</a>
+				</li>
+				<li>
+					<a href="/enconstruccion">Sitio En Construccion
+					</a>
+				</li>
 
-    </ul>
-</div>
+			</ul>
+		</div>
+	</div>
 
-{% for message in app.flashes('success') %}
-    <div class="alert alert-success"> 
-    {{ message }}
-    </div>
-{% endfor %}
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('error') %}
+		<div class="alert alert-danger">
+			{{ message }}
+		</div>
+	{% endfor %}
 
 
 {% endblock %}

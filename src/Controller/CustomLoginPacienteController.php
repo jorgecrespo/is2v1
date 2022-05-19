@@ -20,7 +20,12 @@ class CustomLoginPacienteController extends AbstractController
         CustomService $cs
     ): Response {
 
-        $cs->logout();
+        if (!$cs->validarUrl($request->getPathinfo())){
+            $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
+            return $this->redirect($cs->getHomePageByUser());
+        }
+
+        
         $paciente = new Pacientes();
         $form = $this->createForm(LoginPacienteType::class, $paciente);
         $form->handleRequest($request);
@@ -58,7 +63,6 @@ class CustomLoginPacienteController extends AbstractController
 
 
         return $this->render('custom_login_paciente/index.html.twig', [
-            'controller_name' => 'Login Pacientes',
             'formulario'      => $form->createView()
 
         ]);

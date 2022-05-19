@@ -24,13 +24,20 @@ class AltapacienteController extends AbstractController
     ): Response
     {
 
+        if (!$cs->validarUrl($request->getPathinfo())){
+            $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
+            return $this->redirect($cs->getHomePageByUser());
+        }
+
         $paciente = new Pacientes();
         $form = $this->createForm(PacienteType::class, $paciente);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
 
             $em = $doctrine->getManager();
-            $paciente->setToken(substr($form['nombre']->getData(), 0, 5));
+            $token = $cs->generarToken($form['nombre']->getData());
+            // dd($form['nombre']->getData(), $token);
+            $paciente->setToken($token);
 
             $paciente->setPass($form['pass']->getData());
             $paciente->setNotificacionPendiente(false);
@@ -46,7 +53,6 @@ class AltapacienteController extends AbstractController
 
 
         return $this->render('altapaciente/index.html.twig', [
-            'controller_name' => 'AltapacienteController',
             'formulario'      => $form->createView()
 
         ]);

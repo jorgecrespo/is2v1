@@ -20,6 +20,12 @@ class HomepacienteController extends AbstractController
     ): Response
     {
 
+        if (!$cs->validarUrl($request->getPathinfo())){
+            $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
+            return $this->redirect($cs->getHomePageByUser());
+        }
+        
+
         $mail = $cs->getUser()['user'];
         $em = $doctrine->getManager();
         $paciente = $em->getRepository(Pacientes::class)->findOneByMail($mail);

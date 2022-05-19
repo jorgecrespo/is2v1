@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\VacunadorType;
 use App\Entity\Usuarios;
+use App\Service\CustomService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,9 +17,15 @@ class AltavacunadorController extends AbstractController
     #[Route('/altavacunador', name: 'app_altavacunador')]
     public function index(
         Request $request, 
+        CustomService $cs,
         ManagerRegistry $doctrine, 
         ): Response
     {
+
+        if (!$cs->validarUrl($request->getPathinfo())){
+            $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
+            return $this->redirect($cs->getHomePageByUser());
+        }
 
         $usuario = new Usuarios();
         $form = $this->createForm(VacunadorType::class, $usuario);
@@ -40,7 +47,6 @@ class AltavacunadorController extends AbstractController
 
 
         return $this->render('altavacunador/index.html.twig', [
-            'controller_name' => 'AltavacunadorController',
             'formulario'      => $form->createView()
         ]);
     }

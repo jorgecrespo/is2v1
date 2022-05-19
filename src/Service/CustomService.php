@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Pacientes;
 use App\Entity\Usuarios;
+use phpDocumentor\Reflection\Types\Boolean;
 use PhpParser\Node\Expr\Cast\String_;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -12,7 +13,57 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 
 class CustomService
 {
+
+    // private $devMode = true;
+    private $devMode = false;
+
+
+
     private $session;
+
+    private $paginasPaciente = [
+        '/homepaciente',
+        '/enconstruccion',
+        '/completar/vacunacion',
+        '/token'
+    ];
+
+    private $paginasVacunador = [
+        '/enconstruccion',
+        '/home/vacunador',
+    ];
+
+
+    private $paginasAdmin = [
+        // '/altavacunador',
+        // '/altapaciente',
+        '/vacunadoresporcentro',
+        '/modificarvacunador',
+        '/enconstruccion',
+        '/homeadmin',
+        '/',
+        '/dev/pacientes', // Quitar en prod
+        '/dev/vacunadores',// Quitar en prod
+    ];
+
+    private $paginasPublicas = [
+        '/enconstruccion',
+        '/altapaciente',
+        '/altavacunador',
+        '/custom/login/paciente',
+        '/login/admin',
+        '/dev/pacientes', // Quitar en prod
+        '/dev/vacunadores',// Quitar en prod
+
+    ];
+
+    private $paginasHome = [
+        'P' => '/homepaciente',
+        'V' => '/home/vacunador',
+        'A' => '/homeadmin',
+        'x' => '/custom/login/paciente'
+    ];
+
 
     public function __construct(RequestStack $requestStack){
 
@@ -51,6 +102,7 @@ class CustomService
         $this->deleteUser();
         return new RedirectResponse('/');
     }
+    
 
     public function hashPass(String $plainPass, String $tipoUsuario): string
     {
@@ -74,6 +126,88 @@ class CustomService
          
         return $hashedPassword;
     }
+
+
+    public function isDevMode(){
+        return $this->devMode;
+    }
+
+    public function validarUrl($url):bool
+    {
+        if (!$this->isDevMode()){
+            switch ($this->getUser()['rol']){
+                case 'P':
+                    return in_array($url, $this->paginasPaciente);
+                    break;
+                case 'V':
+                    return in_array($url, $this->paginasVacunador);
+                    break;
+                case 'A':
+                    return in_array($url, $this->paginasAdmin);
+                    break;
+                case 'x':
+                    return in_array($url, $this->paginasPublicas);
+                    break;
+
+            }
+        } else{
+            return true; //si estoy en devMode
+        }
+
+
+        // return ($this->getUser()['rol'] == 'P' && !$this->isDevMode()) ;
+     
+        // retornar a pagina principal segun usuario
+        // home de usuario o alguna pagina del vacunador
+        // preguntar devMode
+    }
+
+    public function getHomePageByUser(): string
+    {
+        return $this->paginasHome[$this->getUser()['rol']];
+    }
+
+   
+
+    public function generarToken($userName):string {
+
+        if (strlen($userName)< 5){
+            $userName  = str_pad($userName, 5);
+        }
+
+        $str5 = str_split(substr(strtolower($userName), 0,5));
+
+        $token= '';
+        foreach ($str5 as $letra){
+            switch ($letra){
+                case 'a':
+                    $letra = '4';
+                    break;
+                case 'e':
+                    $letra = '3';
+                    break;
+                case 'i':
+                    $letra = '1';
+                    break;
+                case 'o':
+                    $letra = '0';
+                    break;
+                case 'u':
+                    $letra = '9';
+                    break;
+                case ' ':
+                    $letra = '8';
+                    break;
+            }
+            $token = $letra . $token;
+
+        }
+        $token = strtoupper($token);
+        return $token;
+    }
+
+
+  
 
 
 

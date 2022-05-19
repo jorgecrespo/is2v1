@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeadminController!
+{% block title %}Hello EnconstruccionController!
 {% endblock %}
 
 {% block body %}
@@ -16,20 +16,15 @@
 			padding: 2px 6px;
 		}
 	</style>
+	<div
+		class="container center">
 
-	<div class="container">
+		{# <div class="example-wrapper"> #}
+		<h1>Sitio en construcción</h1>
+		<img
+		src="{{ asset('build/img/enconstruccion.jpeg') }}">
 
-		<div class="example-wrapper">
-			<h1>Home Admin</h1>
-
-			<p>
-				Pagina en construccion
-			</p>
-
-			<ul>
-				<li><a href="/vacunadoresporcentro">Administrar Vacunadores por Centro</a></li>
-			</ul>
-		</div>
+		{# </div> #}
 
 		{% for message in app.flashes('success') %}
 			<div class="alert alert-success">
@@ -41,6 +36,7 @@
 				{{ message }}
 			</div>
 		{% endfor %}
+
 
 	</div>
 {% endblock %}

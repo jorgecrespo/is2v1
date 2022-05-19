@@ -1,31 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TokenController!{% endblock %}
+{% block title %}Hello TokenController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+	<div class="container">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! </h1>
+		<div class="example-wrapper">
+			<h1>Token generado
+			</h1>
 
-    <p>Token:{{ token }}</p>
-    <p>Necesitará ingresar este código ademas de su contraseña para iniciar sesion</p>
+			<p>Token:<b>{{ token }}</b>
+			</p>
+			<p>Necesitará ingresar este código además de su contraseña para iniciar sesión</p>
 
-    <br>
-    <br>
+			<br>
+			<br>
 
-    <a href="completar/vacunacion" >Registrar Historial de Vacunacion</a>
-    <br>
-    <a href="/homepaciente">Pagina Principal</a>
+			<a href="completar/vacunacion">Registrar Historial de Vacunacion</a>
+			<br>
+			<a href="/homepaciente">Pagina Principal</a>
 
 
-{% for message in app.flashes('success') %}
-    <div class="alert alert-success"> 
-    {{ message }}
-    </div>
-{% endfor %}
-</div>
+		</div>
+
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('error') %}
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
+	</div>
 {% endblock %}

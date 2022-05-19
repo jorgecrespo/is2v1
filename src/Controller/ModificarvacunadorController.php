@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Usuarios;
 use App\Form\ModvacunadorType;
+use App\Service\CustomService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -18,13 +19,22 @@ class ModificarvacunadorController extends AbstractController
     public function index(
         Request $request,
         ManagerRegistry $doctrine,
+        CustomService $cs,
     ): Response {
+
+
+        if (!$cs->validarUrl($request->getPathinfo())){
+            $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
+            return $this->redirect($cs->getHomePageByUser());
+        }
+
+
         $em = $doctrine->getManager();
         // dd( $request);
 
         $id = isset($request->request->all()["form"]["mod"]) ? $request->request->all()["form"]["mod"] : null;
         if (!$id) {
-            //TODO: salir de aca si no es admin o si no hay usuario a modificar
+            
         }
 
         $usuarioDB = $em->getRepository(Usuarios::class)->findOneById($id);
@@ -48,7 +58,6 @@ class ModificarvacunadorController extends AbstractController
         }
 
         return $this->render('modificarvacunador/index.html.twig', [
-            'controller_name' => 'ModificarvacunadorController',
             'formulario'      => $form->createView(),
         ]);
     }

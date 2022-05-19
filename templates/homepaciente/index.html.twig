@@ -1,53 +1,80 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomepacienteController!{% endblock %}
+{% block title %}Hello HomepacienteController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+	<div class="container">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! </h1>
-    <br>
-    <p>Información personal</p>
-    <p>Nombre: {{ paciente.nombre }}</p>
-    <p>Email: {{ paciente.mail }}</p>
-    <br>
-    <p><a href="/completar/vacunacion">Registrar vacunación</a></p>
-    
-    <br>
-    
-   
-   <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Gripe</th>
-      <th scope="col">Covid-19</th>
-      <th scope="col">Hepatitis</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="#">Solicitar turno </a></td>
-      <td><a href="#">Solicitar turno </a></td>
-      <td><a href="#">Solicitar turno </a></td>
-    </tr>
-   
-  </tbody>
-</table>
+		<div class="example-wrapper">
+			<h1>Hello
+				{{ controller_name }}!
+			</h1>
+			<br>
+			<p>Información personal</p>
+			<p>Nombre:
+				{{ paciente.nombre }}</p>
+			<p>Email:
+				{{ paciente.mail }}</p>
+			<br>
+			<p>
+				<a href="/completar/vacunacion">Registrar vacunación</a>
+			</p>
 
-{% for message in app.flashes('success') %}
-    <div class="alert alert-success"> 
-    {{ message }}
-    </div>
-{% endfor %}
+			<br>
 
 
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Gripe</th>
+						<th scope="col">Covid-19</th>
+						<th scope="col">Hepatitis</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<a href="/enconstruccion">Solicitar turno
+							</a>
+						</td>
+						<td>
+							<a href="/enconstruccion">Solicitar turno
+							</a>
+						</td>
+						<td>
+							<a href="/enconstruccion">Solicitar turno
+							</a>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success">
+					{{ message }}
+				</div>
+			{% endfor %}
+			{% for message in app.flashes('error') %}
+				<div class="alert alert-danger">
+					{{ message }}
+				</div>
+			{% endfor %}
 
 
-
-
-</div>
+		</div>
+	</div>
 {% endblock %}

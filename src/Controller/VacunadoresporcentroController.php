@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Usuarios;
+use App\Service\CustomService;
 use Doctrine\Persistence\ManagerRegistry;
 use PhpParser\Node\Stmt\Else_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +17,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class VacunadoresporcentroController extends AbstractController
 {
     #[Route('/vacunadoresporcentro', name: 'app_vacunadoresporcentro')]
-    public function index(ManagerRegistry $doctrine, Request $request): Response
+    public function index(
+        ManagerRegistry $doctrine, 
+        Request $request,
+        CustomService $cs,
+
+        ): Response
     {
+        // dd($request->getPathinfo(),!$cs->validarUrl($request->getPathinfo()), $cs->getHomePageByUser() );
+        if (!$cs->validarUrl($request->getPathinfo())){
+            $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
+            return $this->redirect($cs->getHomePageByUser());
+        }
+
+
 
         $em = $doctrine->getManager();
 
-
-        
         $defaultData = ['V1' => true, 'V2' => true, 'V3' => true];
 
         //  dd($request->request->get('form'));
@@ -56,14 +67,23 @@ class VacunadoresporcentroController extends AbstractController
             ->add('V1', CheckboxType::class, [
                 'label'    => 'Cementerio',
                 'required' => false,
+                'attr' => [
+                    'class' => 'form-check',
+                ],
             ])
             ->add('V2', CheckboxType::class, [
                 'label'    => 'Terminal de O.',
                 'required' => false,
+                'attr' => [
+                    'class' => 'form-check',
+                ],
             ])
             ->add('V3', CheckboxType::class, [
                 'label'    => 'Municipalidad',
                 'required' => false,
+                'attr' => [
+                    'class' => 'form-check',
+                ],
             ])
             ->add('baja', HiddenType::class, [
                 'required' => false,
@@ -71,7 +91,11 @@ class VacunadoresporcentroController extends AbstractController
             ->add('mod', HiddenType::class, [
                 'required' => false,
             ])
-            ->add('Actualizar', SubmitType::class)
+            ->add('Actualizar', SubmitType::class, options: [
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ],
+            ])
             ->getForm();
 
         $form->handleRequest($request);

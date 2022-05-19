@@ -25,7 +25,10 @@ class VacunasType extends AbstractType
                 ])
             ->add('vacuna_covid1_fecha', type: DateType::class, options: [
                 'label' => 'Fecha de vacunación contra el Covid19 Dosis 1',
-                'attr' => ['id'=>'vacuna_covid1_fecha'],
+                'attr' => [
+                    'id'=>'vacuna_covid1_fecha',
+                    'class' => 'form-group',
+                ],
                 'placeholder' => '--',
                 'required' => false,
                 'years' => range(1900,2022),
@@ -33,7 +36,10 @@ class VacunasType extends AbstractType
                 ])
             ->add('vacuna_covid2_fecha', type: DateType::class, options: [
                 'label' => 'Fecha de vacunación contra el Covid19 Dosis 2',
-                'attr' => ['id'=>'vacuna_covid2_fecha'],
+                'attr' => [
+                    'id'=>'vacuna_covid2_fecha',
+                    'class' => 'form-group',
+                ],
                 'placeholder' => '--',
                 'required' => false,
                 'years' => range(1900,2022),
@@ -41,7 +47,10 @@ class VacunasType extends AbstractType
                 ])
             ->add('vacuna_hepatitis_fecha', type: DateType::class, options: [
                 'label' => 'Fecha de vacunación contra la hepatitis',
-                'attr' => ['id'=>'vacuna_hepatitis_fecha'],
+                'attr' => [
+                    'id'=>'vacuna_hepatitis_fecha',
+                    'class' => 'form-group',
+                ],
                 'placeholder' => '--',
                 'required' => false,
                 'years' => range(1900,2022),
@@ -49,7 +58,12 @@ class VacunasType extends AbstractType
                 ])
             ->add('registrar', type: SubmitType::class, options: [
                 'label' => 'Registrar Vacunas',
-            ])
+                'attr' => [
+                    'id'=>'finregistro',
+                    'class' => 'btn btn-primary'
+                    ]
+                ],
+            )
         ;
     }
 

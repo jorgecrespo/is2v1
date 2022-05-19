@@ -21,6 +21,11 @@ class CompletarVacunacionController extends AbstractController
 
     ): Response
     {
+
+        if (!$cs->validarUrl($request->getPathinfo())){
+            $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
+            return $this->redirect($cs->getHomePageByUser());
+        }
         
         $mail = $cs->getUser()['user'];
         
@@ -43,7 +48,6 @@ class CompletarVacunacionController extends AbstractController
 
 
         return $this->render('completar_vacunacion/index.html.twig', [
-            'controller_name' => 'CompletarVacunacionController',
             'formulario'      => $form->createView()
         ]);
     }

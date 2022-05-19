@@ -15,10 +15,29 @@ class LoginPacienteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('mail', type: EmailType::class)->setAttribute('name', '_username')
-            ->add('pass', type: PasswordType::class)
-            ->add('token')
-            ->add('login', type: SubmitType::class)
+            // ->add('mail', type: EmailType::class)->setAttribute('name', '_username')
+            ->add('mail', type: EmailType::class, options: [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('pass', type: PasswordType::class, options: [
+                'label' => 'Contraseña',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('token', options: [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('login', type: SubmitType::class,  options: [
+                'label' => 'Iniciar Sesión',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                    ]
+                ])
             // ->setAction('/')
 
         ;

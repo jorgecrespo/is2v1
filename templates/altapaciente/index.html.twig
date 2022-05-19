@@ -1,17 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AltapacienteController!{% endblock %}
+{% block title %}Registro de Paciente
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! </h1>
+		#paciente div {
+			/* background-color: yellow; */
+			padding: 3px
+		}
 
-   
-   {{ form (formulario)}}
+		#paciente_fecha_nac {}
+		#paciente_fecha_nac select {
+			margin: 3px
+		}
+
+		#paciente_fecha_nac {
+			display: inline;
+		}
+	</style>
+	<script>
+
+		$('#paciente_fecha_nac_month').addClass('form-control');
+	</script>
 </div>
-{% endblock %}
+<div class="container">
+
+	<div class="example-wrapper">
+		<h1>Registro de Paciente
+		</h1>
+
+
+		{{ form (formulario, {
+    attr: {
+        class: 'form-group'
+    }
+})}}
+		</div>
+
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('error') %}
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+
+	</div>
+</div>{% endblock %}

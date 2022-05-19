@@ -11,6 +11,7 @@
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
+
 		{% endblock %}
 
 		{% block javascript_extra %}
@@ -31,7 +32,49 @@
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 			<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 			{# <script src={{encore_entry_script_tags('funciones3')}} ></script> #}
+			
+			<style>
+
+body {
+	background-color: rgb(227, 247, 210);
+}
+			</style>
 			<script>
+
+//Clases
+
+//fecha de nacimiento de paciente
+$('#paciente_fecha_nac_day').addClass('form-control')
+$('#paciente_fecha_nac_month').addClass('form-control')
+$('#paciente_fecha_nac_year').addClass('form-control')
+
+
+// formulario de modificacion de vacunas
+$('#vacunas_vacuna_gripe_fecha_day').addClass('form-control')
+$('#vacunas_vacuna_gripe_fecha_month').addClass('form-control')
+$('#vacunas_vacuna_gripe_fecha_year').addClass('form-control')
+
+$('#vacunas_vacuna_covid1_fecha_day').addClass('form-control')
+$('#vacunas_vacuna_covid1_fecha_month').addClass('form-control')
+$('#vacunas_vacuna_covid1_fecha_year').addClass('form-control')
+
+$('#vacunas_vacuna_covid2_fecha_day').addClass('form-control')
+$('#vacunas_vacuna_covid2_fecha_month').addClass('form-control')
+$('#vacunas_vacuna_covid2_fecha_year').addClass('form-control')
+
+$('#vacunas_vacuna_hepatitis_fecha_day').addClass('form-control')
+$('#vacunas_vacuna_hepatitis_fecha_month').addClass('form-control')
+$('#vacunas_vacuna_hepatitis_fecha_year').addClass('form-control')
+
+
+
+
+
+
+
+
+
+
 
 
 				console.log('Esto esta en base.html.twig')
@@ -46,13 +89,14 @@ let rta = confirm('Esta seguro que desea dar de baja al usuario ' + mail + '?')
 console.log(formVacunadores)
 
 $('#form_baja').val(mail)
-if (rta) { // form_vacunador.action='http://localhost:8000/'
+if (rta) { 
+form_vacunador.action='http://localhost:8000/vacunadoresporcentro'
 form_vacunador.submit();
 }
 }
 
 // ir al formulario de modificar vacunador
-function modificarVacunador(id, mail) { // TODO: si es administrdor:
+function modificarVacunador(id, mail) { 
 formVacunadores = $('#form_vacunador')[0]
 
 //console.log(mail)

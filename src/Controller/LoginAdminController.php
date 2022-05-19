@@ -20,7 +20,12 @@ class LoginAdminController extends AbstractController
         CustomService $cs,
     ): Response 
     {
-        $cs->logout();
+        if (!$cs->validarUrl($request->getPathinfo())){
+            $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
+            return $this->redirect($cs->getHomePageByUser());
+        }
+
+
         $usuario = new Usuarios();
         $form = $this->createForm(LoginVacunadorType::class, $usuario);
         $form->handleRequest($request);
@@ -50,7 +55,7 @@ class LoginAdminController extends AbstractController
             if (
                 ($mailForm == $usuarioDB->getMail()) &&
                 // ( 
-                ($passForm == base64_decode($usuarioDB->getPassword()))
+                ($passForm == $usuarioDB->getPassword())
                 // || ($hashedPassword == $usuarioDB->getPass()) )
             ) {
                 $mensajeFinal = "Credenciales correctas";

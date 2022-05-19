@@ -18,19 +18,42 @@ class ModvacunadorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id', type: HiddenType::class,options:array(
-    
-            ))
-            ->add('mail', type: EmailType::class)
-            ->add('pass')
-            ->add('nombre')
+            ->add('id', type: HiddenType::class, options: [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('mail', type: EmailType::class, options: [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('pass', options: [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('nombre', options: [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
             // ->add('fecha_baja')
             ->add('vacunatorio_id', EntityType::class, [
                 'class' => Vacunatorios::class,
                 'choice_value' => 'id',
                 'choice_label' => 'nombre',
+                'label' => 'Vacunatorio',
+                'attr' => [
+                    'class' => 'form-control'
+                    ]
             ])
-            ->add('registrar', type: SubmitType::class)
+            ->add('registrar', type: SubmitType::class, options: [
+                'label' => 'Guardar',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                    ]
+                ])
         ;
     }
 

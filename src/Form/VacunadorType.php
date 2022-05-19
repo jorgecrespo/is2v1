@@ -18,17 +18,34 @@ class VacunadorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('mail', type: EmailType::class)
-            ->add('pass', type: PasswordType::class)
+            ->add('mail', type: EmailType::class, options: [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('pass', type: PasswordType::class, options: [
+                'label' => 'Contraseña',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
             // ->add('es_admin')
-            ->add('nombre')
+            ->add('nombre', options: [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
             // ->add('fecha_baja')
             ->add('vacunatorio_id', EntityType::class, [
                 'class' => Vacunatorios::class,
+                'label' => 'Vacunatorio',
                 'choice_value' => 'id',
                 'choice_label' => 'nombre',
+                'attr' => ['class' => 'form-control'],
             ])
-            ->add('registrar', type: SubmitType::class)
+            ->add('registrar', type: SubmitType::class, options: [
+                'attr' => ['class' => 'btn btn-primary'],
+            ])
         ;
     }
 

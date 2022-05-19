@@ -3,30 +3,30 @@
 namespace App\Controller;
 
 use App\Service\CustomService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeVacunadorController extends AbstractController
+class LogoutController extends AbstractController
 {
-    #[Route('/home/vacunador', name: 'app_home_vacunador')]
+    #[Route('/logout', name: 'app_logout')]
     public function index(
+        Request $request,
         CustomService $cs,
-        Request $request, 
     ): Response
     {
 
+        $cs->logout();
+
         if (!$cs->validarUrl($request->getPathinfo())){
-            $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
             return $this->redirect($cs->getHomePageByUser());
         }
 
 
-
-
-        return $this->render('home_vacunador/index.html.twig', [
-            'controller_name' => 'HomeVacunadorController',
+        return $this->render('logout/index.html.twig', [
+            'controller_name' => 'LogoutController',
         ]);
     }
 }
