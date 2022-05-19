@@ -35,7 +35,7 @@ class CustomService
 
 
     private $paginasAdmin = [
-        // '/altavacunador',
+        '/altavacunador',
         // '/altapaciente',
         '/vacunadoresporcentro',
         '/modificarvacunador',
@@ -49,7 +49,7 @@ class CustomService
     private $paginasPublicas = [
         '/enconstruccion',
         '/altapaciente',
-        '/altavacunador',
+        // '/altavacunador',
         '/custom/login/paciente',
         '/login/admin',
         '/dev/pacientes', // Quitar en prod

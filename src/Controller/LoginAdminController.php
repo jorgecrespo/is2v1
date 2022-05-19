@@ -40,6 +40,12 @@ class LoginAdminController extends AbstractController
 
             $dataForm = "mailForm: $mailForm, passForm: $passForm  ";
             $usuarioDB = $em->getRepository(Usuarios::class)->findOneBy(['mail' => $mailForm]);
+            
+            if ($usuarioDB == null){
+                $this->addFlash(type: 'error', message: 'Credenciales no válidas');
+                return $this->redirect('/login/admin');
+            }
+
             $esAdmin = $usuarioDB->getEsAdmin();
             if ($esAdmin) {
                 $rutaDestino = 'app_homeadmin';

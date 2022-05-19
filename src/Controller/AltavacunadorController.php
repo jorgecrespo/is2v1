@@ -41,7 +41,8 @@ class AltavacunadorController extends AbstractController
             $em->persist($usuario);
             $em->flush();
             $this->addFlash(type: 'success', message:'Vacunador dado de alta exitosamente.');
-            return $this->redirectToRoute( route : 'app_homepage');
+            // return $this->redirectToRoute( route : 'app_homepage');
+            return $this->redirect($cs->getHomePageByUser());
         }
 
 
