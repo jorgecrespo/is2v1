@@ -26,7 +26,7 @@ class ModificarvacunadorController extends AbstractController
 
         $valido = true;
 
-        if (!$cs->validarUrl($request->getPathinfo())){
+        if (!$cs->validarUrl($request->getPathinfo())) {
             $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
             return $this->redirect($cs->getHomePageByUser());
         }
@@ -42,7 +42,7 @@ class ModificarvacunadorController extends AbstractController
 
         $usuarioDB = $em->getRepository(Usuarios::class)->findOneById($id);
         $form = $this->createForm(ModvacunadorType::class, $usuarioDB);
-     
+
         try {
 
             $form->handleRequest($request);
@@ -86,21 +86,26 @@ class ModificarvacunadorController extends AbstractController
                 $this->addFlash(type: 'error', message: 'Nombre y apellido no pueden contener números.');
                 $valido = false;
             } else {
-            $usuarioDB->setNombre($form->getData()->getNombre());
+                $usuarioDB->setNombre($form->getData()->getNombre());
             }
 
             if ($form['dni']->getData() == null) {
                 $usuarioDB->setDni(0);
-            } else if (!preg_match("/^([0-9])*$/", $form['dni']->getData())){
+            } else if (!preg_match("/^([0-9])*$/", $form['dni']->getData())) {
                 $this->addFlash(type: 'error', message: 'El DNI solo admite números.');
-                $valido = false; 
+                $valido = false;
+            } else {
+                $usuarioDB->setDni($form['dni']->getData());
+
             }
 
             if ($form['telefono']->getData() == null) {
                 $usuarioDB->setTelefono('');
-            } else if (!preg_match("/^([0-9])*$/", $form['telefono']->getData())){
+            } else if (!preg_match("/^([0-9])*$/", $form['telefono']->getData())) {
                 $this->addFlash(type: 'error', message: 'El teléfono solo admite números.');
-                $valido = false; 
+                $valido = false;
+            } else {
+                $usuarioDB->setTelefono($form['telefono']->getData());
             }
 
             $usuarioDB->setVacunatorioId($form->getData()->getVacunatorioId());
@@ -108,16 +113,15 @@ class ModificarvacunadorController extends AbstractController
             if ($valido) {
                 try {
                     $em->flush();
+                    $this->addFlash(type: 'success', message: 'Vacunador modificado exitosamente.');
+                    return $this->redirectToRoute(route: 'app_vacunadoresporcentro');
                 } catch (UniqueConstraintViolationException) {
-                    $this->addFlash(type: 'error', message: 'El mail ya está registrado.');
+                    $this->addFlash(type: 'error', message: 'El mail ingresado ya está registrado.');
                     $valido = false;
                 }
-       
 
-                $this->addFlash(type: 'success', message: 'Vacunador modificado exitosamente.');
-                return $this->redirectToRoute(route: 'app_vacunadoresporcentro');
+
             }
-
         }
 
         return $this->render('modificarvacunador/index.html.twig', [

@@ -34,7 +34,7 @@ class VacunadoresporcentroController extends AbstractController
 
         $em = $doctrine->getManager();
 
-        $defaultData = ['V1' => true, 'V2' => true, 'V3' => true];
+        $defaultData = ['V1' => false, 'V2' => false, 'V3' => false];
 
         //  dd($request->request->get('form'));
         $data = isSet($request->request->all()["form"]["baja"])?$request->request->all()["form"]["baja"]: null;

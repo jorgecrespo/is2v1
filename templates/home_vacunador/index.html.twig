@@ -19,10 +19,10 @@
 	<div class="container">
 
 		<div class="example-wrapper">
-			<h1>Home Page del Vacunador
+			<h1>Menú del Vacunador
 			</h1>
 			<p>
-				Vacunador: XX
+				Vacunador: {{ vacunador.nombre }}
 			</p>
 
 
@@ -38,6 +38,11 @@
 				{{ message }}
 			</div>
 		{% endfor %}
+
+					<div>
+		<img  src="{{ asset('build/img/enconstruccion.jpeg') }}" width="300" height="300" >
+			
+			</div>
 
 
 	</div>
