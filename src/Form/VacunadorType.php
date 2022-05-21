@@ -31,6 +31,18 @@ class VacunadorType extends AbstractType
             ])
             // ->add('es_admin')
             ->add('nombre', options: [
+                'label' => 'Nombre y Apellido',
+
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('dni', options: [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('telefono', options: [
                 'attr' => [
                     'class' => 'form-control',
                 ],

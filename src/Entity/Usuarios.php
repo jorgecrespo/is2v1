@@ -15,7 +15,7 @@ class Usuarios implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $mail;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -27,11 +27,18 @@ class Usuarios implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $nombre;
 
+    #[ORM\Column(type: 'integer')]
+    private $dni;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $telefono;
+
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $fecha_baja;
 
     #[ORM\ManyToOne(targetEntity: Vacunatorios::class)]
     private $vacunatorio_id;
+
 
     public function getId(): ?int
     {
@@ -145,5 +152,29 @@ class Usuarios implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         $this->setMail('');
+    }
+
+    public function getDni(): ?int
+    {
+        return $this->dni;
+    }
+
+    public function setDni(int $dni): self
+    {
+        $this->dni = $dni;
+
+        return $this;
+    }
+
+    public function getTelefono(): ?string
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(string $telefono): self
+    {
+        $this->telefono = $telefono;
+
+        return $this;
     }
 }

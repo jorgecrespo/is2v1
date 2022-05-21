@@ -39,10 +39,20 @@ class CompletarVacunacionController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()){
          
-            // $em->persist($paciente);
-            $em->flush();
-            $this->addFlash(type: 'success', message:'Vacunas registradas exitosamente.');
-            return $this->redirectToRoute( route : 'app_homepaciente');
+            // dd($form['vacuna_gripe_fecha']->getData()
+            // ,$form['vacuna_covid1_fecha']->getData()
+            // ,$form['vacuna_covid2_fecha']->getData()
+            // ,$form['vacuna_hepatitis_fecha']->getData());
+            if ($form['vacuna_covid1_fecha']->getData() == null && $form['vacuna_covid2_fecha']->getData() !=null){
+                $this->addFlash(type: 'error', message: 'Debe ingresar la fecha de vacunacion de la Dosis 1 de Covid-19');
+
+            } else{
+
+                // $em->persist($paciente);
+                $em->flush();
+                $this->addFlash(type: 'success', message:'Vacunas registradas exitosamente.');
+                return $this->redirectToRoute( route : 'app_homepaciente');
+            }
         }
 
 

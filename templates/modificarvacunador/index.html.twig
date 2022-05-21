@@ -25,7 +25,11 @@
 		<div class="example-wrapper">
 			<h1>Modificar Vacunador</h1>
 
-			{{ form (formulario)}}
+			{{ form (formulario, {
+    attr: {
+		'novalidate': 'novalidate'	
+    }
+})}}
 
 			</div>
 

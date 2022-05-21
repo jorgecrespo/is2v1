@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Usuarios;
 use App\Form\ModvacunadorType;
 use App\Service\CustomService;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry;
+use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -22,6 +24,7 @@ class ModificarvacunadorController extends AbstractController
         CustomService $cs,
     ): Response {
 
+        $valido = true;
 
         if (!$cs->validarUrl($request->getPathinfo())){
             $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
@@ -34,27 +37,87 @@ class ModificarvacunadorController extends AbstractController
 
         $id = isset($request->request->all()["form"]["mod"]) ? $request->request->all()["form"]["mod"] : null;
         if (!$id) {
-            
+            // TODO: ver que va aca aca
         }
 
         $usuarioDB = $em->getRepository(Usuarios::class)->findOneById($id);
         $form = $this->createForm(ModvacunadorType::class, $usuarioDB);
      
-        $form->handleRequest($request);
+        try {
+
+            $form->handleRequest($request);
+        } catch (InvalidArgumentException) {
+            if ($form['mail']->getData() == null) {
+                $this->addFlash(type: 'error', message: 'Debe ingresar una direccion de mail');
+                $valido = false;
+            }
+
+            if ($form['pass']->getData() == null) {
+                $this->addFlash(type: 'error', message: 'Debe ingresar una contraseña');
+                $valido = false;
+            }
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //  dd($request->request->all());
+
             $id = $request->request->all()['modvacunador']['id'];
-            // dd($id);
             $usuarioDB = $em->getRepository(Usuarios::class)->findOneById($id);
+
+            if (!filter_var($form['mail']->getData(), FILTER_VALIDATE_EMAIL)) {
+                $this->addFlash(type: 'error', message: 'El mail no tiene un formato válido');
+                $valido = false;
+            } else {
+                $usuarioDB->setMail($form->getData()->getMail());
+            }
+
+            if (strlen($form['pass']->getData()) < 6) {
+                $this->addFlash(type: 'error', message: 'La contraseña debe tener al menos 6 caracteres');
+                $valido = false;
+            } else {
+                $usuarioDB->setPass($form['pass']->getData());
+            }
+
+            if ($form['nombre']->getData() == null || strlen($form['nombre']->getData()) == 0) {
+                $this->addFlash(type: 'error', message: 'Debe ingresar su nombre y apellido.');
+                $valido = false;
+            }
+
+            if (preg_match("/[0-9]/", $form['nombre']->getData())) {
+                $this->addFlash(type: 'error', message: 'Nombre y apellido no pueden contener números.');
+                $valido = false;
+            } else {
             $usuarioDB->setNombre($form->getData()->getNombre());
-            $usuarioDB->setMail($form->getData()->getMail());
-            // dd($form->getData()->getPass());
-            $usuarioDB->setPass($form->getData()->getPass());
+            }
+
+            if ($form['dni']->getData() == null) {
+                $usuarioDB->setDni(0);
+            } else if (!preg_match("/^([0-9])*$/", $form['dni']->getData())){
+                $this->addFlash(type: 'error', message: 'El DNI solo admite números.');
+                $valido = false; 
+            }
+
+            if ($form['telefono']->getData() == null) {
+                $usuarioDB->setTelefono('');
+            } else if (!preg_match("/^([0-9])*$/", $form['telefono']->getData())){
+                $this->addFlash(type: 'error', message: 'El teléfono solo admite números.');
+                $valido = false; 
+            }
+
             $usuarioDB->setVacunatorioId($form->getData()->getVacunatorioId());
-            $em->flush();
-            $this->addFlash(type: 'success', message: 'Vacunador modificado exitosamente.');
-            return $this->redirectToRoute(route: 'app_vacunadoresporcentro');
+
+            if ($valido) {
+                try {
+                    $em->flush();
+                } catch (UniqueConstraintViolationException) {
+                    $this->addFlash(type: 'error', message: 'El mail ya está registrado.');
+                    $valido = false;
+                }
+       
+
+                $this->addFlash(type: 'success', message: 'Vacunador modificado exitosamente.');
+                return $this->redirectToRoute(route: 'app_vacunadoresporcentro');
+            }
+
         }
 
         return $this->render('modificarvacunador/index.html.twig', [

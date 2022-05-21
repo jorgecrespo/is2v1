@@ -15,7 +15,7 @@ class CustomService
 {
 
     // private $devMode = true;
-    private $devMode = false;
+    private $devMode = !false;
 
 
 

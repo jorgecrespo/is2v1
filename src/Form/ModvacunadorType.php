@@ -34,6 +34,17 @@ class ModvacunadorType extends AbstractType
                 ],
             ])
             ->add('nombre', options: [
+                'label' => 'Nombre y Apellido',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('dni', options: [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('telefono', options: [
                 'attr' => [
                     'class' => 'form-control',
                 ],
