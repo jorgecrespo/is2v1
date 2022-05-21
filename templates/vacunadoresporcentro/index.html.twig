@@ -78,8 +78,8 @@
 																																						</td>
 																																						#}
 										<td>
-											<a href="#" class="btn btn-danger" onclick="bajaVacunador('{{vacunador.mail}}')">Baja</a>
-											<a href="#" class="btn btn-primary" onclick="modificarVacunador('{{vacunador.id}}','{{vacunador.mail}}')">Modificar</a>
+											<a href="#" class="btn btn-danger {% if vacunador.fecha_baja %} disabled {% endif %}" onclick="bajaVacunador('{{vacunador.mail}}')">Baja</a>
+											<a href="#" class="btn btn-primary {% if vacunador.fecha_baja %} disabled {% endif %}" onclick="modificarVacunador('{{vacunador.id}}','{{vacunador.mail}}')">Modificar</a>
 										</td>
 										<td>
 											{{ vacunador.fecha_baja }}
@@ -100,8 +100,8 @@
 										{# <td>
 																																						Vacunatorio X</td>#}
 										<td>
-											<a href="#" class="btn btn-danger" onclick="bajaVacunador('{{vacunador.mail}}')">Baja</a>
-											<a href="#" class="btn btn-primary" onclick="modificarVacunador('{{vacunador.id}}','{{vacunador.mail}}')">Modificar</a>
+											<a href="#" class="btn btn-danger {% if vacunador.fecha_baja %} disabled {% endif %}" onclick="bajaVacunador('{{vacunador.mail}}')">Baja</a>
+											<a href="#" class="btn btn-primary {% if vacunador.fecha_baja %} disabled {% endif %}" onclick="modificarVacunador('{{vacunador.id}}','{{vacunador.mail}}')">Modificar</a>
 										</td>
 										<td>
 											{{ vacunador.fecha_baja }}
@@ -124,8 +124,8 @@
 										{# <td>
 																																						Vacunatorio X</td>#}
 										<td>
-											<a href="#" class="btn btn-danger" onclick="bajaVacunador('{{vacunador.mail}}')">Baja</a>
-											<a href="#" class="btn btn-primary" onclick="modificarVacunador('{{vacunador.id}}','{{vacunador.mail}}')">Modificar</a>
+											<a href="#" class="btn btn-danger {% if vacunador.fecha_baja %} disabled {% endif %}" onclick="bajaVacunador('{{vacunador.mail}}')">Baja</a>
+											<a href="#" class="btn btn-primary {% if vacunador.fecha_baja %} disabled {% endif %}" onclick="modificarVacunador('{{vacunador.id}}','{{vacunador.mail}}')">Modificar</a>
 										</td>
 										<td>
 											{{ vacunador.fecha_baja }}
