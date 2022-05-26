@@ -24,17 +24,17 @@
 
 		<div class="row">
 
-			<div class="col-1">
+			<div class="col-2">
 
 				{{ form (form, {'attr': {'id': 'form_vacunador'}})}}
 				</div>
 
 
-				<div class="col-11">
+				<div class="col-10">
 
-					<div class="example-wrapper">
+					<div class="container-fluid">
 
-						<table>
+						<table class=" table">
 							{% if checks["V1"] == true or checks["V2"] == true or checks["V3"] == true %}
 								<tr>
 									<th>
@@ -65,7 +65,7 @@
 
 							{% if checks["V1"] == true %}
 								<tr>
-									<td>Cementerio</td>
+									<td colspan="5" > <b style="color:#96CD7A;"> Cementerio </b></td>
 								</tr>
 
 								{% for vacunador in vacunadores1 %}
@@ -89,7 +89,7 @@
 							{% endif %}
 							{% if checks["V2"] == true %}
 								<tr>
-									<td>Terminal de Omnibus</td>
+									<td colspan="5" ><b style="color:#96CD7A;">Terminal de Omnibus </b></td>
 								</tr>
 								{% for vacunador in vacunadores2 %}
 									<tr>
@@ -112,7 +112,7 @@
 							{% endif %}
 							{% if checks["V3"] == true %}
 								<tr>
-									<td>Municipalidad</td>
+									<td colspan="5" ><b style="color:#96CD7A;"> Municipalidad </b></td>
 								</tr>
 
 								{% for vacunador in vacunadores3 %}

@@ -20,12 +20,11 @@ class CustomLoginPacienteController extends AbstractController
         CustomService $cs
     ): Response {
 
-        if (!$cs->validarUrl($request->getPathinfo())){
+        if (!$cs->validarUrl($request->getPathinfo())) {
             $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
             return $this->redirect($cs->getHomePageByUser());
         }
 
-        
         $paciente = new Pacientes();
         $form = $this->createForm(LoginPacienteType::class, $paciente);
         $form->handleRequest($request);
@@ -39,26 +38,28 @@ class CustomLoginPacienteController extends AbstractController
 
             $pacienteDB = new Pacientes();
 
-            $dataForm = " mailForm: $mailForm, tokenForm:  $tokenForm, passForm: $passForm";
             $pacienteDB = $em->getRepository(Pacientes::class)->findOneByEmail($mailForm);
-            // dd($pacienteDB);
-            $mensaje = ($pacienteDB != null) ? 'Paciente mail: ' . $pacienteDB->getMail() . ', Token: ' . $pacienteDB->getToken() . ", Pass: " .  base64_decode($pacienteDB->getPass()) : 'Paciente no encontrado';
-            $mensajeFinal = $dataForm . $mensaje;
 
-            // dd('hola!');
-            if (
-                ($mailForm == $pacienteDB->getMail()) &&
-                ($tokenForm == $pacienteDB->getToken()) &&
-                ($passForm == base64_decode($pacienteDB->getPass()))
-            ) {
-                $mensajeFinal = "Credenciales correctas ";
-                $cs->setUser($mailForm, 'P');
-                return $this->redirectToRoute(route: 'app_homepaciente');
+            if ($pacienteDB != null && ($pacienteDB->getMail() == $mailForm)) {
+
+                if ($passForm == $pacienteDB->getPass()) {
+
+                    if (strtoupper($tokenForm) == $pacienteDB->getToken()) {
+                        $cs->setUser($mailForm, 'P');
+                        return $this->redirectToRoute(route: 'app_homepaciente');
+                    } else {
+                        $mensajeFinal = "Token incorrecto. Vuelva a intentar.";
+                        $this->addFlash(type: 'error', message: $mensajeFinal);
+                    }
+                } else {
+                    $mensajeFinal = "Contraseña incorrecta. Vuelva a intentar.";
+                    $this->addFlash(type: 'error', message: $mensajeFinal);
+                }
             } else {
-                $mensajeFinal .= "Credenciales incorrectas ";
+                // dd($pacienteDB,$pacienteDB->getMail(),$mailForm );
+                $mensajeFinal = "Mail no válido. Vuelva a intentar.";
+                $this->addFlash(type: 'error', message: $mensajeFinal);
             }
-
-            $this->addFlash(type: 'success', message: $mensajeFinal);
         }
 
 

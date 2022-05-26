@@ -18,9 +18,8 @@ class LoginAdminController extends AbstractController
         Request $request,
         ManagerRegistry $doctrine,
         CustomService $cs,
-    ): Response 
-    {
-        if (!$cs->validarUrl($request->getPathinfo())){
+    ): Response {
+        if (!$cs->validarUrl($request->getPathinfo())) {
             $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
             return $this->redirect($cs->getHomePageByUser());
         }
@@ -38,40 +37,34 @@ class LoginAdminController extends AbstractController
 
             $usuarioDB = new Usuarios();
 
-            $dataForm = "mailForm: $mailForm, passForm: $passForm  ";
             $usuarioDB = $em->getRepository(Usuarios::class)->findOneBy(['mail' => $mailForm]);
-            
-            if ($usuarioDB == null){
-                $this->addFlash(type: 'error', message: 'Credenciales no válidas');
-                return $this->redirect('/login/admin');
-            }
 
-            $esAdmin = $usuarioDB->getEsAdmin();
-            if ($esAdmin) {
-                $rutaDestino = 'app_homeadmin';
-                $userRol = 'A';
+
+            if ($usuarioDB != null && $mailForm == $usuarioDB->getMail()) {
+
+                if ($passForm == $usuarioDB->getPassword()) {
+
+                    $esAdmin = $usuarioDB->getEsAdmin();
+                    if ($esAdmin) {
+                        $rutaDestino = 'app_homeadmin';
+                        $userRol = 'A';
+                    } else {
+                        $rutaDestino = 'app_home_vacunador';
+                        $userRol = 'V';
+                    }
+
+                    $cs->setUser($mailForm, $userRol);
+
+                    return $this->redirectToRoute(route: $rutaDestino);
+                } else {
+
+                    $mensajeFinal = "La contraseña ingresada es incorrecta.";
+                    $this->addFlash(type: 'error', message: $mensajeFinal);
+                }
             } else {
-                $rutaDestino = 'app_home_vacunador';
-                $userRol = 'V';
+                $mensajeFinal = "Mail no válido.";
+                $this->addFlash(type: 'error', message: $mensajeFinal);
             }
-
-            $mensaje = ($usuarioDB != null) ? 'usuario mail: ' . $usuarioDB->getMail() . ", Pass: " . base64_decode( $usuarioDB->getPassword())  : 'usuario no encontrado';
-            $mensajeFinal = $dataForm . $mensaje;
-
-            if (
-                ($mailForm == $usuarioDB->getMail()) &&
-                // ( 
-                ($passForm == $usuarioDB->getPassword())
-                // || ($hashedPassword == $usuarioDB->getPass()) )
-            ) {
-                $mensajeFinal = "Credenciales correctas";
-                $cs->setUser($mailForm, $userRol);
-                return $this->redirectToRoute(route: $rutaDestino);
-            } else {
-                $mensajeFinal .= "Credenciales incorrectas";
-            }
-
-            $this->addFlash(type: 'success', message: $mensajeFinal);
         }
 
 
