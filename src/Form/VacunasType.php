@@ -46,7 +46,7 @@ class VacunasType extends AbstractType
 
                 ])
             ->add('vacuna_hepatitis_fecha', type: DateType::class, options: [
-                'label' => 'Fecha de vacunación contra la hepatitis',
+                'label' => 'Fecha de vacunación contra la Fiebre Amarilla',
                 'attr' => [
                     'id'=>'vacuna_hepatitis_fecha',
                     'class' => 'form-group',
