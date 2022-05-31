@@ -156,6 +156,19 @@ function validarYregistrarTurno(edad,vacunado){
 	}
 }
 
+function registrarAplicacion(turnoId){
+
+if (confirm('Está seguro que desea registrar la aplicacón de esta vacuna?')){
+		window.location = 'http://localhost:8000/registrar/vacunacion/' + turnoId;
+}
+}
+
+function btn_cancelar_reg_aplicacion(){
+	if (confirm('Está seguro que desea cancelar el registro de aplicacion de esta vacuna?')){
+		window.location = 'http://localhost:8000/vacunas/a/aplicar';
+}
+}
+
 
 
 

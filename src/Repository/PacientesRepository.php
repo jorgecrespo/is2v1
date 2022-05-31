@@ -91,6 +91,25 @@ class PacientesRepository extends ServiceEntityRepository
         return null;
    }
 
+   public function findOneById($id): ?Pacientes
+   {
+    $entityManager = $this->getEntityManager();
+
+    $query = $entityManager->createQuery(
+        'SELECT  p
+        FROM App\Entity\Pacientes p
+        WHERE p.id = :id'
+    )->setParameter('id', $id);
+
+    // returns an array of Product objects
+    $busqueda = $query->getResult();
+    
+    if (count($busqueda) > 0)
+        return $query->getResult()[0];
+    else 
+        return null;
+   }
+
 
       /**
     * @return Pacientes[] Returns an array of Pacientes objects

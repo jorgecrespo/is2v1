@@ -17,17 +17,17 @@
 		}
 	</style>
 	<div class="container">
-
 		<div class="example-wrapper">
 			<h1>Menú del Vacunador
 			</h1>
 			<p>
-				Vacunador: {{ vacunador.nombre }}
+				Vacunador:
+				{{ vacunador.nombre }}
 			</p>
-
-
 		</div>
-
+		<p>
+			<a href="/vacunas/a/aplicar">Generar Listado de Vacunas a Aplicar</a>
+		</p>
 		{% for message in app.flashes('success') %}
 			<div class="alert alert-success">
 				{{ message }}
@@ -38,12 +38,8 @@
 				{{ message }}
 			</div>
 		{% endfor %}
-
-					<div>
-		<img  src="{{ asset('build/img/enconstruccion.jpeg') }}" width="300" height="300" >
-			
-			</div>
-
-
+		<div>
+			<img src="{{ asset('build/img/enconstruccion.jpeg') }}" width="300" height="300">
+		</div>
 	</div>
 {% endblock %}
