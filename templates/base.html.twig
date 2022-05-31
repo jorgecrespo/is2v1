@@ -140,6 +140,22 @@ function ir_a(ruta){
 
 }
 
+function habilitarBtn(x){
+	
+	$('#' + x).attr('disabled', false)
+}
+
+function validarYregistrarTurno(edad,vacunado){
+	if (vacunado == true){
+		alert('Ud. ya tiene aplicada la vacuna contra la Fiebre Amarilla.')
+	} else if (edad >= 60){
+		alert('Ud. por su edad no puede solicitar turno para la vacuna de Fiebre Amarilla')
+	} else {
+		if(confirm('Está seguro que desea solicitar un turno para aplicarse la vacuna contra la Fiebre Amarilla?'))
+		window.location = 'http://localhost:8000/asignacion/turno/famarilla';
+	}
+}
+
 
 
 

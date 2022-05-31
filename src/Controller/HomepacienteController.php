@@ -23,16 +23,29 @@ class HomepacienteController extends AbstractController
         if (!$cs->validarUrl($request->getPathinfo())){
             $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
             return $this->redirect($cs->getHomePageByUser());
-        }
-        
+        }        
 
         $mail = $cs->getUser()['user'];
         $em = $doctrine->getManager();
         $paciente = $em->getRepository(Pacientes::class)->findOneByMail($mail);
+
+
+        $mailPaciente = $cs->getUser()['user'];
+        $feNac = $em->getRepository(Pacientes::class)->findOneByEmail($mailPaciente)->getFechaNac();
+        $edad = $cs->getEdad($feNac);
+        
+        $yaVacunado = (bool) $em->getRepository(Pacientes::class)->findOneByEmail($mailPaciente)->getVacunaHepatitisFecha() != null;
+        // dd($yaVacunado);
+
+        // si no hay problema, ir a /asignacion/turno/famarilla
+
+
         // dd($paciente);
         return $this->render('homepaciente/index.html.twig', [
             'controller_name' => 'HomepacienteController',
-            'paciente' => $paciente
+            'paciente' => $paciente,
+            'edad'=>$edad,
+            'vacunado'=>$yaVacunado,
         ]);
     }
 }

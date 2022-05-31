@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Pacientes;
 use App\Entity\Usuarios;
+use DateTime;
 use phpDocumentor\Reflection\Types\Boolean;
 use PhpParser\Node\Expr\Cast\String_;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,7 +26,8 @@ class CustomService
         '/homepaciente',
         '/enconstruccion',
         '/completar/vacunacion',
-        '/token'
+        '/token',
+        '/asignacion/turno',
     ];
 
     private $paginasVacunador = [
@@ -88,6 +90,12 @@ class CustomService
         $this->session->set('user',$user);
         $this->session->set('rol',$rol);
 
+    }
+
+    public function getEdad(DateTime $fecha){
+        $now = new DateTime();
+        $interval = $now->diff($fecha);
+        return $interval->y;
     }
 
     public function deleteUser()

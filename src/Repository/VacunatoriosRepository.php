@@ -87,4 +87,16 @@ class VacunatoriosRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findOneById($value): ?Vacunatorios
+{
+    return $this->createQueryBuilder('u')
+        ->andWhere('u.id = :val')
+        ->setParameter('val', $value)
+        ->getQuery()
+        ->getOneOrNullResult()
+    ;
+}
+
+
 }

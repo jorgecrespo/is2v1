@@ -71,4 +71,18 @@ class TurnosRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+   /**
+    * @return Turnos[] Returns an array of Turnos objects
+    */
+   public function findTurnosByUser($userId): array
+   {
+       return $this->createQueryBuilder('t')
+           ->andWhere('t.paciente_id = :val')
+           ->setParameter('val', $userId)
+        //    ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 }

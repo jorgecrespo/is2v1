@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AsignacionTurnoController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Asignación de turno para {{enf }}</h1>
+
+    <hr>
+    <p>Por favor seleccione el centro de vacunación de su conveniencia.</p>
+
+<form method="post" action="/turno/asignado">
+<div class="form-check">
+  <input class="form-check-input" id="vacunatorio1" type="radio" name="vacunatorio_id" value="0" onclick="habilitarBtn('btn_sel_turno')">
+  <label class="form-check-label" for="vacunatorio1">
+    <b>{{vacunatorios[0].getNombre() }}</b> ({{vacunatorios[0].getDireccion()}})
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" id="vacunatorio2" type="radio" name="vacunatorio_id" value="1" onclick="habilitarBtn('btn_sel_turno')">
+  <label class="form-check-label" for="vacunatorio2">
+        <b>{{vacunatorios[1].getNombre() }}</b> ({{vacunatorios[1].getDireccion()}})
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" id="vacunatorio3" type="radio" name="vacunatorio_id" value="2" onclick="habilitarBtn('btn_sel_turno')">
+  <label class="form-check-label" for="vacunatorio3">
+       <b>{{vacunatorios[2].getNombre() }}</b> ({{vacunatorios[2].getDireccion()}})
+
+  </label>
+</div>
+
+   <input type="submit" id="btn_sel_turno"  class="btn btn-primary" disabled onclick="registrarTurnoFA()" value="Confirmar">
+   <a    class="btn btn-primary" href="/homepaciente">Cancelar</a>
+</form>
+ 
+</div>
+{% endblock %}
