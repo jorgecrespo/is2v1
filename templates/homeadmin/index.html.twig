@@ -19,6 +19,10 @@
 
 	<div class="container">
 
+		<form id="form_home_admin" method="post">
+		<input type="hidden" id="data1" name="data1">
+		</form>
+
 		<div class="example-wrapper">
 			<h1>Home Admin</h1>
 
@@ -29,6 +33,10 @@
 			<ul>
 				<li><a href="/altavacunador">Alta de Vacunador</a></li>
 				<li><a href="/vacunadoresporcentro">Administrar Vacunadores por Centro</a></li>
+				<li><a onclick="modificarVacunatorio(1,'{{ nombres_vacunatorios[0]}}' )" href="#">Actualizar informacion del  Centro de vacunacion {{ nombres_vacunatorios[0]}}</a></li>
+				<li><a onclick="modificarVacunatorio(2, '{{ nombres_vacunatorios[1]}}')" href="#">Actualizar informacion del  Centro de vacunacion {{ nombres_vacunatorios[1]}}</a></li>
+				<li><a onclick="modificarVacunatorio(3, '{{ nombres_vacunatorios[2]}}')" href="#">Actualizar informacion del  Centro de vacunacion {{ nombres_vacunatorios[2]}}</a></li>
+
 			</ul>
 		</div>
 

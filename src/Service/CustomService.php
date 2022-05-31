@@ -15,7 +15,7 @@ class CustomService
 {
 
     // private $devMode = true;
-    private $devMode = false;
+    private $devMode = !false;
 
 
 
@@ -44,6 +44,7 @@ class CustomService
         '/',
         '/dev/pacientes', // Quitar en prod
         '/dev/vacunadores',// Quitar en prod
+        '/modificar/vacunatorio'
     ];
 
     private $paginasPublicas = [

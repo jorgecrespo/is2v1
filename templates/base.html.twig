@@ -42,6 +42,8 @@ h1 {
 	color: #96CD7A;
 }
 			</style>
+
+			
 			<script>
 
 //Clases
@@ -114,6 +116,29 @@ form_vacunador.submit();
 
 }
 
+
+function modificarVacunatorio(id, nombre){
+
+formHomeAdmin = $('#form_home_admin')[0]
+
+
+	let rta = confirm('¿Esta seguro que desea modificar el vacunatorio  ' + nombre + '?')
+if (rta) {
+$('#data1').val(id)
+formHomeAdmin.action = 'http://localhost:8000/modificar/vacunatorio'
+console.log(formHomeAdmin);
+
+formHomeAdmin.submit();
+} 
+
+}
+
+function ir_a(ruta){
+	formHomeAdmin = $('#mod_vacunatorio_form')[0];
+	formHomeAdmin.action = 'http://localhost:8000/homeadmin'
+	formHomeAdmin.submit();
+
+}
 
 
 

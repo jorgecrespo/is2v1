@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Vacunatorios;
 use App\Service\CustomService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +16,7 @@ class HomeadminController extends AbstractController
     public function index(
         CustomService $cs,
         Request $request,
+        ManagerRegistry $doctrine,
 
     ): Response
     {
@@ -23,10 +26,13 @@ class HomeadminController extends AbstractController
             return $this->redirect($cs->getHomePageByUser());
         }
 
-
+        $em = $doctrine->getManager();
+        $data = $em->getRepository(Vacunatorios::class)->findAll();
+        $nombres_vacunatorios = array($data[0]->getNombre(),$data[1]->getNombre(), $data[2]->getNombre());
 
         return $this->render('homeadmin/index.html.twig', [
             'controller_name' => 'HomeadminController',
+            'nombres_vacunatorios' => $nombres_vacunatorios,
         ]);
     }
 }
