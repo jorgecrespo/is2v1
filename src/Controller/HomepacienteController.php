@@ -42,7 +42,6 @@ class HomepacienteController extends AbstractController
 
         // dd($paciente);
         return $this->render('homepaciente/index.html.twig', [
-            'controller_name' => 'HomepacienteController',
             'paciente' => $paciente,
             'edad'=>$edad,
             'vacunado'=>$yaVacunado,

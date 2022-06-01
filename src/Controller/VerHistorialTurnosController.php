@@ -29,9 +29,9 @@ class VerHistorialTurnosController extends AbstractController
         $turnosDelPaciente = $em->getRepository(Turnos::class)->findTurnosByUser($paciente->getId());
         $turnos = [];
         foreach($turnosDelPaciente as $turno){
-                $turnoStr['vacuna'] = $em->getRepository(Vacunas::class)->findOneById($turno->getVacunaId()->getId())->getNombre();
+                $turnoStr['vacuna'] = $em->getRepository(Vacunas::class)->findOneById($turno->getVacunaId())->getNombre();
                 $turnoStr['fecha'] = date_format($turno->getFecha(), "d-m-Y") ;
-                $turnoStr['vacunatorio'] = $em->getRepository(Vacunatorios::class)->findOneById($turno->getVacunatorioId()->getId())->getNombre();
+                $turnoStr['vacunatorio'] = $em->getRepository(Vacunatorios::class)->findOneById($turno->getVacunatorioId())->getNombre();
                 $turnoStr['estado'] = $turno->getEstado();
                 
                 array_push($turnos, $turnoStr);

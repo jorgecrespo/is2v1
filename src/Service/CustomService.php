@@ -20,6 +20,16 @@ class CustomService
 
 
 
+    
+    
+    
+    /*
+    Tener en cuenta:
+     Fiebre amarilla debe tener id 3
+
+     Los estados del turno son : ASIGNADO, APLICADA, 
+    */
+
     private $session;
 
     private $paginasPaciente = [

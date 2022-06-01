@@ -34,7 +34,7 @@ class VacunasAAplicarController extends AbstractController
             $turnoStr['id'] = $turno->getId();
             $turnoStr['paciente']= $em->getRepository(Pacientes::class)->findOneById($turno->getPacienteId())->getNombre();
 
-            $turnoStr['vacuna'] = $em->getRepository(Vacunas::class)->findOneById($turno->getVacunaId()->getId())->getNombre();
+            $turnoStr['vacuna'] = $em->getRepository(Vacunas::class)->findOneById($turno->getVacunaId())->getNombre();
             $turnoStr['fecha'] = date_format($turno->getFecha(), "d-m-Y") ;
             $turnoStr['estado'] = $turno->getEstado();
 

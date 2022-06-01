@@ -31,24 +31,31 @@ class TurnoAsignadoController extends AbstractController
         $turno = new Turnos();
         $mailPaciente = $cs->getUser()['user'];
         $paciente = $em->getRepository(Pacientes::class)->findOneByEmail($mailPaciente);
-        $turno->setPacienteId($paciente);
+        $turno->setPacienteId($paciente->getId());
         $vacuna = $em->getRepository(Vacunas::class)->findOneById(3);
         // dd($vacuna);
-        $turno->setVacunaId($vacuna);
+        $turno->setVacunaId($vacuna->getId());
         $turno->setEstado('ASIGNADO');
         $vacunatorio = $em->getRepository(Vacunatorios::class)->findOneById($vacunatorioId);
         // dd($vacunatorioId, $vacunatorio);
-        $turno->setVacunatorioId($vacunatorio);
+        $turno->setVacunatorioId($vacunatorio->getID());
         $hoy = date("d-m-Y");
         $fechaTurno = date("d-m-Y", strtotime($hoy . "+ 10 days"));
         $turno->setFecha(new Datetime($fechaTurno));
 
+        // dd($turno);
         $em->persist($turno);
         $em->flush();
+
+        $turnoX['fecha'] = $fechaTurno;
+        $turnoX['vacunatorio'] = $vacunatorio->getNombre();
+        $turnoX['direccion'] = $vacunatorio->getDireccion();
+        $turnoX['vacuna'] = $vacuna->getNombre();
 
         return $this->render('turno_asignado/index.html.twig', [
             'controller_name' => 'TurnoAsignadoController',
             'vacunatorio_id' => $vacunatorioId,
+            'turno' => $turnoX,
         ]);
     }
 }

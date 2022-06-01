@@ -11,7 +11,23 @@
 <div class="example-wrapper">
     <h1>Turno asignado</h1>
 
-{{ vacunatorio_id }}
+<br>
+<p>Turno reservado para:</p>
 
+
+<b>Fecha: </b>
+<p>{{ turno.fecha }}</p>
+
+<b>Vacunatorio: </b>
+<p>{{ turno.vacunatorio }}</p>
+
+<b>Direccion: </b>
+<p>{{ turno.direccion }}</p>
+
+<b>Vacuna: </b>
+<p>{{ turno.vacuna }}</p>
+
+
+<a href="/homepaciente">Página Principal</a>
 </div>
 {% endblock %}

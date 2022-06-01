@@ -15,16 +15,13 @@ class Turnos
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\OneToOne(targetEntity: pacientes::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\Column(type: 'integer')]
     private $paciente_id;
 
-    #[ORM\OneToOne(targetEntity: vacunas::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\Column(type: 'integer')]
     private $vacuna_id;
 
-    #[ORM\OneToOne(targetEntity: Vacunatorios::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\Column(type: 'integer')]
     private $vacunatorio_id;
 
     #[ORM\Column(type: 'datetime')]
@@ -47,36 +44,36 @@ class Turnos
         return $this->id;
     }
 
-    public function getPacienteId(): ?pacientes
+    public function getPacienteId(): ?int
     {
         return $this->paciente_id;
     }
 
-    public function setPacienteId(pacientes $paciente_id): self
+    public function setPacienteId(int $paciente_id): self
     {
         $this->paciente_id = $paciente_id;
 
         return $this;
     }
 
-    public function getVacunaId(): ?vacunas
+    public function getVacunaId(): ?int
     {
         return $this->vacuna_id;
     }
 
-    public function setVacunaId(vacunas $vacuna_id): self
+    public function setVacunaId(int $vacuna_id): self
     {
         $this->vacuna_id = $vacuna_id;
 
         return $this;
     }
 
-    public function getVacunatorioId(): ?vacunatorios
+    public function getVacunatorioId(): ?int
     {
         return $this->vacunatorio_id;
     }
 
-    public function setVacunatorioId(vacunatorios $vacunatorio_id): self
+    public function setVacunatorioId(int $vacunatorio_id): self
     {
         $this->vacunatorio_id = $vacunatorio_id;
 

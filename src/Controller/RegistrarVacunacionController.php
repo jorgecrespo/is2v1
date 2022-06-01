@@ -45,6 +45,7 @@ class RegistrarVacunacionController extends AbstractController
             $turno->setEstado('APLICADA');
             $em->flush();
             $this->addFlash(type: 'success', message: 'Aplicacion registrada correctamente.');
+            return $this->redirect('/vacunas/a/aplicar');
 
 
 
