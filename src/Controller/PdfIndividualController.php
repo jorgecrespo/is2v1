@@ -8,27 +8,41 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class PdfIndividualController extends AbstractController
 {
     #[Route('/pdf/individual', name: 'app_pdf_individual')]
-    public function index(Pdf $pdf)
+    public function index(Pdf $knpSnappyPdf)
     {
 
-        $html = $this->renderView('pdf_individual/index.html.twig', [
-                'controller_name' => 'PdfIndividualController',
-            ]);
-        $filename = 'certificado.pdf';
-        return new PdfResponse(
-            $pdf->getOutputFromHtml($html),
-            $filename
+
+        $file_url = 'pdf/file5.pdf';
+
+        $displayName='pepe.pdf';
+        $file =  $knpSnappyPdf->generateFromHtml(
+            $this->renderView(
+                'pdf_individual/index.html.twig',
+                // array(
+                //     'some'  => $vars
+                // )
+            ),
+            $file_url
         );
 
 
+        $response = new BinaryFileResponse ( $file_url );
+        $response->headers->set ( 'Content-Type', 'application/pdf' );
+        $response->setContentDisposition ( ResponseHeaderBag::DISPOSITION_ATTACHMENT, $displayName );
+        return $response;
+   
+
+        
 
 
-        // return $this->render('pdf_individual/index.html.twig', [
-        //     'controller_name' => 'PdfIndividualController',
-        // ]);
+
+
+
     }
 }
