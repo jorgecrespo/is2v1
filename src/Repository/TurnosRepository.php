@@ -111,4 +111,20 @@ class TurnosRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    public function findOneByPacienteAndVacunaId($pacienteId, $vacunaId): ?Turnos
+{
+    $estado = 'APLICADA';
+    return $this->createQueryBuilder('u')
+        ->andWhere('u.paciente_id = :val')
+        ->setParameter('val', $pacienteId)
+        ->andWhere('u.vacuna_id = :val')
+        ->setParameter('val', $vacunaId)
+        ->andWhere('u.estado = :val')
+        ->setParameter('val', $estado)
+        ->getQuery()
+        ->getOneOrNullResult()
+    ;
+}
+
 }

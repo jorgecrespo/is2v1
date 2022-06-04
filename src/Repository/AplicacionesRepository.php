@@ -71,4 +71,19 @@ class AplicacionesRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findOneById($value): ?Aplicaciones
+{
+    return $this->createQueryBuilder('u')
+        ->andWhere('u.id = :val')
+        ->setParameter('val', $value)
+        ->getQuery()
+        ->getOneOrNullResult()
+    ;
+}
+
+
+
+
+
 }
