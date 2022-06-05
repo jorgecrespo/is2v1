@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Aplicaciones;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -48,7 +49,7 @@ class AplicacionVacunaType extends AbstractType
                     'class' => 'btn btn-primary'
                     ]
                 ])
-                ->add('cancelar', type: SubmitType::class,  options: [
+                ->add('cancelar', type: ButtonType::class,  options: [
                     'label' => 'Cancelar',
                     'attr' => [
                         'class' => 'btn btn-primary',

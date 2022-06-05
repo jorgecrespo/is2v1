@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Turnos;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -102,6 +103,20 @@ class TurnosRepository extends ServiceEntityRepository
         ;
     }
 
+          /**
+    * @return Turnos[] Returns an array of Turnos objects
+    */
+    public function findTurnosByVacuna($vacunaId): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.vacuna_id = :val')
+            ->setParameter('val', $vacunaId)
+         //    ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findOneById($id): ?Turnos
     {
         return $this->createQueryBuilder('u')
@@ -126,5 +141,22 @@ class TurnosRepository extends ServiceEntityRepository
         ->getOneOrNullResult()
     ;
 }
+
+
+     /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function bajaTurno(int $idTurno): void
+    {
+        $turno = $this->findOneById($idTurno);
+        if (isset($turno)){
+            $turno->setEstado('CANCELADO');
+        }
+
+        
+         $this->_em->flush();
+     
+    }
 
 }

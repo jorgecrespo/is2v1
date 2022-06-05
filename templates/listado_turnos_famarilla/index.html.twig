@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ListadoTurnosFamarillaController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Listado de turnos de fiebre amarilla</h1>
+
+
+<form method="post" action="/listado/turnos/famarilla" id="form_baja_turno">
+<input type="hidden" id="id_baja_turno" name="id_baja_turno">
+</form>
+		<div class="container-fluid">
+
+			<table class=" table">
+				{% if turnos != null %}
+					<tr>
+						<th>
+							Paciente
+						</th>
+						<th>
+							Estado
+						</th>
+						<th>
+							Fecha Turno
+						</th>
+						<th>
+							Operacion
+						</th>
+					</tr>
+
+					{% for turno in turnos %}
+						<tr>
+							<td>{{ turno.paciente }}</td>
+							<td>{{ turno.estado }}</td>
+							<td>{{ turno.fecha }}</td>
+							<td>
+									<button class="btn btn-primary" 
+								{% if (turno.estado == 'CANCELADO' or turno.estado == 'APLICADA') %}
+								disabled
+								{% endif %}
+									onclick="cancelarTurnoFamarilla('{{turno.id}}')">Cancelar Turno</button>
+							
+							</td>
+
+						</tr>
+					{% endfor %}
+
+
+				{% else %}
+					<tr>
+						<td>No hay turnos registrados para la vacuna contra la fiebre amarilla
+						</td>
+					</tr>
+				{% endif %}
+
+
+			</table>
+
+  
+</div>
+{% endblock %}
