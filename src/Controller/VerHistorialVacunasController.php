@@ -5,24 +5,20 @@ namespace App\Controller;
 use App\Entity\Pacientes;
 use App\Entity\Turnos;
 use App\Service\CustomService;
-use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PdfGeneralController extends AbstractController
+class VerHistorialVacunasController extends AbstractController
 {
-    #[Route('/pdf/general', name: 'app_pdf_general')]
+    #[Route('/ver/historial/vacunas', name: 'app_ver_historial_vacunas')]
     public function index(
-        Pdf $knpSnappyPdf,
         CustomService $cs,
         ManagerRegistry $doctrine,
-    )
+    ): Response
     {
+
         $em = $doctrine->getManager();
         $paciente = $em->getRepository(Pacientes::class)->findOneByEmail( $cs->getUser()['user']);
         $pacienteId = $paciente->getId();
@@ -84,41 +80,10 @@ class PdfGeneralController extends AbstractController
 
         }
 
-        // return $this->render('pdf_general/index.html.twig', [
-        //     'vacunas' => $aplicacionesStr,
-        // ]);
 
-        // dd($aplicacionesStr);
-        $time = time();
+        return $this->render('ver_historial_vacunas/index.html.twig', [
+                      'vacunas' => $aplicacionesStr,
 
-        $filename = "CG-$pacienteId-$time.pdf";
-        $file_url = "pdf/" . $filename;
-
-        $fecha_gen = date_format(new DateTime(), "d-m-Y") ;
-
-        $nombre = $paciente->getNombre();
-        
-        $fecha_gen = date_format(new DateTime(), "d-m-Y") ;
-
-
-        $file =  $knpSnappyPdf->generateFromHtml(
-            $this->renderView(
-                'pdf_general/index.html.twig',
-                array(
-                    'nombre' => $paciente->getNombre(),
-                    'vacunas' => $aplicacionesStr,
-                    'fecha_certificado'  => $fecha_gen,
-
-                )
-            ),
-            $file_url
-        );
-
-
-        $response = new BinaryFileResponse ( $file_url );
-        $response->headers->set ( 'Content-Type', 'application/pdf' );
-        $response->setContentDisposition ( ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename );
-        return $response;
-   
+        ]);
     }
 }

@@ -32,23 +32,23 @@
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 			<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 			{# <script src={{encore_entry_script_tags('funciones3')}} ></script> #}
-			
+
 			<style>
 
-body {
-	background-color: rgb(227, 247, 210);
-}
-h1 {
-	color: #96CD7A;
-}
+				body {
+					background-color: rgb(227, 247, 210);
+				}
+				h1 {
+					color: #96CD7A;
+				}
 			</style>
 
-			
+
 			<script>
 
-//Clases
+				// Clases
 
-//fecha de nacimiento de paciente
+// fecha de nacimiento de paciente
 $('#paciente_fecha_nac_day').addClass('form-control')
 $('#paciente_fecha_nac_month').addClass('form-control')
 $('#paciente_fecha_nac_year').addClass('form-control')
@@ -72,17 +72,7 @@ $('#vacunas_vacuna_hepatitis_fecha_month').addClass('form-control')
 $('#vacunas_vacuna_hepatitis_fecha_year').addClass('form-control')
 
 
-
-
-
-
-
-
-
-
-
-
-				console.log('Esto esta en base.html.twig')
+console.log('Esto esta en base.html.twig')
 
 
 // LISTA DE VACUNADORES PARA EL ADMIN
@@ -94,17 +84,17 @@ let rta = confirm('Esta seguro que desea dar de baja al usuario ' + mail + '?')
 console.log(formVacunadores)
 
 $('#form_baja').val(mail)
-if (rta) { 
-form_vacunador.action='http://localhost:8000/vacunadoresporcentro'
+if (rta) {
+form_vacunador.action = 'http://localhost:8000/vacunadoresporcentro'
 form_vacunador.submit();
 }
 }
 
 // ir al formulario de modificar vacunador
-function modificarVacunador(id, mail) { 
+function modificarVacunador(id, mail) {
 formVacunadores = $('#form_vacunador')[0]
 
-//console.log(mail)
+// console.log(mail)
 
 let rta = confirm('¿Esta seguro que desea modificar al usuario ' + mail + '?')
 if (rta) {
@@ -117,76 +107,73 @@ form_vacunador.submit();
 }
 
 
-function modificarVacunatorio(id, nombre){
+function modificarVacunatorio(id, nombre) {
 
 formHomeAdmin = $('#form_home_admin')[0]
 
 
-	let rta = confirm('¿Esta seguro que desea modificar el vacunatorio  ' + nombre + '?')
+let rta = confirm('¿Esta seguro que desea modificar el vacunatorio  ' + nombre + '?')
 if (rta) {
 $('#data1').val(id)
 formHomeAdmin.action = 'http://localhost:8000/modificar/vacunatorio'
 console.log(formHomeAdmin);
 
 formHomeAdmin.submit();
-} 
+}
 
 }
 
-function ir_a(ruta){
-	formHomeAdmin = $('#mod_vacunatorio_form')[0];
-	formHomeAdmin.action = 'http://localhost:8000/homeadmin'
-	formHomeAdmin.submit();
+function ir_a(ruta) {
+formHomeAdmin = $('#mod_vacunatorio_form')[0];
+formHomeAdmin.action = 'http://localhost:8000/homeadmin'
+formHomeAdmin.submit();
 
 }
 
-function habilitarBtn(x){
-	
-	$('#' + x).attr('disabled', false)
+function habilitarBtn(x) {
+
+$('#' + x).attr('disabled', false)
 }
 
-function validarYregistrarTurno(edad,vacunado){
-	if (vacunado == true){
-		alert('Ud. ya tiene aplicada la vacuna contra la Fiebre Amarilla.')
-	} else if (edad >= 60){
-		alert('Ud. por su edad no puede solicitar turno para la vacuna de Fiebre Amarilla')
-	} else {
-		if(confirm('Está seguro que desea solicitar un turno para aplicarse la vacuna contra la Fiebre Amarilla?'))
-		window.location = 'http://localhost:8000/asignacion/turno/famarilla';
-	}
-}
+function validarYregistrarTurno(edad, vacunado) {
+if (vacunado == true) {
+alert('Ud. ya tiene aplicada la vacuna contra la Fiebre Amarilla.')
+} else if (edad >= 60) {
+alert('Ud. por su edad no puede solicitar turno para la vacuna de Fiebre Amarilla')
+} else {
+if (confirm('Está seguro que desea solicitar un turno para aplicarse la vacuna contra la Fiebre Amarilla?')) 
+window.location = 'http://localhost:8000/asignacion/turno/famarilla';
 
-function registrarAplicacion(turnoId){
-
-if (confirm('Está seguro que desea registrar la aplicacón de esta vacuna?')){
-		window.location = 'http://localhost:8000/registrar/vacunacion/' + turnoId;
 }
 }
 
-function btn_cancelar_reg_aplicacion(){
-	if (confirm('Está seguro que desea cancelar el registro de aplicacion de esta vacuna?')){
-		window.location = 'http://localhost:8000/vacunas/a/aplicar';
+function registrarAplicacion(turnoId) {
+
+if (confirm('Está seguro que desea registrar la aplicacón de esta vacuna?')) {
+window.location = 'http://localhost:8000/registrar/vacunacion/' + turnoId;
 }
 }
 
-function genPdfIndividual(x){
-	console.log('pdf: ', x);
-	window.location = 'http://localhost:8000/pdf/individual/3';
+function btn_cancelar_reg_aplicacion() {
+if (confirm('Está seguro que desea cancelar el registro de aplicacion de esta vacuna?')) {
+window.location = 'http://localhost:8000/vacunas/a/aplicar';
+}
 }
 
-function cancelarTurnoFamarilla(idTurno){
+function genPdfIndividual(x) {
+console.log('pdf: ', x);
+window.location = 'http://localhost:8000/pdf/individual/3';
+}
+
+function cancelarTurnoFamarilla(idTurno) {
 console.log('baja turno famarilla', idTurno)
-	if (confirm('Está seguro que desea eliminar el turno indicado?')){
+if (confirm('Está seguro que desea eliminar el turno indicado?')) {
 
 $('#id_baja_turno').val(idTurno);
- $('#form_baja_turno').submit();
-	}
-
+$('#form_baja_turno').submit();
 }
 
-
-
-
+}
 
 			</script>
 		{% endblock %}

@@ -30,7 +30,7 @@ class DevPacientesController extends AbstractController
         $pacientes = $em->getRepository(Pacientes::class)->findAll();
         // dd($pacientes[0]);
         foreach($pacientes as &$paciente){
-            $paciente->setPass(base64_decode($paciente->getPass()));
+            // $paciente->setPass(base64_decode($paciente->getPass()));
         }
 
 

@@ -103,47 +103,20 @@ class TurnosRepository extends ServiceEntityRepository
         ;
     }
 
-          /**
-    * @return Turnos[] Returns an array of Turnos objects
-    */
-    public function findTurnosByVacuna($vacunaId): array
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.vacuna_id = :val')
-            ->setParameter('val', $vacunaId)
-         //    ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
+    
     public function findOneById($id): ?Turnos
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.id = :val')
-            ->setParameter('val', $id)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-
-    public function findOneByPacienteAndVacunaId($pacienteId, $vacunaId): ?Turnos
-{
-    $estado = 'APLICADA';
-    return $this->createQueryBuilder('u')
-        ->andWhere('u.paciente_id = :val')
-        ->setParameter('val', $pacienteId)
-        ->andWhere('u.vacuna_id = :val')
-        ->setParameter('val', $vacunaId)
-        ->andWhere('u.estado = :val')
-        ->setParameter('val', $estado)
+        ->andWhere('u.id = :val')
+        ->setParameter('val', $id)
         ->getQuery()
         ->getOneOrNullResult()
-    ;
-}
-
-
-     /**
+        ;
+    }
+    
+    
+    
+    /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -153,10 +126,60 @@ class TurnosRepository extends ServiceEntityRepository
         if (isset($turno)){
             $turno->setEstado('CANCELADO');
         }
-
+        $this->_em->flush();
         
-         $this->_em->flush();
-     
     }
+    
+    /**
+     * @return Turnos[] Returns an array of Turnos objects
+     */
+    public function findTurnosByVacuna($vacunaId): array
+    {
+        return $this->createQueryBuilder('t')
+        ->andWhere('t.vacuna_id = :val')
+        ->setParameter('val', $vacunaId)
+        //    ->setMaxResults(10)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+
+    public function findOneByPacienteAndVacunaId($pacienteId, $vacunaId): ?Turnos
+    {
+        $estado = 'APLICADA';
+        return $this->createQueryBuilder('u')
+        ->andWhere('u.paciente_id = :val')
+        ->setParameter('val', $pacienteId)
+        ->andWhere('u.vacuna_id = :val')
+        ->setParameter('val', $vacunaId)
+        ->andWhere('u.estado = :val')
+        ->setParameter('val', $estado)
+        ->getQuery()
+        ->getOneOrNullResult()
+        ;
+    }
+
+
+
+    /**
+     * @return Turnos[] Returns an array of Turnos objects
+     */
+    public function findTurnosByPacienteAndVacunaId($pacienteId, $vacunaId, $estado = 'APLICADA'): array
+    {
+        
+        return $this->createQueryBuilder('u')
+        ->andWhere('u.paciente_id = :val1')
+        ->setParameter('val1', $pacienteId)
+        ->andWhere('u.vacuna_id = :val2')
+        ->setParameter('val2', $vacunaId)
+        ->andWhere('u.estado = :val3')
+        ->setParameter('val3', $estado)
+        //    ->setMaxResults(10)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
 
 }
