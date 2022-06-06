@@ -16,7 +16,7 @@ class CustomService
 {
 
     // private $devMode = true;
-    private $devMode = !false;
+    private $devMode = false;
 
 
 
@@ -190,28 +190,49 @@ class CustomService
 
     public function generarToken($userName):string {
 
-        if (strlen($userName)< 5){
-            $userName  = str_pad($userName, 5);
+        if (strlen($userName)< 4){
+            $userName  = str_pad($userName, 4);
         }
 
-        $str5 = str_split(substr(strtolower($userName), 0,5));
+        $str4 = str_split(substr(strtolower($userName), 0,4));
 
         $token= '';
-        foreach ($str5 as $letra){
+        foreach ($str4 as $letra){
             switch ($letra){
                 case 'a':
+                case 'b':
+                case 'c':
+                case 'd':
                     $letra = '4';
                     break;
-                case 'e':
+                    case 'e':
+                    case 'f':
+                    case 'g':
+                    case 'h':
                     $letra = '3';
                     break;
                 case 'i':
+                case 'j':
+                case 'k':
+                case 'l':
+                case 'm':
+                case 'n':
                     $letra = '1';
                     break;
                 case 'o':
+                case 'p':
+                case 'q':
+                case 'r':
+                case 's':
+                case 't':
                     $letra = '0';
                     break;
                 case 'u':
+                case 'v':
+                case 'w':
+                case 'x':
+                case 'y':
+                case 'z':
                     $letra = '9';
                     break;
                 case ' ':
