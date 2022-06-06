@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Pacientes;
+use App\Entity\Turnos;
 use App\Service\CustomService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,11 +25,10 @@ class HomepacienteController extends AbstractController
             $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
             return $this->redirect($cs->getHomePageByUser());
         }        
-
+        
         $mail = $cs->getUser()['user'];
         $em = $doctrine->getManager();
         $paciente = $em->getRepository(Pacientes::class)->findOneByMail($mail);
-
 
         $mailPaciente = $cs->getUser()['user'];
         $feNac = $em->getRepository(Pacientes::class)->findOneByEmail($mailPaciente)->getFechaNac();

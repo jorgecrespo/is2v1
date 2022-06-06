@@ -78,17 +78,31 @@ class PdfGeneralController extends AbstractController
 
         $aplicacionesStr = array();
 
+        $sinVacunas  = true;
         foreach($aplicaciones as $aplicacion){
 
-            array_push($aplicacionesStr, $aplicacion != null ? date_format($aplicacion, "d-m-Y")  : null );
+            if ($aplicacion != null ){
+
+                $aplicacionStr =  date_format($aplicacion, "d-m-Y") ;
+                $sinVacunas = false;
+            } else {
+                $aplicacionStr = null;
+            }
+
+
+            array_push($aplicacionesStr, $aplicacionStr );
 
         }
 
-        // return $this->render('pdf_general/index.html.twig', [
-        //     'vacunas' => $aplicacionesStr,
-        // ]);
+      
+        if ($sinVacunas){
 
-        // dd($aplicacionesStr);
+            $this->addFlash(type: 'error', message: 'Ud. no registra vacunas aplicadas');
+            return $this->redirect($cs->getHomePageByUser());
+            
+                
+                // dd($aplicacionesStr);
+            } else {
         $time = time();
 
         $filename = "CG-$pacienteId-$time.pdf";
@@ -119,6 +133,6 @@ class PdfGeneralController extends AbstractController
         $response->headers->set ( 'Content-Type', 'application/pdf' );
         $response->setContentDisposition ( ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename );
         return $response;
-   
+    }
     }
 }

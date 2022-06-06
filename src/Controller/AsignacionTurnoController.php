@@ -36,9 +36,29 @@ class AsignacionTurnoController extends AbstractController
         }
 
         $em = $doctrine->getManager();
-
         $mailPaciente = $cs->getUser()['user'];
         $paciente = $em->getRepository(Pacientes::class)->findOneByEmail($mailPaciente);
+
+
+        // dd($paciente->getId());
+        $turnosGripePendiente = $em->getRepository(Turnos::class)->findTurnosByPacienteAndVacunaId($paciente->getId(), 3,  'ASIGNADO');
+        // dd($turnosGripePendiente);
+        $turnosGripeAplicada = $em->getRepository(Turnos::class)->findTurnosByPacienteAndVacunaId($paciente->getId(), 3);
+
+        if (count($turnosGripePendiente) >0 ){
+            $this->addFlash(type: 'error', message: 'Ud. ya tiene un turno para aplicar la vacuna contra la fiebre amarilla');
+            return $this->redirect($cs->getHomePageByUser());
+
+        }
+
+        if ( count($turnosGripeAplicada) > 0){
+            $this->addFlash(type: 'error', message: 'Ud. ya tiene aplicada la vacuna contra la fiebre amarilla');
+            return $this->redirect($cs->getHomePageByUser());
+
+        }
+
+
+
         
         // $turnosPaciente = $em->getRepository(Turnos::class)->findTurnosByUser($paciente->getId());
         // dd($turnosPaciente);

@@ -7,6 +7,7 @@ use App\Entity\Turnos;
 use App\Entity\Usuarios;
 use App\Entity\Vacunas;
 use App\Service\CustomService;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,17 +31,19 @@ class VacunasAAplicarController extends AbstractController
         // dd($turnos_pendientes);
         $turnos = [];
         foreach($turnos_pendientes as $turno){
-
-            $turnoStr['id'] = $turno->getId();
-            $turnoStr['paciente']= $em->getRepository(Pacientes::class)->findOneById($turno->getPacienteId())->getNombre();
-
-            $turnoStr['vacuna'] = $em->getRepository(Vacunas::class)->findOneById($turno->getVacunaId())->getNombre();
+            
             $turnoStr['fecha'] = date_format($turno->getFecha(), "d-m-Y") ;
-            $turnoStr['estado'] = $turno->getEstado();
 
-
-
-            array_push($turnos, $turnoStr);
+            if ($turnoStr['fecha'] == date_format(new DateTime(), "d-m-Y")){
+                
+                $turnoStr['id'] = $turno->getId();
+                $turnoStr['paciente']= $em->getRepository(Pacientes::class)->findOneById($turno->getPacienteId())->getNombre();
+                
+                $turnoStr['vacuna'] = $em->getRepository(Vacunas::class)->findOneById($turno->getVacunaId())->getNombre();
+                $turnoStr['estado'] = $turno->getEstado();
+                
+                array_push($turnos, $turnoStr);
+            }
         }
 
 
