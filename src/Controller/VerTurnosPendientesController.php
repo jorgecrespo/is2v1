@@ -7,6 +7,7 @@ use App\Entity\Turnos;
 use App\Entity\Vacunas;
 use App\Entity\Vacunatorios;
 use App\Service\CustomService;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,11 +26,12 @@ class VerTurnosPendientesController extends AbstractController
         $em = $doctrine->getManager();
         $mailPaciente = $cs->getUser()['user'];
         $paciente = $em->getRepository(Pacientes::class)->findOneByEmail($mailPaciente);
+        $hoy =  new DateTime();
 
         $turnosDelPaciente = $em->getRepository(Turnos::class)->findTurnosByUser($paciente->getId());
         $turnos = [];
         foreach($turnosDelPaciente as $turno){
-            if ($turno->getEstado() == 'ASIGNADO'){
+            if ($turno->getEstado() == 'ASIGNADO' and ( date_diff( $hoy, $turno->getFecha())->invert == 0 )){
                 $turnoStr['vacuna'] = $em->getRepository(Vacunas::class)->findOneById($turno->getVacunaId())->getNombre();
                 $turnoStr['fecha'] = date_format($turno->getFecha(), "d-m-Y") ;
                 $turnoStr['vacunatorio'] = $em->getRepository(Vacunatorios::class)->findOneById($turno->getVacunatorioId())->getNombre();

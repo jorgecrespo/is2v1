@@ -37,9 +37,15 @@ class PdfIndividualController extends AbstractController
 
 
         if ($idVacuna != 2) {
-            $turno = $em->getRepository(Turnos::class)->findOneByPacienteAndVacunaId($pacienteId, $vacuna->getId());
+
+
+            if ($paciente->getVacunaGripeFecha() != null)
+                $turno = $paciente->getVacunaGripeFecha();
+            else{
+                $turno = $em->getRepository(Turnos::class)->findOneByPacienteAndVacunaId($pacienteId, $vacuna->getId());
+            }
             if ($turno != null)
-            $fecha_aplicacion = date_format($turno->getFecha(), "d-m-Y");
+            $fecha_aplicacion = date_format($turno, "d-m-Y");
 
         } else {
             $fecha_aplicacion = null;
