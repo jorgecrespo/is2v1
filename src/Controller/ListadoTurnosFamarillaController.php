@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Pacientes;
 use App\Entity\Turnos;
+use App\Entity\Vacunas;
+use App\Entity\Vacunatorios;
 use App\Service\CustomService;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
@@ -30,7 +32,30 @@ class ListadoTurnosFamarillaController extends AbstractController
         if ( isset ($request->request->all()["id_baja_turno"])){
 
             $turnoId = $request->request->all()["id_baja_turno"];
-            $em->getRepository(Turnos::class)->bajaTurno($turnoId);
+
+             $em->getRepository(Turnos::class)->bajaTurno($turnoId);
+
+
+            //mail de baja
+            $turno = $em->getRepository(Turnos::class)->findOneById($turnoId );
+
+            $fechaStr = date_format($turno->getFecha(), "d-m-Y") ;
+            $paciente = $em->getRepository(Pacientes::class)->findOneById($turno->getPacienteId());
+            $pacienteNombre = $paciente->getNombre();
+            $pacienteMail = $paciente->getMail();
+            $vacunatorio = $em->getRepository(Vacunatorios::class)->findOneById($turno->getVacunatorioId());
+            $nombreVacunatorio = $vacunatorio->getNombre();
+            $direccionVacunaotiro = $vacunatorio->getDireccion();
+            $NombreVacuna = $em->getRepository(Vacunas::class)->findOneById($turno->getVacunaID())->getNombre();
+
+            $asunto ="IMPORTANTE: TURNO DADO DE BAJA.";
+           
+            $mensajeHtml = "<p>Estimado/a " . $paciente->getNombre() . ", lamentamos informarle que su turno de vacunación contra " . $NombreVacuna . " para el dia ". $fechaStr  ;
+            $mensajeHtml .= " en el Centro de vacunacion ". $nombreVacunatorio ." ubicado en: " . $direccionVacunaotiro .", ha sido <b> CANCELADO </b> <br> Saludos Cordiales <br> VacunaSist </p>";
+
+            // dd($pacienteNombre, $paciente, $mensajeHtml);
+            $cs->enviarEmail($pacienteMail, $asunto, $mensajeHtml);
+
         
         }
    

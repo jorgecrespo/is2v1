@@ -9,6 +9,8 @@ use phpDocumentor\Reflection\Types\Boolean;
 use PhpParser\Node\Expr\Cast\String_;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 
@@ -18,6 +20,8 @@ class CustomService
     // private $devMode = true;
     private $devMode = !false;
 
+
+    private $mailer;
 
 
     
@@ -78,9 +82,10 @@ class CustomService
     ];
 
 
-    public function __construct(RequestStack $requestStack){
+    public function __construct(RequestStack $requestStack, MailerInterface $mailer){
 
         $this->session = $requestStack->getSession();
+        $this->mailer = $mailer;
     }
 
     public function getUser():array
@@ -246,6 +251,20 @@ class CustomService
         return $token;
     }
 
+
+    public function enviarEmail($mail, $asunto, $mensajeHtml){
+        
+
+        $email = (new Email())
+        ->from('info@vacunasist.com.ar')
+        ->to($mail)
+        ->subject($asunto)
+        // ->text('Texto de prueba para el envio de mails')
+        ->html($mensajeHtml);
+
+        $this->mailer->send($email);
+
+    }
 
   
 

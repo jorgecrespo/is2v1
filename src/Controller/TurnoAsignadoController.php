@@ -58,6 +58,7 @@ class TurnoAsignadoController extends AbstractController
         $paciente = $em->getRepository(Pacientes::class)->findOneByEmail($mailPaciente);
         $turno->setPacienteId($paciente->getId());
         $vacuna = $em->getRepository(Vacunas::class)->findOneById(3);
+        $nombreVacuna = $vacuna->getNombre();
         // dd($vacuna);
         $turno->setVacunaId($vacuna->getId());
         $turno->setEstado('ASIGNADO');
@@ -72,7 +73,12 @@ class TurnoAsignadoController extends AbstractController
         $turnoX['fecha'] = date_format($fecha_seleccionada, "d-m-Y") ;
         $turnoX['vacunatorio'] = $vacunatorio->getNombre();
         $turnoX['direccion'] = $vacunatorio->getDireccion();
-        $turnoX['vacuna'] = $vacuna->getNombre();
+        $turnoX['vacuna'] = $nombreVacuna;
+
+        $mensajeHtml = "<p>Estimado/a " . $paciente->getNombre() . ", se le asignó un turno de vacunación contra " . $turnoX['vacuna'] . " para el dia ". $turnoX['fecha'] . " .</p>" ;
+        $mensajeHtml .= "<br> <p> Centro de vacunacion ". $turnoX['vacunatorio'] ." ubicado en: " . $turnoX['direccion'] ." <br> Saludos Cordiales <br> VacunaSist </p>";
+        $asunto= 'Turno de vacunacion en VacunaSist';
+        $cs->enviarEmail($mailPaciente, $asunto, $mensajeHtml);
 
         return $this->render('turno_asignado/index.html.twig', [
             'controller_name' => 'TurnoAsignadoController',
