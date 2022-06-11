@@ -6,6 +6,7 @@ use App\Entity\Pacientes;
 use App\Entity\Turnos;
 use App\Entity\Vacunatorios;
 use App\Service\CustomService;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use PhpParser\Node\Stmt\Switch_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -65,6 +66,15 @@ class AsignacionTurnoController extends AbstractController
 
 
         $vacunatorios = $em->getRepository(Vacunatorios::class)->findAll();
+
+
+        $hoy = date("d-m-Y");
+ 
+        $fecha_desde =  date("d-m-Y",strtotime($hoy ."+ 10 days")); 
+        
+        $fecha_hasta = date("d-m-Y",strtotime($hoy ."+ 40 days")); 
+
+
         // dd($vacunatorios);
         // $mailPaciente = $cs->getUser()['user'];
         // $feNac = $em->getRepository(Pacientes::class)->findOneByEmail($mailPaciente)->getFechaNac();
@@ -81,6 +91,8 @@ class AsignacionTurnoController extends AbstractController
             'controller_name' => 'AsignacionTurnoController',
             'enf' => $enfermedad,
             'vacunatorios'=> $vacunatorios,
+            'fdesde' => $fecha_desde,
+            'fhasta' => $fecha_hasta,
 
         ]);
     }

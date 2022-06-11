@@ -12,21 +12,25 @@
     <h1>Asignación de turno para {{enf }}</h1>
 
     <hr>
-    <p>Por favor seleccione el centro de vacunación de su conveniencia.</p>
+    <p>Por favor seleccione el centro de vacunación de su conveniencia y la fecha del turno.</p>
+    <p>Prodrá reservar su turno entre el {{ fdesde }} y {{ fhasta }} </p>
 
 <form method="post" action="/turno/asignado">
-<div class="form-check">
-  <input class="form-check-input" id="vacunatorio1" type="radio" name="vacunatorio_id" value="0" onclick="habilitarBtn('btn_sel_turno')">
-  <label class="form-check-label" for="vacunatorio1">
-    <b>{{vacunatorios[0].getNombre() }}</b> ({{vacunatorios[0].getDireccion()}})
-  </label>
+<div>
+  <div class="form-check">
+    <input class="form-check-input" id="vacunatorio1" type="radio" name="vacunatorio_id" value="0" onclick="habilitarBtn('btn_sel_turno')">
+    <label class="form-check-label" for="vacunatorio1">
+      <b>{{vacunatorios[0].getNombre() }}</b> ({{vacunatorios[0].getDireccion()}})
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" id="vacunatorio2" type="radio" name="vacunatorio_id" value="1" onclick="habilitarBtn('btn_sel_turno')">
+    <label class="form-check-label" for="vacunatorio2">
+          <b>{{vacunatorios[1].getNombre() }}</b> ({{vacunatorios[1].getDireccion()}})
+    </label>
+  </div>
 </div>
-<div class="form-check">
-  <input class="form-check-input" id="vacunatorio2" type="radio" name="vacunatorio_id" value="1" onclick="habilitarBtn('btn_sel_turno')">
-  <label class="form-check-label" for="vacunatorio2">
-        <b>{{vacunatorios[1].getNombre() }}</b> ({{vacunatorios[1].getDireccion()}})
-  </label>
-</div>
+
 <div class="form-check">
   <input class="form-check-input" id="vacunatorio3" type="radio" name="vacunatorio_id" value="2" onclick="habilitarBtn('btn_sel_turno')">
   <label class="form-check-label" for="vacunatorio3">
@@ -35,9 +39,32 @@
   </label>
 </div>
 
+
+<br>
+<div>
+<label for="turno_famarilla">Fecha:  </label>
+<input type="date" id="turno_famarilla" name="turno_famarilla">
+
+</div>
+<br>
+
    <input type="submit" id="btn_sel_turno"  class="btn btn-primary" disabled onclick="registrarTurnoFA()" value="Confirmar">
    <a    class="btn btn-primary" href="/homepaciente">Cancelar</a>
 </form>
  
+ <div>
+{% for message in app.flashes('success') %}
+				<div class="alert alert-success">
+					{{ message }}
+				</div>
+			{% endfor %}
+			{% for message in app.flashes('error') %}
+				<div class="alert alert-danger">
+					{{ message }}
+				</div>
+			{% endfor %}
+ </div>
+
+
 </div>
 {% endblock %}
