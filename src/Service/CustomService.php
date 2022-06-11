@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Pacientes;
 use App\Entity\Usuarios;
 use DateTime;
+use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\Types\Boolean;
 use PhpParser\Node\Expr\Cast\String_;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,6 +23,7 @@ class CustomService
 
 
     private $mailer;
+    private $doctrine;
 
 
     
@@ -82,10 +84,15 @@ class CustomService
     ];
 
 
-    public function __construct(RequestStack $requestStack, MailerInterface $mailer){
+    public function __construct(
+        RequestStack $requestStack, 
+        MailerInterface $mailer,
+        ManagerRegistry $doctrine,
+        ){
 
         $this->session = $requestStack->getSession();
         $this->mailer = $mailer;
+        $this->doctrine = $doctrine;
     }
 
     public function getUser():array
@@ -153,6 +160,7 @@ class CustomService
 
 
     public function isDevMode(){
+        $this->VerificarNotificaciones();
         return $this->devMode;
     }
 
@@ -263,6 +271,31 @@ class CustomService
         ->html($mensajeHtml);
 
         $this->mailer->send($email);
+
+    }
+
+    public function VerificarNotificaciones(){
+
+        $em = $this->doctrine->getManager();
+
+        $admin = $em->getRepository(Usuarios::class)->findOneByMail('admin@gmail.com');
+        $fechaActualizacion = $admin->getFechaBaja();
+        // dd($fechaActualizacion);
+
+        $hoy =  new DateTime();
+
+        $intvl = $fechaActualizacion->diff($hoy);
+        if ($intvl->d >=1 ){
+
+            $this->enviarNotificaciones();
+            $admin->setFechaBaja($hoy);
+            $em->flush();
+        }
+
+
+    }
+
+    public function enviarNotificaciones(){
 
     }
 
