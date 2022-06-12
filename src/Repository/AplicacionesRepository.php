@@ -82,6 +82,16 @@ public function findOneById($value): ?Aplicaciones
     ;
 }
 
+public function findOneByTurnoId($turnoId): ?Aplicaciones
+{
+    return $this->createQueryBuilder('u')
+        ->andWhere('u.turno_id = :val')
+        ->setParameter('val', $turnoId)
+        ->getQuery()
+        ->getOneOrNullResult()
+    ;
+}
+
 
 
 
