@@ -34,39 +34,34 @@ class PdfIndividualController extends AbstractController
         $vacuna = $em->getRepository(Vacunas::class)->findOneById($idVacuna);
 
         $fechaSegunda = null;
-
+        $lote1 = null;
+        $lote2 = null;
 
         if ($idVacuna != 2) {
 
 
-            if ($paciente->getVacunaGripeFecha() != null)
-                $turno = $paciente->getVacunaGripeFecha();
-            else{
                 $turno = $em->getRepository(Turnos::class)->findOneByPacienteAndVacunaId($pacienteId, $vacuna->getId());
+            if ($turno != null){
+                $fecha_aplicacion = date_format($turno->getFecha(), "d-m-Y");
+                $lote1 = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($turno->getId())->getLote();
             }
-            if ($turno != null)
-            $fecha_aplicacion = date_format($turno->getFecha(), "d-m-Y");
 
         } else {
             $fecha_aplicacion = null;
-            $vacunasVacunaSistCovid = $em->getRepository(Turnos::class)->findTurnosByPacienteAndVacunaId($pacienteId, 2);
-            // fecha vacuna covid - 1
-            $fecha_aplicacion = $paciente->getVacunaCovid1Fecha();
+            $vacunasVacunasSistCovid = $em->getRepository(Turnos::class)->findTurnosByPacienteAndVacunaId($pacienteId, 2);
             if ($fecha_aplicacion == null) {
-                if (count($vacunasVacunaSistCovid) > 0) {
+                if (count($vacunasVacunasSistCovid) > 0) {
 
-                    $fecha_aplicacion = $vacunasVacunaSistCovid[0]->getFecha();
+                    $fecha_aplicacion = $vacunasVacunasSistCovid[0]->getFecha();
                 }
             } 
             $fecha_aplicacion = date_format($fecha_aplicacion, "d-m-Y");
+            $lote1 = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($vacunasVacunasSistCovid[0]->getId())->getLote();
 
-            // fecha vacuna covid - 2
-            if ($paciente->getVacunaCovid2Fecha() != null) {
-                $fechaCovid2 = $paciente->getVacunaCovid2Fecha();
-            } else if ($paciente->getVacunaCovid1Fecha() != null and isset($vacunasVacunaSistCovid[0])) {
-                $fechaCovid2 = $vacunasVacunaSistCovid[0]->getFecha();
-            } else if (isset($vacunasVacunaSistCovid[1])) {
-                $fechaCovid2 = $vacunasVacunaSistCovid[1]->getFecha();
+            if (isset($vacunasVacunasSistCovid[1])) {
+                $fechaCovid2 = $vacunasVacunasSistCovid[1]->getFecha();
+                $lote2 = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($vacunasVacunasSistCovid[1]->getId())->getLote();
+
             } else {
                 $fechaCovid2 = null;
             }
@@ -102,6 +97,8 @@ class PdfIndividualController extends AbstractController
                     'vacuna' => $vacuna->getNombre(),
                     'fecha' => $fecha_aplicacion,
                     'segunda' => $fechaSegunda,
+                    'lote1' => $lote1,
+                    'lote2' => $lote2,
                 )
             ),
             $file_url

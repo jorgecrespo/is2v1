@@ -18,7 +18,7 @@ class MailSenderController extends AbstractController
 
 
         $email = (new Email())
-        ->from('info@vacunasist.com.ar')
+        ->from('info@vacunassist.com.ar')
         ->to('jorgeluiscrespo@gmail.com')
         //->cc('cc@example.com')
         //->bcc('bcc@example.com')

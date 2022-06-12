@@ -264,7 +264,7 @@ class CustomService
         
 
         $email = (new Email())
-        ->from('info@vacunasist.com.ar')
+        ->from('info@vacunassist.com.ar')
         ->to($mail)
         ->subject($asunto)
         // ->text('Texto de prueba para el envio de mails')

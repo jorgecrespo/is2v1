@@ -28,7 +28,6 @@ class VerHistorialVacunasController extends AbstractController
         $aplicaciones = array(null, null, null, null);
 
         // fecha vacuna gripe
-        // $fechaGripe = $paciente->getVacunaGripeFecha();
         $fechaGripe = null;
         if ($fechaGripe == null){
             if ($em->getRepository(Turnos::class)->findOneByPacienteAndVacunaId($pacienteId, 1) != null){
@@ -43,31 +42,23 @@ class VerHistorialVacunasController extends AbstractController
 
         
         // fecha vacuna covid - 1
-        $vacunasVacunaSistCovid = $em->getRepository(Turnos::class)->findTurnosByPacienteAndVacunaId($pacienteId, 2);
+        $vacunasVacunasSistCovid = $em->getRepository(Turnos::class)->findTurnosByPacienteAndVacunaId($pacienteId, 2);
         // omito las vacunas previas del paciente
-        // $fechaCovid1 = $paciente->getVacunaCovid1Fecha();
         $fechaCovid1 = null;
         if ($fechaCovid1 == null){
-            if (count ($vacunasVacunaSistCovid) >0){
+            if (count ($vacunasVacunasSistCovid) >0){
                 
-                $fechaCovid1 = $vacunasVacunaSistCovid[0]->getFecha();
-                $loteCovid1 = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($vacunasVacunaSistCovid[0]->getId())->getLote();
+                $fechaCovid1 = $vacunasVacunasSistCovid[0]->getFecha();
+                $loteCovid1 = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($vacunasVacunasSistCovid[0]->getId())->getLote();
                 $aplicaciones[1] = array($fechaCovid1, $loteCovid1);
             } 
         }
         
         // fecha vacuna covid - 2
-
-        // COMENTO PARA EXCLUIR VACUNAS PREVIAS A VACUNASIST
-        // if ($paciente->getVacunaCovid2Fecha() != null){
-        // $fechaCovid2 = $paciente->getVacunaCovid2Fecha();
-        // } else if ( $paciente->getVacunaCovid1Fecha() != null and isset($vacunasVacunaSistCovid[0]) ){
-        //     $fechaCovid2 = $vacunasVacunaSistCovid[0]->getFecha();
-        // } else 
         
-        if ( isset( $vacunasVacunaSistCovid[1]) ){
-            $fechaCovid2 = $vacunasVacunaSistCovid[1]->getFecha();
-            $loteCovid2 = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($vacunasVacunaSistCovid[1]->getId())->getLote();
+        if ( isset( $vacunasVacunasSistCovid[1]) ){
+            $fechaCovid2 = $vacunasVacunasSistCovid[1]->getFecha();
+            $loteCovid2 = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($vacunasVacunasSistCovid[1]->getId())->getLote();
             $aplicaciones[2] = array($fechaCovid2, $loteCovid2);
 
         } else {
@@ -76,7 +67,6 @@ class VerHistorialVacunasController extends AbstractController
 
 
         // fecha vacuna Fiebre amarilla
-        // $fechaFamarilla = $paciente->getVacunaHepatitisFecha();
         $fechaFamarilla = null;
 
         if ($fechaFamarilla == null){

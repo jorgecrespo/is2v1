@@ -76,8 +76,8 @@ class TurnoAsignadoController extends AbstractController
         $turnoX['vacuna'] = $nombreVacuna;
 
         $mensajeHtml = "<p>Estimado/a " . $paciente->getNombre() . ", se le asignó un turno de vacunación contra " . $turnoX['vacuna'] . " para el dia ". $turnoX['fecha'] . " .</p>" ;
-        $mensajeHtml .= "<br> <p> Centro de vacunacion ". $turnoX['vacunatorio'] ." ubicado en: " . $turnoX['direccion'] ." <br> Saludos Cordiales <br> VacunaSist </p>";
-        $asunto= 'Turno de vacunacion en VacunaSist';
+        $mensajeHtml .= "<br> <p> Centro de vacunacion ". $turnoX['vacunatorio'] ." ubicado en: " . $turnoX['direccion'] ." <br> Saludos Cordiales <br> VacunasSist </p>";
+        $asunto= 'Turno de vacunacion en VacunasSist';
         $cs->enviarEmail($mailPaciente, $asunto, $mensajeHtml);
 
         return $this->render('turno_asignado/index.html.twig', [

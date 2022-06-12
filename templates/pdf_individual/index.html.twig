@@ -10,18 +10,18 @@
 
 <div class="example-wrapper">
 Fecha: {{ fecha_certificado }}
-<h3>VACUNASIST</h3>
+<h3>VACUNASSIST</h3>
     <h1>Certificado de vacunaci&oacute;n</h1>
 
 {% if (segunda == null)  %} 
 
    <p>VACUNASSIST certifica que  {{ nombre }} ha recibido la primera dosis de la vacuna contra 
-   {{ vacuna }} el dia {{ fecha }}.   </p>
+   {{ vacuna }} (lote: {{ lote1 }})  el dia {{ fecha }}.   </p>
 
 {% else  %} 
 
- <p>VACUNASSIST certifica que  {{ nombre }} ha recibido la primera dosis de la vacuna contra 
-   {{ vacuna }} el dia {{ fecha }} y la segunda dosis el dia {{segunda}}   </p>
+ <p>VACUNASSIST certifica que  {{ nombre }} ha recibido una dosis de la vacuna contra 
+   {{ vacuna }} (lote: {{ lote1 }}) el dia {{ fecha }} y otra dosis el dia {{segunda}} (lote: {{ lote2 }})  </p>
 
 
 {% endif  %} 

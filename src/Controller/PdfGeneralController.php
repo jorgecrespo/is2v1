@@ -39,14 +39,14 @@ class PdfGeneralController extends AbstractController
             } 
         }
         $aplicaciones[0] = $fechaGripe;
-        $vacunasVacunaSistCovid = $em->getRepository(Turnos::class)->findTurnosByPacienteAndVacunaId($pacienteId, 2);
+        $vacunasVacunasSistCovid = $em->getRepository(Turnos::class)->findTurnosByPacienteAndVacunaId($pacienteId, 2);
 
         // fecha vacuna covid - 1
         $fechaCovid1 = $paciente->getVacunaCovid1Fecha();
         if ($fechaCovid1 == null){
-            if (count ($vacunasVacunaSistCovid) >0){
+            if (count ($vacunasVacunasSistCovid) >0){
 
-                $fechaCovid1 = $vacunasVacunaSistCovid[0]->getFecha();
+                $fechaCovid1 = $vacunasVacunasSistCovid[0]->getFecha();
             } 
         }
         $aplicaciones[1] = $fechaCovid1;
@@ -55,10 +55,10 @@ class PdfGeneralController extends AbstractController
         if ($paciente->getVacunaCovid2Fecha() != null){
         $fechaCovid2 = $paciente->getVacunaCovid2Fecha();
 
-        } else if ( $paciente->getVacunaCovid1Fecha() != null and isset($vacunasVacunaSistCovid[0]) ){
-            $fechaCovid2 = $vacunasVacunaSistCovid[0]->getFecha();
-        } else if ( isset( $vacunasVacunaSistCovid[1]) ){
-            $fechaCovid2 = $vacunasVacunaSistCovid[1]->getFecha();
+        } else if ( $paciente->getVacunaCovid1Fecha() != null and isset($vacunasVacunasSistCovid[0]) ){
+            $fechaCovid2 = $vacunasVacunasSistCovid[0]->getFecha();
+        } else if ( isset( $vacunasVacunasSistCovid[1]) ){
+            $fechaCovid2 = $vacunasVacunasSistCovid[1]->getFecha();
         } else {
             $fechaCovid2 = null;
         }

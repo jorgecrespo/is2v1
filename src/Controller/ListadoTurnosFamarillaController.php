@@ -51,7 +51,7 @@ class ListadoTurnosFamarillaController extends AbstractController
             $asunto ="IMPORTANTE: TURNO DADO DE BAJA.";
            
             $mensajeHtml = "<p>Estimado/a " . $paciente->getNombre() . ", lamentamos informarle que su turno de vacunación contra " . $NombreVacuna . " para el dia ". $fechaStr  ;
-            $mensajeHtml .= " en el Centro de vacunacion ". $nombreVacunatorio ." ubicado en: " . $direccionVacunaotiro .", ha sido <b> CANCELADO </b> <br> Saludos Cordiales <br> VacunaSist </p>";
+            $mensajeHtml .= " en el Centro de vacunacion ". $nombreVacunatorio ." ubicado en: " . $direccionVacunaotiro .", ha sido <b> CANCELADO </b> <br> Saludos Cordiales <br> VacunasSist </p>";
 
             // dd($pacienteNombre, $paciente, $mensajeHtml);
             $cs->enviarEmail($pacienteMail, $asunto, $mensajeHtml);
