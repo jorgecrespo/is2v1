@@ -6,6 +6,7 @@ use App\Entity\Pacientes;
 use App\Entity\Turnos;
 use App\Entity\Usuarios;
 use App\Entity\Vacunas;
+use App\Entity\Vacunatorios;
 use App\Service\CustomService;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
@@ -25,7 +26,8 @@ class VacunasAAplicarController extends AbstractController
         $mail = $cs->getUser()['user'];
         $vacunador = $em->getRepository(Usuarios::class)->findOneByMail($mail);
         $vacunatorio_id = $vacunador->getVacunatorioId()->getId();
-
+        $nombreVacunatorio = $em->getRepository(Vacunatorios::class)->findOneById($vacunatorio_id)->getNombre();
+        // dd($vacunador->getVacunatorioId(),$vacunador->getVacunatorioId()->getId() , $nombreVacunatorio);
         $turnos_pendientes = $em->getRepository(Turnos::class)->findTurnosByVacunatorio($vacunatorio_id);
 
         // dd($turnos_pendientes);
@@ -51,6 +53,7 @@ class VacunasAAplicarController extends AbstractController
             'controller_name' => 'VacunasAAplicarController',
             'turnos'=> $turnos,
             'vacunador'=>$vacunador->getNombre(),
+            'vacunatorio' => $nombreVacunatorio
         ]);
     }
 }
