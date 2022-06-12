@@ -36,6 +36,9 @@
 						Vacuna
 					</th>
 					<th>
+						Lote
+					</th>
+					<th>
 						Fecha
 					</th>
 
@@ -47,24 +50,28 @@
 			{% if (vacunas[0] != null )  %}
 				<tr>
 					<td>Gripe</td>
+					<td>{{lotes[0]}}</td>
 					<td>{{vacunas[0]}}</td>
 				</tr>
 			{% endif %}
 			{% if (vacunas[1] != null )  %}
 				<tr>
-					<td>Covid19 Dosis 1</td>
+					<td>Covid19</td>
+					<td>{{lotes[1]}}</td>
 					<td>{{vacunas[1]}}</td>
 				</tr>
 			{% endif %}
 			{% if (vacunas[2] != null )  %}
 				<tr>
-					<td>Covid19 Dosis 2</td>
+					<td>Covid19</td>
+					<td>{{lotes[2]}}</td>
 					<td>{{vacunas[2]}}</td>
 				</tr>
 			{% endif %}
 			{% if (vacunas[3] != null )  %}
 				<tr>
 					<td>Fiebre Amarilla</td>
+					<td>{{lotes[3]}}</td>
 					<td>{{vacunas[3]}}</td>
 				</tr>
 			{% endif %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Aplicaciones;
 use App\Entity\Pacientes;
 use App\Entity\Turnos;
 use App\Service\CustomService;
@@ -29,55 +30,56 @@ class PdfGeneralController extends AbstractController
 
 
         $aplicaciones = array(null, null, null, null);
+        $lotes = array(null, null, null, null);
 
         // fecha vacuna gripe
-        $fechaGripe = $paciente->getVacunaGripeFecha();
-        if ($fechaGripe == null){
+       
             if ($em->getRepository(Turnos::class)->findOneByPacienteAndVacunaId($pacienteId, 1) != null){
+                $turnoGripe = $em->getRepository(Turnos::class)->findOneByPacienteAndVacunaId($pacienteId, 1);
+                $fechaGripe = $turnoGripe->getFecha();
+                $aplicaciones[0] = $fechaGripe;
+                $lotes[0] = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($turnoGripe->getId())->getLote();
 
-                $fechaGripe = $em->getRepository(Turnos::class)->findOneByPacienteAndVacunaId($pacienteId, 1)->getFecha();
             } 
-        }
-        $aplicaciones[0] = $fechaGripe;
+        
+        
         $vacunasVacunasSistCovid = $em->getRepository(Turnos::class)->findTurnosByPacienteAndVacunaId($pacienteId, 2);
-
         // fecha vacuna covid - 1
-        $fechaCovid1 = $paciente->getVacunaCovid1Fecha();
-        if ($fechaCovid1 == null){
+      
             if (count ($vacunasVacunasSistCovid) >0){
 
                 $fechaCovid1 = $vacunasVacunasSistCovid[0]->getFecha();
+                $aplicaciones[1] = $fechaCovid1;
+                $lotes[1] = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($vacunasVacunasSistCovid[0]->getId())->getLote();
+
             } 
-        }
-        $aplicaciones[1] = $fechaCovid1;
+        
 
         // fecha vacuna covid - 2
-        if ($paciente->getVacunaCovid2Fecha() != null){
-        $fechaCovid2 = $paciente->getVacunaCovid2Fecha();
-
-        } else if ( $paciente->getVacunaCovid1Fecha() != null and isset($vacunasVacunasSistCovid[0]) ){
-            $fechaCovid2 = $vacunasVacunasSistCovid[0]->getFecha();
-        } else if ( isset( $vacunasVacunasSistCovid[1]) ){
+    if ( isset( $vacunasVacunasSistCovid[1]) ){
             $fechaCovid2 = $vacunasVacunasSistCovid[1]->getFecha();
+            $lotes[2] = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($vacunasVacunasSistCovid[1]->getId())->getLote();
+
         } else {
             $fechaCovid2 = null;
+            $aplicaciones[2] = $fechaCovid2;
         }
-        $aplicaciones[2] = $fechaCovid2;
 
         // fecha vacuna Fiebre amarilla
-        $fechaFamarilla = $paciente->getVacunaHepatitisFecha();
-        if ($fechaFamarilla == null){
+ 
             if ($em->getRepository(Turnos::class)->findOneByPacienteAndVacunaId($pacienteId, 3) != null){
+                $turnoFamarilla = $em->getRepository(Turnos::class)->findOneByPacienteAndVacunaId($pacienteId, 3);
+                $fechaFamarilla = $turnoFamarilla->getFecha();
+                $aplicaciones[3] = $fechaFamarilla;
+                $lotes[3] = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($turnoFamarilla->getId())->getLote();
 
-                $fechaFamarilla = $em->getRepository(Turnos::class)->findOneByPacienteAndVacunaId($pacienteId, 3)->getFecha();
             } 
-        }
-        $aplicaciones[3] = $fechaFamarilla;
+        
 
         // dd($aplicaciones);
 
         $aplicacionesStr = array();
-
+        
         $sinVacunas  = true;
         foreach($aplicaciones as $aplicacion){
 
@@ -122,6 +124,7 @@ class PdfGeneralController extends AbstractController
                     'nombre' => $paciente->getNombre(),
                     'vacunas' => $aplicacionesStr,
                     'fecha_certificado'  => $fecha_gen,
+                    'lotes' => $lotes
 
                 )
             ),
