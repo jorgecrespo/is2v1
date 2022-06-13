@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Service;
+date_default_timezone_set('America/Buenos_Aires');
 
 use App\Entity\Pacientes;
 use App\Entity\Usuarios;
@@ -14,6 +15,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+
 
 class CustomService
 {
@@ -89,6 +91,7 @@ class CustomService
         MailerInterface $mailer,
         ManagerRegistry $doctrine,
         ){
+
 
         $this->session = $requestStack->getSession();
         $this->mailer = $mailer;
