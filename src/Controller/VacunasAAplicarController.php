@@ -28,7 +28,7 @@ class VacunasAAplicarController extends AbstractController
         $vacunatorio_id = $vacunador->getVacunatorioId()->getId();
         $nombreVacunatorio = $em->getRepository(Vacunatorios::class)->findOneById($vacunatorio_id)->getNombre();
         // dd($vacunador->getVacunatorioId(),$vacunador->getVacunatorioId()->getId() , $nombreVacunatorio);
-        $turnos_pendientes = $em->getRepository(Turnos::class)->findTurnosByVacunatorio($vacunatorio_id);
+        $turnos_pendientes = $em->getRepository(Turnos::class)->findTurnosByVacunatorioPorEstado($vacunatorio_id, 'ASIGNADO');
 
         // dd($turnos_pendientes);
         $turnos = [];

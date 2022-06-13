@@ -88,6 +88,8 @@ class VerHistorialVacunasController extends AbstractController
             $fechaStr=null;
             if ($aplicacion != null ){
                 $fechaStr = date_format($aplicacion[0], "d-m-Y");
+            } else {
+                $fechaStr ="Vacuna no aplicada";
             }
             $lote = $aplicacion != null ? $aplicacion[1]: null;
             array_push($aplicacionesStr, array($fechaStr ,$lote ));

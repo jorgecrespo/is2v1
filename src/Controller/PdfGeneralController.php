@@ -121,7 +121,7 @@ class PdfGeneralController extends AbstractController
             $this->renderView(
                 'pdf_general/index.html.twig',
                 array(
-                    'nombre' => $paciente->getNombre(),
+                    'nombre' => $paciente->getNombre() . " " . $paciente->getApellido(),
                     'vacunas' => $aplicacionesStr,
                     'fecha_certificado'  => $fecha_gen,
                     'lotes' => $lotes

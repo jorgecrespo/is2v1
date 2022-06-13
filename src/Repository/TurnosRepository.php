@@ -103,6 +103,23 @@ class TurnosRepository extends ServiceEntityRepository
         ;
     }
 
+
+          /**
+    * @return Turnos[] Returns an array of Turnos objects
+    */
+    public function findTurnosByVacunatorioPorEstado($vacunatorioId, $estado): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.vacunatorio_id = :val')
+            ->setParameter('val', $vacunatorioId)
+            ->andWhere('t.estado = :val3')
+            ->setParameter('val3', $estado)
+         //    ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     
     public function findOneById($id): ?Turnos
     {

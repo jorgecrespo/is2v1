@@ -53,10 +53,10 @@ class PdfIndividualController extends AbstractController
                 if (count($vacunasVacunasSistCovid) > 0) {
 
                     $fecha_aplicacion = $vacunasVacunasSistCovid[0]->getFecha();
+                    $fecha_aplicacion = date_format($fecha_aplicacion, "d-m-Y");
+                    $lote1 = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($vacunasVacunasSistCovid[0]->getId())->getLote();
                 }
             } 
-            $fecha_aplicacion = date_format($fecha_aplicacion, "d-m-Y");
-            $lote1 = $em->getRepository(Aplicaciones::class)->findOneByTurnoId($vacunasVacunasSistCovid[0]->getId())->getLote();
 
             if (isset($vacunasVacunasSistCovid[1])) {
                 $fechaCovid2 = $vacunasVacunasSistCovid[1]->getFecha();
@@ -86,7 +86,7 @@ class PdfIndividualController extends AbstractController
 
         $fecha_gen = date_format(new DateTime(), "d-m-Y");
 
-        $nombre = $paciente->getNombre();
+        $nombre = $paciente->getNombre() . ' ' .  $paciente->getApellido();
 
         $file =  $knpSnappyPdf->generateFromHtml(
             $this->renderView(
