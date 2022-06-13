@@ -13,18 +13,18 @@
 
     <hr>
     <p>Por favor seleccione el centro de vacunación de su conveniencia y la fecha del turno.</p>
-    <p>Prodrá reservar su turno entre el {{ fdesde }} y {{ fhasta }} </p>
+    <p>Podrá reservar su turno entre el {{ fdesde }} y {{ fhasta }} </p>
 
 <form method="post" action="/turno/asignado">
 <div>
   <div class="form-check">
-    <input class="form-check-input" id="vacunatorio1" type="radio" name="vacunatorio_id" value="0" onclick="habilitarBtn('btn_sel_turno')">
+    <input class="form-check-input" id="vacunatorio1" type="radio" name="vacunatorio_id" value="1" onclick="habilitarBtn('btn_sel_turno')">
     <label class="form-check-label" for="vacunatorio1">
       <b>{{vacunatorios[0].getNombre() }}</b> ({{vacunatorios[0].getDireccion()}})
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" id="vacunatorio2" type="radio" name="vacunatorio_id" value="1" onclick="habilitarBtn('btn_sel_turno')">
+    <input class="form-check-input" id="vacunatorio2" type="radio" name="vacunatorio_id" value="2" onclick="habilitarBtn('btn_sel_turno')">
     <label class="form-check-label" for="vacunatorio2">
           <b>{{vacunatorios[1].getNombre() }}</b> ({{vacunatorios[1].getDireccion()}})
     </label>
@@ -32,7 +32,7 @@
 </div>
 
 <div class="form-check">
-  <input class="form-check-input" id="vacunatorio3" type="radio" name="vacunatorio_id" value="2" onclick="habilitarBtn('btn_sel_turno')">
+  <input class="form-check-input" id="vacunatorio3" type="radio" name="vacunatorio_id" value="3" onclick="habilitarBtn('btn_sel_turno')">
   <label class="form-check-label" for="vacunatorio3">
        <b>{{vacunatorios[2].getNombre() }}</b> ({{vacunatorios[2].getDireccion()}})
 
