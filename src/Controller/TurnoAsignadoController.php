@@ -64,7 +64,7 @@ class TurnoAsignadoController extends AbstractController
         $turno->setEstado('ASIGNADO');
         $vacunatorio = $em->getRepository(Vacunatorios::class)->findOneById($vacunatorioId);
         // dd($vacunatorioId, $vacunatorio);
-        $turno->setVacunatorioId($vacunatorio->getID());
+        $turno->setVacunatorioId($vacunatorio->getId());
         $turno->setFecha(($fecha_seleccionada));
 
         $em->persist($turno);
