@@ -87,5 +87,18 @@ class NotificacionesRepository extends ServiceEntityRepository
        ;
    }
 
+      /**
+    * @return Notificaciones[] Returns an array of Notificaciones objects
+    */
+    public function findNotificacionesByTurnoId($turnoId): array
+    {
+        return $this->createQueryBuilder('n')
+            ->andWhere('n.turno_id = :val1')
+            ->setParameter('val1', $turnoId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 }

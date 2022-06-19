@@ -289,7 +289,7 @@ class CustomService
         $hoy =  date_format(new DateTime(), "d-m-Y") ;
         if ($fechaActualizacion != $hoy){
             $this->enviarNotificaciones();
-            $admin->setFechaBaja($hoy);
+            $admin->setFechaBaja(new DateTime());
             $em->flush();
         }
     }
