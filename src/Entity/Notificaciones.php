@@ -13,8 +13,7 @@ class Notificaciones
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: turnos::class, inversedBy: 'notificaciones')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\Column(type: 'integer')]
     private $turno_id;
 
     #[ORM\Column(type: 'integer')]
@@ -28,12 +27,12 @@ class Notificaciones
         return $this->id;
     }
 
-    public function getTurnoId(): ?turnos
+    public function getTurnoId(): ?int
     {
         return $this->turno_id;
     }
 
-    public function setTurnoId(?turnos $turno_id): self
+    public function setTurnoId(int $turno_id): self
     {
         $this->turno_id = $turno_id;
 

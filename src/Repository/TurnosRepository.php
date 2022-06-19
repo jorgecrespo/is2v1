@@ -199,4 +199,20 @@ class TurnosRepository extends ServiceEntityRepository
     }
 
 
+        /**
+     * @return Turnos[] Returns an array of Turnos objects
+     */
+    public function findTurnosPendientesByDate($fecha): array
+    {
+        $estado = 'ASIGNADO';
+        return $this->createQueryBuilder('u')
+        ->andWhere('u.fecha = :val1')
+        ->setParameter('val1', $fecha)
+        ->andWhere('u.estado = :val2')
+        ->setParameter('val2', $estado)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
 }

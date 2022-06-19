@@ -72,7 +72,7 @@ class VacunadoresporcentroController extends AbstractController
                 ],
             ])
             ->add('V2', CheckboxType::class, [
-                'label'    => 'Terminal de O.',
+                'label'    => 'Terminal de Omnibus',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-check',

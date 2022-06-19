@@ -3,8 +3,12 @@
 namespace App\Service;
 date_default_timezone_set('America/Buenos_Aires');
 
+use App\Entity\Notificaciones;
 use App\Entity\Pacientes;
+use App\Entity\Turnos;
 use App\Entity\Usuarios;
+use App\Entity\Vacunas;
+use App\Entity\Vacunatorios;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -280,30 +284,76 @@ class CustomService
     public function VerificarNotificaciones(){
 
         $em = $this->doctrine->getManager();
-
         $admin = $em->getRepository(Usuarios::class)->findOneByMail('admin@gmail.com');
-        $fechaActualizacion = $admin->getFechaBaja();
-        // dd($fechaActualizacion);
-
-        $hoy =  new DateTime();
-
-        $intvl = $fechaActualizacion->diff($hoy);
-        if ($intvl->d >=1 ){
-
+        $fechaActualizacion = date_format($admin->getFechaBaja(), "d-m-Y");
+        $hoy =  date_format(new DateTime(), "d-m-Y") ;
+        if ($fechaActualizacion != $hoy){
             $this->enviarNotificaciones();
             $admin->setFechaBaja($hoy);
             $em->flush();
         }
-
-
     }
 
+
+
+    // 
     public function enviarNotificaciones(){
 
+        $em = $this->doctrine->getManager();
+
+        
+        $hoy = date("d-m-Y");
+        
+        $maniana = new DateTime(date("d-m-Y",strtotime($hoy ."+ 1 days"))); 
+        
+        $turnosDeManiana =  $em->getRepository(Turnos::class)->findTurnosPendientesByDate($maniana);
+
+        foreach($turnosDeManiana as $turno){
+
+            $this->enviarRecordatorio($turno);
+        }
+        
     }
 
-  
+    public function enviarRecordatorio($turno, $diasAntes = 1){
 
+        $em = $this->doctrine->getManager();
+        $paciente =  $em->getRepository(Pacientes::class)->findOneById($turno->getPacienteId());
+        $mailPaciente = $paciente->getMail();
+
+        $vacunatorio = $em->getRepository(Vacunatorios::class)->findOneById($turno->getVacunatorioId());
+        $vacuna = $em->getRepository(Vacunas::class)->findOneById($turno->getVacunaId());
+
+
+
+        
+        $notificaciones = $em->getRepository(Notificaciones::class)->findNotificacionesByTurnoIdAndAntelacion($turno->getId(),$diasAntes );
+        
+        if (count($notificaciones) == 0){
+
+            
+            
+            $asunto = "Recordario de turno de Vacunacion en VacunasSist";
+            
+            $mensajeHtml = "<p>Estimado/a " . $paciente->getNombre() . ' ' . $paciente->getApellido() . ", le recordamos que tiene asignado un turno de vacunación contra " . $vacuna->getNombre() . " para <b> mañana  ". date_format($turno->getFecha(), "d-m-Y")  . "</b> .</p>" ;
+            $mensajeHtml .= "<br> <p> Centro de vacunacion ". $vacunatorio->getNombre() ." ubicado en: " . $vacunatorio->getDireccion() ." <br> Saludos Cordiales <br> VacunasSist </p>";
+            
+            $this->enviarEmail($mailPaciente, $asunto, $mensajeHtml);
+            
+            
+            $notificacion = new Notificaciones();
+            $notificacion->setTurnoId($turno->getId());
+            $notificacion->setAntelacion($diasAntes);
+            $notificacion->setLeida(false);
+            $em->persist($notificacion);
+            
+        }
+            
+            
+            
+        }
+        
+        
 
 
 }

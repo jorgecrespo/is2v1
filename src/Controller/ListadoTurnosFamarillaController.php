@@ -50,7 +50,7 @@ class ListadoTurnosFamarillaController extends AbstractController
 
             $asunto ="IMPORTANTE: TURNO DADO DE BAJA.";
            
-            $mensajeHtml = "<p>Estimado/a " . $paciente->getNombre() . ", lamentamos informarle que su turno de vacunación contra " . $NombreVacuna . " para el dia ". $fechaStr  ;
+            $mensajeHtml = "<p>Estimado/a " . $paciente->getNombre() . ' ' . $paciente->getApellido() . ", lamentamos informarle que su turno de vacunación contra " . $NombreVacuna . " para el dia ". $fechaStr  ;
             $mensajeHtml .= " en el Centro de vacunacion ". $nombreVacunatorio ." ubicado en: " . $direccionVacunaotiro .", ha sido <b> CANCELADO </b> <br> Saludos Cordiales <br> VacunasSist </p>";
 
             // dd($pacienteNombre, $paciente, $mensajeHtml);
@@ -68,7 +68,8 @@ class ListadoTurnosFamarillaController extends AbstractController
         foreach($turnos_pendientes as $turno){
 
             $turnoStr['id'] = $turno->getId();
-            $turnoStr['paciente']= $em->getRepository(Pacientes::class)->findOneById($turno->getPacienteId())->getNombre();
+            $paciente = $em->getRepository(Pacientes::class)->findOneById($turno->getPacienteId());
+            $turnoStr['paciente']= $paciente->getNombre() . ' ' . $paciente->getApellido() ;
 
             $turnoStr['fecha'] = date_format($turno->getFecha(), "d-m-Y") ;
             $turnoStr['estado'] = $turno->getEstado();
