@@ -51,7 +51,8 @@ class NotificacionesPacienteController extends AbstractController
                             'fecha_turno' => date_format($turno->getFecha(), "d-m-Y") ,
                             'fecha_notificacion' =>$fechaNotificacionStr ,
                             'vacuna' => $vacuna->getNombre(),
-                            'vacunatorio' => $vacunatorio->getNombre()
+                            'vacunatorio' => $vacunatorio->getNombre(),
+                            'leida' => $notificacion->getLeida() ? 'Si': 'No',
                         );
                             
                             array_push($listaNotificacinoes, $itemNotificacion);
