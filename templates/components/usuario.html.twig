@@ -31,7 +31,17 @@
 
 
             {% if rol == 'P' %}
-               <i class="fa-solid fa-user"></i> Paciente: {{ user }} |  <a href="{{ homePage }}" ><i class="fa-solid fa-house-user"></i></a> | <i id="bell" class="fa-solid fa-bell" ></i> |  <a href="/logout" ><i class="fa-solid fa-right-from-bracket"></i></a>
+               <i class="fa-solid fa-user"></i> Paciente: {{ user }} |  <a href="{{ homePage }}" ><i class="fa-solid fa-house-user"></i></a> | 
+               {# <i id="bell" class="fa-solid fa-bell" ></i>  #}
+               <i id="bell" class="fa-solid fa-bell"  onclick="listarNotificaciones()"></i>
+               {# <div class="dropdown" style="display:inline;">
+                <a class=" dropdown-toggle"  id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i id="bell" class="fa-solid fa-bell" ></i></a>
+              <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton1" id="lista_notificaciones">
+
+              </ul>
+            </div> #}
+               |  <a href="/logout" ><i class="fa-solid fa-right-from-bracket"></i></a>
             {% endif %}
             {% if rol == 'V' %}
                <i class="fa-solid fa-user"></i> Vacunador: {{ user }} |  <a href="{{ homePage }}" ><i class="fa-solid fa-house-user"></i></a> |  <a href="/logout" ><i class="fa-solid fa-right-from-bracket"></i></a>

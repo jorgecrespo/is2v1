@@ -130,21 +130,7 @@
 			
 {% block noti %}
 
-<div class="toast-container position-fixed top-0 end-0 p-3 m-5">
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      {# <img src="..." class="rounded me-2" alt="..."> #}
-	  
-      <strong class="me-auto"><i class="fa-solid fa-message-lines"></i> Notificación</strong>
-      <small>Recordatorio de Turno {{ loop.index }}</small>
-      {# <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> #}
-    </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
-    </div>
-  </div>
-</div>
-	</div>
+
 	{% endblock%}
 			{% endfor %}
 
@@ -156,12 +142,22 @@
     window.onload = function() {
 		
 	   hayNotificaciones();
+
+listarNotificaciones();
+
+
+
+    }
+
+	function listarNotificaciones(){
 	   data = $('#hdn-notificaciones').val();
 	   jsondata = JSON.parse(data);
 	   console.log(jsondata);
 
 
 	   var toastTrigger = document.getElementById('liveToastBtn') //quitar
+
+	   cardsArray = [];
 
 		jsondata.forEach( function (x,y){
 			console.log(x,y)
@@ -172,31 +168,44 @@
 			if (ant == 1){
 				texto1 = 'Recordatorio de Turno: '  + x.vacuna
 				texto2= x.mensaje_ini + 'le recordamos que tiene asignado un turno de vacunación...'
+				role ='alert-success';
 
 			} else {
 				texto1 = 'Cancelacion de Turno: '  + x.vacuna
 				texto2= x.mensaje_ini + 'lamentamos informarle que su turno de vacunación...'
+				role ='alert-danger';
 
 			}
-			notificacionesDinamicas(z, texto1, texto2);
+			notificacionesDinamicas(z, texto1, texto2, role, x.id_notificacion);
 			var toastLiveExample = document.getElementById('liveToast' + z)
 
 			const toast = new bootstrap.Toast(toastLiveExample)
 			toast.show()
 
+			//card = '<div class="toast" style="width: 18rem;">  <div class="card-body"> <p class="card-title">' + texto1 + '</p>   <p class="card-text">'+ texto2+'</p>    <a href="#" class="card-link">Leer Notificacion</a>  </div></div>';
 
+			card ='<div class="alert ' + role + '" role="alert">  <p class="alert-heading">' + texto1 + '</p>  <hr>  <p class="mb-0">'+ texto2+' </p></div>';
+
+			cardsArray.push(card)
+		})
+		// console.log(cardsArray)
+
+		cardsArray.forEach( function (card,i){
+	$('#lista_notificaciones').append(card)
 
 		})
 
 
-    }
+	}
 
 
-	function notificacionesDinamicas(x, texto1, texto2){
+	function notificacionesDinamicas(x, texto1, texto2, role, idNotif){
 
+		// TODO: poner color segun role
 		var tc = $('<div></div>');
-		tc.addClass('toast-container position-fixed top-0 end-0 p-3 ');
+		tc.addClass('toast-container position-fixed top-0 end-0 p-3');
 		tc.css('margin-top', x * 120);
+		tc.attr('onclick', 'irANotif('+idNotif+');')
 		var lt = $('<div></div>');
 		lt.attr('id', 'liveToast' + x);
 		lt.attr('class', 'toast');
@@ -217,6 +226,13 @@
 		$('#listaToasts').append(tc)
 
 
+	}
+
+	function irANotif(x){
+
+		url = '/notificaciones/pendientes/paciente/' + x;
+		console.log(x)
+		window.location = url;
 	}
 
 </script>

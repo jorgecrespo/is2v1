@@ -389,6 +389,7 @@ class CustomService
                                 'leida' => $notificacion->getLeida() ? 'Si': 'No',
                                 'antelacion' => $notificacion->getAntelacion(),
                                 'mensaje_ini' => $mensajeIni,
+                                'id_notificacion' => $notificacion->getId(),
                             );
                             
                             array_push($notificacionesPendientes, $itemNotificacion);
