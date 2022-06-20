@@ -123,7 +123,6 @@
 
 
 		</div>
-		<button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
 
 		<div id="listaToasts"></div>
 
@@ -151,10 +150,7 @@
 
 
 		{% if notificaciones|length > 0 %}
-	<script>document.getElementById('liveToastBtn').click();</script>
     
-
-{# {% else %} #}
 
 <script type="text/javascript">
     window.onload = function() {
@@ -193,22 +189,6 @@
 		})
 
 
-		if (toastTrigger) {
-		toastTrigger.addEventListener('click', () => {
-			const toast1 = new bootstrap.Toast(toastLiveExample1)
-			const toast2 = new bootstrap.Toast(toastLiveExample2)
-
-			toast1.show()
-			toast2.show()
-		})
-		}
-
-       document.getElementById('liveToastBtn').click();
-
-		notificacionesDinamicas(1);
-		notificacionesDinamicas(2);
-		var toastLiveExample1 = document.getElementById('liveToast1')
-		var toastLiveExample2 = document.getElementById('liveToast2')
     }
 
 
