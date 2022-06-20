@@ -26,18 +26,18 @@
       </ul>
       <span class="navbar-text">
         {% if env == 'dev' %}
-            Usuario: {{ user }} |    Rol: {{ rol }} |  <a href="/" >Home</a> |  <a href="/logout" >Cerrar sesión</a>
+           <i class="fa-solid fa-user"></i> Usuario: {{ user }} |    Rol: {{ rol }} |  <a href="/" ><i class="fa-solid fa-house-user"></i></a> |  <a href="/logout" ><i class="fa-solid fa-right-from-bracket"></i></a>
 		{% else %}
 
 
             {% if rol == 'P' %}
-                Paciente: {{ user }} |  <a href="{{ homePage }}" >Home</a> |  <a href="/logout" >Cerrar sesión</a>
+               <i class="fa-solid fa-user"></i> Paciente: {{ user }} |  <a href="{{ homePage }}" ><i class="fa-solid fa-house-user"></i></a> | <i id="bell" class="fa-solid fa-bell" ></i> |  <a href="/logout" ><i class="fa-solid fa-right-from-bracket"></i></a>
             {% endif %}
             {% if rol == 'V' %}
-                Vacunador: {{ user }} |  <a href="{{ homePage }}" >Home</a> |  <a href="/logout" >Cerrar sesión</a>
+               <i class="fa-solid fa-user"></i> Vacunador: {{ user }} |  <a href="{{ homePage }}" ><i class="fa-solid fa-house-user"></i></a> |  <a href="/logout" ><i class="fa-solid fa-right-from-bracket"></i></a>
             {% endif %}
             {% if rol == 'A' %}
-                Admin: {{ user }} |  <a href="{{ homePage }}" >Home</a> |  <a href="/logout" >Cerrar sesión</a>
+               <i class="fa-solid fa-user"></i> Admin: {{ user }} |  <a href="{{ homePage }}" ><i class="fa-solid fa-house-user"></i></a> |  <a href="/logout" ><i class="fa-solid fa-right-from-bracket"></i></a>
             {% endif %}
             {% if rol == 'x' %}
                 <a href="/custom/login/paciente" >Iniciar Sesión</a>

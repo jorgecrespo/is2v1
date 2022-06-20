@@ -33,6 +33,8 @@
 			<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 			{# <script src={{encore_entry_script_tags('funciones3')}} ></script> #}
 
+			{# fontawesome #}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 			<style>
 
 				body {
@@ -174,6 +176,34 @@ $('#form_baja_turno').submit();
 }
 
 }
+
+{# const toastTrigger = document.getElementById('liveToastBtn')
+const toastLiveExample = document.getElementById('liveToast')
+
+// inicio pop up notificaciones
+
+if (toastTrigger) {
+  toastTrigger.addEventListener('click', () => {
+    const toast = new bootstrap.Toast(toastLiveExample)
+
+    toast.show()
+  })
+} #}
+
+//fin pop up notificaciones
+
+function hayNotificaciones(){
+
+$('#bell').css('color', 'red')
+
+
+}
+
+function toastsNotificaciones(){
+
+}
+
+
 
 			</script>
 		{% endblock %}

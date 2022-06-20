@@ -21,6 +21,20 @@ class HomepacienteController extends AbstractController
     ): Response
     {
 
+        $notificaciones = $cs->notificacionesSinLeer();
+        // dd($notificaciones);
+        if (count($notificaciones) > 0){
+
+        }
+
+        // dd($request->headers->all()['referer'][0]);
+        // "http://localhost:8000/custom/login/paciente"
+        if (isset($request->headers->all()['referer'][0])){
+            if ( substr($request->headers->all()['referer'][0], -22) == "/custom/login/paciente"){
+
+            }
+        }
+
         if (!$cs->validarUrl($request->getPathinfo())){
             $this->addFlash(type: 'error', message: 'Página no válida. Ha sido redireccionado a su página principal');
             return $this->redirect($cs->getHomePageByUser());
@@ -45,6 +59,7 @@ class HomepacienteController extends AbstractController
             'paciente' => $paciente,
             'edad'=>$edad,
             'vacunado'=>$yaVacunado,
+            'notificaciones' => $notificaciones,
         ]);
     }
 }

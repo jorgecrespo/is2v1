@@ -167,7 +167,7 @@ class CustomService
 
 
     public function isDevMode(){
-        $this->VerificarNotificaciones();
+        $this->VerificarNotificacionesAdmin();
         return $this->devMode;
     }
 
@@ -281,7 +281,7 @@ class CustomService
 
     }
 
-    public function VerificarNotificaciones(){
+    public function VerificarNotificacionesAdmin(){
 
         $em = $this->doctrine->getManager();
         $admin = $em->getRepository(Usuarios::class)->findOneByMail('admin@gmail.com');
@@ -348,10 +348,62 @@ class CustomService
             $em->persist($notificacion);
             
         }
+                    
+    }
+
+    public function notificacionesSinLeer(){
+
+        $em = $this->doctrine->getManager();
+
+        $paciente = $em->getRepository(Pacientes::class)->findOneByEmail( $this->getUser()['user']);
+        $turnos = $em->getRepository(Turnos::class)->findTurnosByUser( $paciente->getId());
+        
+        $notificacionesPendientes = array();
+        
+        if (count($turnos) > 0){
             
-            
-            
+            foreach($turnos as $turno){
+                
+                $vacuna = $em->getRepository(Vacunas::class)->findOneById($turno->getVacunaId());
+                $vacunatorio = $em->getRepository(Vacunatorios::class)->findOneById($turno->getVacunatorioId());
+                
+                $notificaciones = $em->getRepository(Notificaciones::class)->findNotificacionesByTurnoId( $turno->getId());
+                
+                if (count ( $notificaciones) >0 ){
+
+                    foreach($notificaciones as $notificacion){
+
+                        if ($notificacion->getLeida() == 0){
+
+                            
+                            $diasAntelacino = $notificacion->getAntelacion();
+                            $fechaNotificacionStr = $turno->getFecha();
+                            $fechaNotificacionStr = $fdesde = date("d-m-Y",strtotime(date_format($fechaNotificacionStr, "d-m-Y") ."- $diasAntelacino days"));
+                            $mensajeIni = 'Estimado/a ' . $paciente->getNombre() . ' ' . $paciente->getApellido() . ', ';
+                            
+                            $itemNotificacion = array (
+                                'fecha_turno' => date_format($turno->getFecha(), "d-m-Y") ,
+                                'fecha_notificacion' =>$fechaNotificacionStr ,
+                                'vacuna' => $vacuna->getNombre(),
+                                'vacunatorio' => $vacunatorio->getNombre(),
+                                'leida' => $notificacion->getLeida() ? 'Si': 'No',
+                                'antelacion' => $notificacion->getAntelacion(),
+                                'mensaje_ini' => $mensajeIni,
+                            );
+                            
+                            array_push($notificacionesPendientes, $itemNotificacion);
+                        }
+                    }
+                        
+                    }
+                
+                
+            }
         }
+
+        return $notificacionesPendientes;
+
+    }
         
         
 
