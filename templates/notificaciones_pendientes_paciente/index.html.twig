@@ -12,5 +12,55 @@
     <h1>Notificaciones</h1>
 
 
+	<table class="table">
+
+		{% if (notificaciones[0] != null ) %}
+			<tr>
+				<th>
+					Fecha de Notificacion
+				</th>
+				<th>
+					Vacuna
+				</th>
+				<th>
+					Vacunatorio
+				</th>
+				<th>
+					Fecha de Aplicacion
+				</th>
+
+
+			</tr>
+
+		{% else %}
+
+			<tr>
+
+				<td>No tiene notificaciones en su Historial</td>
+			</tr>
+		{% endif %}
+
+
+		{% for notificacion in notificaciones %}
+			<tr>
+				<td>
+					{{ notificacion['fecha_notificacion'] }}
+				</td>
+
+				<td>
+					{{ notificacion['vacuna'] }}
+				</td>
+				<td>
+					{{ notificacion['vacunatorio'] }}
+				</td>
+				<td>
+					{{ notificacion['fecha_turno'] }}
+				</td>
+			</tr>
+		{% endfor %}
+
+
+	</tabla>
+
 </div>
 {% endblock %}
