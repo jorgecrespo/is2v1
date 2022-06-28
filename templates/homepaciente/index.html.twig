@@ -39,7 +39,7 @@
 				{{ paciente.mail }}</p>
 			<br>
 			<p>
-				<a href="/notificaciones/pendientes/paciente/0">Leer Notificaiones Pendientes</a>
+				<a href="/notificaciones/pendientes/paciente">Leer Notificaiones Pendientes</a>
 			</p>
 			<p>
 				<a href="/completar/vacunacion">Registrar Historial de Vacunacion</a>
@@ -230,7 +230,7 @@ listarNotificaciones();
 
 	function irANotif(x){
 
-		url = '/notificaciones/pendientes/paciente/' + x;
+		url = '/leer/notificacion/' + x;
 		console.log(x)
 		window.location = url;
 	}

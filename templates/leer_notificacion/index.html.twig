@@ -24,8 +24,6 @@
 
 			<table class="table">
 
-		{% if (notificaciones|length > 0 ) %}
-
 				<tr>
 					<th>
 						Fecha de Notificacion
@@ -39,43 +37,33 @@
 					<th>
 						Fecha de Aplicacion
 					</th>
-					<th>
-						Operación
-					</th>
 				</tr>
 
-			{% else %}
 
-			<tr>
+				<tr>
+					<td>
+						{{ notif['fecha_notificacion'] }}
+					</td>
 
-				<td>No tiene notificaciones Pendientes de Lectura</td>
-			</tr>
-		{% endif %}
-
-
-			{% for notificacion in notificaciones %}
-			<tr>
-				<td>
-					{{ notificacion['fecha_notificacion'] }}
-				</td>
-
-				<td>
-					{{ notificacion['vacuna'] }}
-				</td>
-				<td>
-					{{ notificacion['vacunatorio'] }}
-				</td>
-				<td>
-					{{ notificacion['fecha_turno'] }}
-				</td>
-				<td>
-					<a href="/leer/notificacion/{{ notificacion['id_notificacion'] }}" >Leer</a>
-				</td>
-			</tr>
-		{% endfor %}
+					<td>
+						{{ notif['vacuna'] }}
+					</td>
+					<td>
+						{{ notif['vacunatorio'] }}
+					</td>
+					<td>
+						{{ notif['fecha_turno'] }}
+					</td>
+				</tr>
 
 
 			</tabla>
 		</div>
+		<div>
+			<p>Mensaje:
+				{{ notif['mensaje'] }}
+			</p>
+		</div>
+		<a href="/notificaciones/pendientes/paciente">Ver todas las notificaciones pendientes</a>
 	</div>
 {% endblock %}
