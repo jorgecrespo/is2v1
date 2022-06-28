@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EstadisticaController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Información Estadística</h1>
+
+
+    <form>
+    
+    <hr>
+<p>Vacunatorios</p>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+  <label class="form-check-label" for="inlineCheckbox1">{{ vacunatorios[0] }}</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+  <label class="form-check-label" for="inlineCheckbox2">{{ vacunatorios[1] }}</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" >
+  <label class="form-check-label" for="inlineCheckbox3">{{ vacunatorios[2] }}</label>
+</div>
+<hr>
+<p>Vacunas</p>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+  <label class="form-check-label" for="inlineCheckbox1">Gripe</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+  <label class="form-check-label" for="inlineCheckbox2">Covid</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" >
+  <label class="form-check-label" for="inlineCheckbox3">Fiebre Amarilla</label>
+</div>
+<hr>
+<p>Estados de turnos</p>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+  <label class="form-check-label" for="inlineCheckbox1">Aplicado</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+  <label class="form-check-label" for="inlineCheckbox2">Pendiente</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" >
+  <label class="form-check-label" for="inlineCheckbox3">Cancelado</label>
+</div>
+<hr>
+<div>
+<label for="fecha">Fecha:  </label>
+<input type="date" id="fecha" name="fecha1" value="{{ fecha }}" max="{{ fecha }}">
+
+</div> 
+<hr>
+<input type="submit" value="Aceptar">
+
+    
+    </form>
+  
+</div>
+{% endblock %}

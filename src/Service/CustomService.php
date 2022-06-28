@@ -46,14 +46,12 @@ class CustomService
 
     private $paginasPaciente = [
         '/homepaciente',
-        '/enconstruccion',
         '/completar/vacunacion',
         '/token',
         '/asignacion/turno',
     ];
 
     private $paginasVacunador = [
-        '/enconstruccion',
         '/home/vacunador',
     ];
 
@@ -63,7 +61,6 @@ class CustomService
         // '/altapaciente',
         '/vacunadoresporcentro',
         '/modificarvacunador',
-        '/enconstruccion',
         '/homeadmin',
         '/',
         '/dev/pacientes', // Quitar en prod
@@ -72,7 +69,6 @@ class CustomService
     ];
 
     private $paginasPublicas = [
-        '/enconstruccion',
         '/altapaciente',
         // '/altavacunador',
         '/custom/login/paciente',

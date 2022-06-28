@@ -37,6 +37,10 @@
 				<li><a onclick="modificarVacunatorio(2, '{{ nombres_vacunatorios[1]}}')" href="#">Actualizar informacion del  Centro de vacunacion {{ nombres_vacunatorios[1]}}</a></li>
 				<li><a onclick="modificarVacunatorio(3, '{{ nombres_vacunatorios[2]}}')" href="#">Actualizar informacion del  Centro de vacunacion {{ nombres_vacunatorios[2]}}</a></li>
 				<li><a href="/listado/turnos/famarilla">Listado de Turnos para Fiebre Amarilla</a></li>
+				<li><a >--</a></li>
+				<li><a href="/estadistica/unafecha">Información estadistica en una fecha dada</a></li>
+				<li><a href="/estadistica/hastafecha">Información estadistica hasta una fecha dada</a></li>
+				<li><a href="/estadistica/entrefechas">Información estadistica entre dos fechas dadas</a></li>
 
 			</ul>
 		</div>
@@ -52,10 +56,7 @@
 			</div>
 		{% endfor %}
 
-		<div>
-			<img src="{{ asset('build/img/enconstruccion.jpeg') }}" width="300" height="300">
 
-		</div>
 
 
 	</div>
