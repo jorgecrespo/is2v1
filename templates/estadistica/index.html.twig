@@ -17,7 +17,7 @@
 		}
 	</style>
 
-	<div class="example-wrapper" id="div_estadistica1_form">
+	<div class="example-wrapper" id="div_estadistica1_form" style="display:{{ clase_form }};">
 		<h1>Información Estadística</h1>
 
 		{# {{ form (form, {'attr': {'id': 'form_data'}})}} #}
@@ -26,44 +26,44 @@
 			<hr>
 			<p>Vacunatorios</p>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vacunatorio1" id="inlineCheckbox1">
-				<label class="form-check-label" for="inlineCheckbox1">{{ vacunatorios[0] }}</label>
+				<input class="form-check-input" type="checkbox" name="vacunatorio1" id="inlineCheckbox11">
+				<label class="form-check-label" for="inlineCheckbox11">{{ vacunatorios[0] }}</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vacunatorio2" id="inlineCheckbox2">
-				<label class="form-check-label" for="inlineCheckbox2">{{ vacunatorios[1] }}</label>
+				<input class="form-check-input" type="checkbox" name="vacunatorio2" id="inlineCheckbox12">
+				<label class="form-check-label" for="inlineCheckbox12">{{ vacunatorios[1] }}</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vacunatorio3" id="inlineCheckbox3">
-				<label class="form-check-label" for="inlineCheckbox3">{{ vacunatorios[2] }}</label>
+				<input class="form-check-input" type="checkbox" name="vacunatorio3" id="inlineCheckbox13">
+				<label class="form-check-label" for="inlineCheckbox13">{{ vacunatorios[2] }}</label>
 			</div>
 			<hr>
 			<p>Vacunas</p>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vakuna1" id="inlineCheckbox1">
-				<label class="form-check-label" for="inlineCheckbox1">Gripe</label>
+				<input class="form-check-input" type="checkbox" name="vakuna1" id="inlineCheckbox21">
+				<label class="form-check-label" for="inlineCheckbox21">Gripe</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vakuna2" id="inlineCheckbox2">
-				<label class="form-check-label" for="inlineCheckbox2">Covid</label>
+				<input class="form-check-input" type="checkbox" name="vakuna2" id="inlineCheckbox22">
+				<label class="form-check-label" for="inlineCheckbox22">Covid</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vakuna3" id="inlineCheckbox3">
-				<label class="form-check-label" for="inlineCheckbox3">Fiebre Amarilla</label>
+				<input class="form-check-input" type="checkbox" name="vakuna3" id="inlineCheckbox23">
+				<label class="form-check-label" for="inlineCheckbox23">Fiebre Amarilla</label>
 			</div>
 			<hr>
 			<p>Estados de turnos</p>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="estado1" id="inlineCheckbox1">
-				<label class="form-check-label" for="inlineCheckbox2">Asignado</label>
+				<input class="form-check-input" type="checkbox" name="estado1" id="inlineCheckbox31">
+				<label class="form-check-label" for="inlineCheckbox31">Asignado</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="estado2" id="inlineCheckbox2">
-				<label class="form-check-label" for="inlineCheckbox3">Cancelado</label>
+				<input class="form-check-input" type="checkbox" name="estado2" id="inlineCheckbox32">
+				<label class="form-check-label" for="inlineCheckbox32">Cancelado</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="estado3" id="inlineCheckbox3">
-				<label class="form-check-label" for="inlineCheckbox1">Aplicado</label>
+				<input class="form-check-input" type="checkbox" name="estado3" id="inlineCheckbox33">
+				<label class="form-check-label" for="inlineCheckbox33">Aplicado</label>
 			</div>
 			<hr>
 			<div>
@@ -80,7 +80,7 @@
 
 	</div>
 
-	<div class="example-wrapper" id="div_estad1_info">
+	<div class="example-wrapper" id="div_estad1_info" style="display:{{ clase_info }};">
 
 		<table class=" table">
 			{% if turnos != null %}

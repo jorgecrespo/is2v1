@@ -27,6 +27,8 @@ class EstadisticaController extends AbstractController
     ): Response
     {
 
+        $clase_form="block";
+        $clase_info="none";
         $em = $doctrine->getManager();
         $infoVacunatorios = $em->getRepository(Vacunatorios::class)->findAll();
         $vacunatorios = [$infoVacunatorios[0]->getNombre(),$infoVacunatorios[1]->getNombre(),$infoVacunatorios[2]->getNombre()];
@@ -38,6 +40,8 @@ class EstadisticaController extends AbstractController
 
         if (count($request->request->All()) > 0){
             $data = $request->request->All();
+            $clase_form="none";
+            $clase_info="block";
             // dd($data);
             $dataForm = array(
                 'vacunatorios' => array(
@@ -79,7 +83,9 @@ class EstadisticaController extends AbstractController
                         'fecha' => date_format($turno->getFecha(), "d-m-Y"),
                         'vacunatorio' => $vacunatorios[$turno->getVacunatorioId() -1],
                         'vacuna' => $vacunas[$turno->getVacunaId() -1],
-                        'estado' => $turno->getEstado()
+                        'estado' => $turno->getEstado(),
+                        'clase_form' => $clase_form,
+                        'clase_info' => $clase_info,
                     );
                     
                     array_push($turnosAMostrar, $arregloTurno);
@@ -110,6 +116,8 @@ class EstadisticaController extends AbstractController
             'fecha_hoy' => $hoy,
             'vacunatorios'=> $vacunatorios,
             'turnos' => $turnosAMostrar,
+            'clase_form' => $clase_form,
+            'clase_info' => $clase_info,
             // 'data' => $data,
             // 'form' => $form->createView(),
 
