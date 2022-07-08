@@ -140,7 +140,17 @@ if (
 
 formEstadisticaUnaFecha = $('#estadistica_una_fecha')[0]
 formHomeAdmin = $('#estadistica_una_fecha').serializeArray()
-formEstadisticaUnaFecha.action = 'http://localhost:8000/estadistica/unafecha'
+tipo = formHomeAdmin[0].value
+if (tipo == "entrefechas"){
+	date1 = new Date(formHomeAdmin[10].value)
+	date2 = new Date(formHomeAdmin[11].value)
+	console.log(date1, date2)
+	if (date1.getTime() > date2.getTime()){
+		alert('La Fecha Desde debe ser menor o igual a la Fecha Hasta')
+		return
+	} 
+}
+formEstadisticaUnaFecha.action = 'http://localhost:8000/estadistica/' + tipo
 formEstadisticaUnaFecha.submit();
 }
 

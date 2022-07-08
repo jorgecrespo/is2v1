@@ -18,60 +18,76 @@
 	</style>
 
 	<div class="example-wrapper" id="div_estadistica1_form" style="display:{{ clase_form }};">
-		<h1>Información Estadística</h1>
+		<h1>Información Estadística <small>{{subtitulo}}</small></h1>
 
 		{# {{ form (form, {'attr': {'id': 'form_data'}})}} #}
 		<form action="/estadistica/unafecha" method="POST" id="estadistica_una_fecha">
+				<input  type="hidden" name="tipo" id="tipo" value="{{tipo}}">
 
 			<hr>
 			<p>Vacunatorios</p>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vacunatorio1" id="inlineCheckbox11">
+				<input class="form-check-input" type="checkbox" checked  name="vacunatorio1" id="inlineCheckbox11">
 				<label class="form-check-label" for="inlineCheckbox11">{{ vacunatorios[0] }}</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vacunatorio2" id="inlineCheckbox12">
+				<input class="form-check-input" type="checkbox" checked name="vacunatorio2" id="inlineCheckbox12">
 				<label class="form-check-label" for="inlineCheckbox12">{{ vacunatorios[1] }}</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vacunatorio3" id="inlineCheckbox13">
+				<input class="form-check-input" type="checkbox" checked name="vacunatorio3" id="inlineCheckbox13">
 				<label class="form-check-label" for="inlineCheckbox13">{{ vacunatorios[2] }}</label>
 			</div>
 			<hr>
 			<p>Vacunas</p>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vakuna1" id="inlineCheckbox21">
+				<input class="form-check-input" type="checkbox" checked name="vakuna1" id="inlineCheckbox21">
 				<label class="form-check-label" for="inlineCheckbox21">Gripe</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vakuna2" id="inlineCheckbox22">
+				<input class="form-check-input" type="checkbox" checked name="vakuna2" id="inlineCheckbox22">
 				<label class="form-check-label" for="inlineCheckbox22">Covid</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="vakuna3" id="inlineCheckbox23">
+				<input class="form-check-input" type="checkbox" checked name="vakuna3" id="inlineCheckbox23">
 				<label class="form-check-label" for="inlineCheckbox23">Fiebre Amarilla</label>
 			</div>
 			<hr>
 			<p>Estados de turnos</p>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="estado1" id="inlineCheckbox31">
+				<input class="form-check-input" type="checkbox" checked name="estado1" id="inlineCheckbox31">
 				<label class="form-check-label" for="inlineCheckbox31">Asignado</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="estado2" id="inlineCheckbox32">
+				<input class="form-check-input" type="checkbox" checked name="estado2" id="inlineCheckbox32">
 				<label class="form-check-label" for="inlineCheckbox32">Cancelado</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" name="estado3" id="inlineCheckbox33">
+				<input class="form-check-input" type="checkbox" checked name="estado3" id="inlineCheckbox33">
 				<label class="form-check-label" for="inlineCheckbox33">Aplicado</label>
 			</div>
 			<hr>
+			{% if tipo != 'entrefechas' %}
 			<div>
-				<label for="fecha">Fecha de Aplicación:
+				<label for="fecha1">Fecha de Aplicación:
 				</label>
-				<input type="date" id="fecha" name="fecha1" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
+				<input type="date" id="fecha1" name="fecha1" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
 
 			</div>
+			{% else %}
+			<div>
+				<label for="fecha1">Fecha Desde:
+				</label>
+				<input type="date" id="fecha1" name="fecha1" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
+
+				<label for="fecha2">Fecha Hasta:
+				</label>
+				<input type="date" id="fecha2" name="fecha2" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
+
+			</div>
+
+			{% endif %}
+
 			<hr>
 			<input type="button" value="Aceptar" onclick="verEstadisticaUnaFecha()">
 
