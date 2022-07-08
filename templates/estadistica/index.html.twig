@@ -1,72 +1,126 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EstadisticaController!{% endblock %}
+{% block title %}Hello EstadisticaController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-<div class="example-wrapper">
-    <h1>Información Estadística</h1>
+	<div class="example-wrapper" id="div_estadistica1_form">
+		<h1>Información Estadística</h1>
+
+		{# {{ form (form, {'attr': {'id': 'form_data'}})}} #}
+		<form action="/estadistica/unafecha" method="POST" id="estadistica_una_fecha">
+
+			<hr>
+			<p>Vacunatorios</p>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="vacunatorio1" id="inlineCheckbox1">
+				<label class="form-check-label" for="inlineCheckbox1">{{ vacunatorios[0] }}</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="vacunatorio2" id="inlineCheckbox2">
+				<label class="form-check-label" for="inlineCheckbox2">{{ vacunatorios[1] }}</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="vacunatorio3" id="inlineCheckbox3">
+				<label class="form-check-label" for="inlineCheckbox3">{{ vacunatorios[2] }}</label>
+			</div>
+			<hr>
+			<p>Vacunas</p>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="vakuna1" id="inlineCheckbox1">
+				<label class="form-check-label" for="inlineCheckbox1">Gripe</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="vakuna2" id="inlineCheckbox2">
+				<label class="form-check-label" for="inlineCheckbox2">Covid</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="vakuna3" id="inlineCheckbox3">
+				<label class="form-check-label" for="inlineCheckbox3">Fiebre Amarilla</label>
+			</div>
+			<hr>
+			<p>Estados de turnos</p>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="estado1" id="inlineCheckbox1">
+				<label class="form-check-label" for="inlineCheckbox2">Asignado</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="estado2" id="inlineCheckbox2">
+				<label class="form-check-label" for="inlineCheckbox3">Cancelado</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="estado3" id="inlineCheckbox3">
+				<label class="form-check-label" for="inlineCheckbox1">Aplicado</label>
+			</div>
+			<hr>
+			<div>
+				<label for="fecha">Fecha de Aplicación:
+				</label>
+				<input type="date" id="fecha" name="fecha1" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
+
+			</div>
+			<hr>
+			<input type="button" value="Aceptar" onclick="verEstadisticaUnaFecha()">
 
 
-    <form>
-    
-    <hr>
-<p>Vacunatorios</p>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-  <label class="form-check-label" for="inlineCheckbox1">{{ vacunatorios[0] }}</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-  <label class="form-check-label" for="inlineCheckbox2">{{ vacunatorios[1] }}</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" >
-  <label class="form-check-label" for="inlineCheckbox3">{{ vacunatorios[2] }}</label>
-</div>
-<hr>
-<p>Vacunas</p>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-  <label class="form-check-label" for="inlineCheckbox1">Gripe</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-  <label class="form-check-label" for="inlineCheckbox2">Covid</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" >
-  <label class="form-check-label" for="inlineCheckbox3">Fiebre Amarilla</label>
-</div>
-<hr>
-<p>Estados de turnos</p>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-  <label class="form-check-label" for="inlineCheckbox1">Aplicado</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-  <label class="form-check-label" for="inlineCheckbox2">Pendiente</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" >
-  <label class="form-check-label" for="inlineCheckbox3">Cancelado</label>
-</div>
-<hr>
-<div>
-<label for="fecha">Fecha:  </label>
-<input type="date" id="fecha" name="fecha1" value="{{ fecha }}" max="{{ fecha }}">
+		</form>
 
-</div> 
-<hr>
-<input type="submit" value="Aceptar">
+	</div>
 
-    
-    </form>
-  
-</div>
+	<div class="example-wrapper" id="div_estad1_info">
+
+		<table class=" table">
+			{% if turnos != null %}
+				<tr>
+					<th>
+						Vacunatorio
+					</th>
+					<th>
+						Vacuna
+					</th>
+					<th>
+						Estado
+					</th>
+					<th>
+						Fecha Aplicacion
+					</th>
+				</tr>
+
+				{% for turno in turnos %}
+					<tr>
+						<td>{{ turno.vacunatorio }}</td>
+						<td>{{ turno.vacuna }}</td>
+						<td>{{ turno.estado }}</td>
+						<td>{{ turno.fecha }}</td>
+
+
+					</tr>
+				{% endfor %}
+
+
+			{% else %}
+				<tr>
+					<td>No hay turnos registrados con los filtros aplicados
+					</td>
+				</tr>
+			{% endif %}
+
+
+		</table>
+
+
+	</div>
 {% endblock %}

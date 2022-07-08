@@ -125,6 +125,28 @@ formHomeAdmin.submit();
 
 }
 
+function verEstadisticaUnaFecha(){
+
+var formStr = $('#estadistica_una_fecha').serialize();
+console.log(formStr)
+if (
+(formStr.search('vacunatorio') == -1) ||
+(formStr.search('vakuna') == -1) ||
+(formStr.search('estado') == -1)
+){
+	alert('Debe Seleccionar al menos un vacunatorio, una vacuna y un estado para obtener la informacion estadística')
+	return;
+} else {
+
+formEstadisticaUnaFecha = $('#estadistica_una_fecha')[0]
+formHomeAdmin = $('#estadistica_una_fecha').serializeArray()
+formEstadisticaUnaFecha.action = 'http://localhost:8000/estadistica/unafecha'
+formEstadisticaUnaFecha.submit();
+}
+
+	
+}
+
 function ir_a(ruta) {
 formHomeAdmin = $('#mod_vacunatorio_form')[0];
 formHomeAdmin.action = 'http://localhost:8000/homeadmin'

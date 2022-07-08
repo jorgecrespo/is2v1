@@ -199,7 +199,7 @@ class TurnosRepository extends ServiceEntityRepository
     }
 
 
-        /**
+    /**
      * @return Turnos[] Returns an array of Turnos objects
      */
     public function findTurnosPendientesByDate($fecha): array
@@ -210,6 +210,19 @@ class TurnosRepository extends ServiceEntityRepository
         ->setParameter('val1', $fecha)
         ->andWhere('u.estado = :val2')
         ->setParameter('val2', $estado)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+        /**
+     * @return Turnos[] Returns an array of Turnos objects
+     */
+    public function findTurnosByDate($fecha): array
+    {
+        return $this->createQueryBuilder('u')
+        ->andWhere('u.fecha = :val1')
+        ->setParameter('val1', $fecha)
         ->getQuery()
         ->getResult()
         ;
