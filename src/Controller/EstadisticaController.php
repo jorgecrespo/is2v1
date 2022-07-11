@@ -20,44 +20,58 @@ class EstadisticaController extends AbstractController
 {
     #[Route('/estadistica/{tipo}', name: 'app_estadistica')]
     public function index(
-        ManagerRegistry $doctrine, 
+        ManagerRegistry $doctrine,
         Request $request,
         CustomService $cs,
         String $tipo
 
-    ): Response
-    {
-        $subtitulo='';
-        
-switch ($tipo) {
-    case 'unafecha':
-        $subtitulo='En una fecha dada';
-        break;
-    case 'hastafecha':
-        $subtitulo='Hasta una fecha dada';
-        break;
-    case 'entrefechas':
-        $subtitulo='Entre dos Fechas';
-        break;
-}
+    ): Response {
+        $subtitulo = '';
 
-       
+        switch ($tipo) {
+            case 'unafecha':
+                $subtitulo = 'En una fecha dada';
+                break;
+            case 'hastafecha':
+                $subtitulo = 'Hasta una fecha dada';
+                break;
+            case 'entrefechas':
+                $subtitulo = 'Entre dos Fechas';
+                break;
+        }
 
-        $clase_form="block";
-        $clase_info="none";
+        $resumen = array(
+            'total'=> 0,
+            'vacunatorio1' => null,
+            'vacunatorio2' => null,
+            'vacunatorio3' => null,
+            'vacuna1' => null,
+            'vacuna2' => null,
+            'vacuna3' => null,
+            'ASIGNADO' => null,
+            'CANCELADO' => null,
+            'APLICADA' => null,
+        );
+
+
+
+
+
+        $clase_form = "block";
+        $clase_info = "none";
         $em = $doctrine->getManager();
         $infoVacunatorios = $em->getRepository(Vacunatorios::class)->findAll();
-        $vacunatorios = [$infoVacunatorios[0]->getNombre(),$infoVacunatorios[1]->getNombre(),$infoVacunatorios[2]->getNombre()];
+        $vacunatorios = [$infoVacunatorios[0]->getNombre(), $infoVacunatorios[1]->getNombre(), $infoVacunatorios[2]->getNombre()];
 
-        $vacunas =["Gripe", "Covid-19", "Fiebre Amarilla"];
+        $vacunas = ["Gripe", "Covid-19", "Fiebre Amarilla"];
 
         $turnosAMostrar = array();
 
 
-        if (count($request->request->All()) > 0){
+        if (count($request->request->All()) > 0) {
             $data = $request->request->All();
-            $clase_form="none";
-            $clase_info="block";
+            $clase_form = "none";
+            $clase_info = "block";
             // dd($data);
             $dataForm = array(
                 'vacunatorios' => array(
@@ -77,11 +91,11 @@ switch ($tipo) {
                 ),
                 'fecha1' => $data['fecha1']
             );
-            if ($tipo == 'entrefechas'){
-                $dataForm['fecha2']= $data['fecha2'];
+            if ($tipo == 'entrefechas') {
+                $dataForm['fecha2'] = $data['fecha2'];
             }
 
-            $strEstados= 'x';
+            $strEstados = 'x';
             if ($dataForm['estados']['estado1']) $strEstados .= 'ASIGNADO';
             if ($dataForm['estados']['estado2']) $strEstados .= 'CANCELADO';
             if ($dataForm['estados']['estado3']) $strEstados .= 'APLICADA';
@@ -97,31 +111,35 @@ switch ($tipo) {
                     $turnosDB =  $em->getRepository(Turnos::class)->findTurnosUntilDate($dataForm['fecha1']);
                     break;
                 case 'entrefechas':
-                    $turnosDB =  $em->getRepository(Turnos::class)->findTurnosBetweenDates($dataForm['fecha1'],$dataForm['fecha2']);
+                    $turnosDB =  $em->getRepository(Turnos::class)->findTurnosBetweenDates($dataForm['fecha1'], $dataForm['fecha2']);
                     break;
             }
-            foreach($turnosDB as $turno){
+            foreach ($turnosDB as $turno) {
 
-                if ( ( $dataForm['vacunatorios']['vacunatorio' . $turno->getVacunatorioId()]) &&
-                ( $dataForm['vacunas']['vacuna' . $turno->getVacunaId()]) &&
-                (strpos($strEstados, $turno->getEstado() ))
-                    
-                ){
+                if (($dataForm['vacunatorios']['vacunatorio' . $turno->getVacunatorioId()]) &&
+                    ($dataForm['vacunas']['vacuna' . $turno->getVacunaId()]) &&
+                    (strpos($strEstados, $turno->getEstado()))
+
+                ) {
 
                     $arregloTurno = array(
                         'id' => $turno->getId(),
                         'fecha' => date_format($turno->getFecha(), "d-m-Y"),
-                        'vacunatorio' => $vacunatorios[$turno->getVacunatorioId() -1],
-                        'vacuna' => $vacunas[$turno->getVacunaId() -1],
+                        'vacunatorio' => $vacunatorios[$turno->getVacunatorioId() - 1],
+                        'vacuna' => $vacunas[$turno->getVacunaId() - 1],
                         'estado' => $turno->getEstado(),
                         'clase_form' => $clase_form,
                         'clase_info' => $clase_info,
                     );
-                    
-                    array_push($turnosAMostrar, $arregloTurno);
-                }
-                
 
+                    array_push($turnosAMostrar, $arregloTurno);
+
+                    $resumen['total']++;
+                    $resumen['vacunatorio' . $turno->getVacunatorioId() ]++;
+                    $resumen['vacuna' . $turno->getVacunaId() ]++;
+                    $resumen[ $turno->getEstado()]++;
+
+                }
             }
 
 
@@ -135,21 +153,22 @@ switch ($tipo) {
 
 
         }
- 
+
         $hoy =  date_format(new DateTime(), "Y-m-d");
 
 
-      
+
 
         return $this->render('estadistica/index.html.twig', [
             'controller_name' => 'EstadisticaController',
             'fecha_hoy' => $hoy,
-            'vacunatorios'=> $vacunatorios,
+            'vacunatorios' => $vacunatorios,
             'turnos' => $turnosAMostrar,
             'clase_form' => $clase_form,
             'clase_info' => $clase_info,
             'subtitulo' => $subtitulo,
             'tipo' => $tipo,
+            'resumen' => $resumen
             // 'data' => $data,
             // 'form' => $form->createView(),
 

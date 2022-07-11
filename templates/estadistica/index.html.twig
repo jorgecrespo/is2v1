@@ -16,18 +16,21 @@
 			padding: 2px 6px;
 		}
 	</style>
-
+<div class="example-wrapper">
+		<h1>Información Estadística
+			<small>{{subtitulo}}</small>
+		</h1>
+</div>
 	<div class="example-wrapper" id="div_estadistica1_form" style="display:{{ clase_form }};">
-		<h1>Información Estadística <small>{{subtitulo}}</small></h1>
 
 		{# {{ form (form, {'attr': {'id': 'form_data'}})}} #}
 		<form action="/estadistica/unafecha" method="POST" id="estadistica_una_fecha">
-				<input  type="hidden" name="tipo" id="tipo" value="{{tipo}}">
+			<input type="hidden" name="tipo" id="tipo" value="{{tipo}}">
 
 			<hr>
 			<p>Vacunatorios</p>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" checked  name="vacunatorio1" id="inlineCheckbox11">
+				<input class="form-check-input" type="checkbox" checked name="vacunatorio1" id="inlineCheckbox11">
 				<label class="form-check-label" for="inlineCheckbox11">{{ vacunatorios[0] }}</label>
 			</div>
 			<div class="form-check form-check-inline">
@@ -68,23 +71,23 @@
 			</div>
 			<hr>
 			{% if tipo != 'entrefechas' %}
-			<div>
-				<label for="fecha1">Fecha de Aplicación:
-				</label>
-				<input type="date" id="fecha1" name="fecha1" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
+				<div>
+					<label for="fecha1">Fecha de Aplicación:
+					</label>
+					<input type="date" id="fecha1" name="fecha1" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
 
-			</div>
+				</div>
 			{% else %}
-			<div>
-				<label for="fecha1">Fecha Desde:
-				</label>
-				<input type="date" id="fecha1" name="fecha1" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
+				<div>
+					<label for="fecha1">Fecha Desde:
+					</label>
+					<input type="date" id="fecha1" name="fecha1" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
 
-				<label for="fecha2">Fecha Hasta:
-				</label>
-				<input type="date" id="fecha2" name="fecha2" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
+					<label for="fecha2">Fecha Hasta:
+					</label>
+					<input type="date" id="fecha2" name="fecha2" max="{{ fecha_hoy }}" value="{{ fecha_hoy}}">
 
-			</div>
+				</div>
 
 			{% endif %}
 
@@ -136,6 +139,64 @@
 
 
 		</table>
+
+		<div id="div_resumen">
+
+			{% if  resumen['total'] != 0 %}
+
+			<p>
+				Se encontraron
+				{{resumen['total']}}
+				turnos registrados que cumplen con los filtros seleccionados, de los cuales:
+			</p>
+
+				{% for key,dato in resumen   %}
+
+
+					{% if  dato != null and  key != 'total' %}
+
+						<p>
+							=>
+							{{dato }}, equivalente al
+							{{ (dato *100 / resumen['total']) |round(2)  }}
+							%
+							{% if  key == 'vacunatorio1' %}
+								corresponden al vacunatorio
+								{{vacunatorios[0]}}
+							{% endif %}
+							{% if  key == 'vacunatorio2' %}
+								corresponden al vacunatorio
+								{{vacunatorios[1]}}
+							{% endif %}
+							{% if  key == 'vacunatorio3' %}
+								corresponden al vacunatorio
+								{{vacunatorios[2]}}
+							{% endif %}
+
+							{% if  key == 'vacuna1'  %}
+								son contra la Gripe
+							{% endif %}
+
+							{% if    key == 'vacuna2'  %}
+								son contra el Covid
+							{% endif %}
+
+							{% if   key == 'vacuna3' %}
+								son contra la Fiebre Amarilla
+							{% endif %}
+
+							{% if  key == 'ASIGNADO' or  key == 'CANCELADO' or key == 'APLICADA' %}
+								tienen estado
+								{{ key}}.
+							{% endif %}
+
+						</p>
+					{% endif %}
+				{% endfor %}
+
+			{% endif %}
+
+		</div>
 
 
 	</div>
