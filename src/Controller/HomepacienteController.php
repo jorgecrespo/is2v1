@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Pacientes;
 use App\Entity\Turnos;
 use App\Service\CustomService;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,7 +47,15 @@ class HomepacienteController extends AbstractController
 
         $mailPaciente = $cs->getUser()['user'];
         $feNac = $em->getRepository(Pacientes::class)->findOneByEmail($mailPaciente)->getFechaNac();
-        $edad = $cs->getEdad($feNac);
+        $feNacFormatted = date_format($feNac, "d-m-Y");
+        $fechanac40diasAntes = new DateTime(  date("d-m-Y",strtotime($feNacFormatted ."- 40 days")));
+        if ($cs->getEdad($fechanac40diasAntes)>=60){
+            $edad = 60;
+        } else {
+            $edad = $cs->getEdad($feNac);
+        }
+        
+        $diasPara60 = 
         
         $yaVacunado = (bool) $em->getRepository(Pacientes::class)->findOneByEmail($mailPaciente)->getVacunaHepatitisFecha() != null;
         // dd($yaVacunado);
